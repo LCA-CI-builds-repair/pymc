@@ -49,6 +49,8 @@ from pytensor.tensor.math import Max
 from pytensor.tensor.random.op import RandomVariable
 from pytensor.tensor.variable import TensorVariable
 
+import pymc as pm
+
 from pymc.logprob.abstract import (
     MeasurableVariable,
     _logcdf_helper,
