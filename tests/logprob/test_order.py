@@ -221,6 +221,7 @@ def test_min_logprob(shape, value, axis):
         (x_min_logprob.eval({x_min_value: test_value})),
         rtol=1e-06,
     )
+    assert 0
 
 
 def test_min_non_mul_elemwise_fails():
@@ -235,11 +236,11 @@ def test_min_non_mul_elemwise_fails():
 
 @pytest.mark.parametrize(
     "mu, size, value, axis",
-    [(2, 3, 1, -1), (2, 3, 1, 0), (1, 2, 2, None), (0, 4, 0, 0)],
+    [(2, 3, 0.85, -1), (2, 3, 1, 0), (1, 2, 2, None), (0, 4, 0, 0)],
 )
-def test_max_discrete(mu, size, value, axis):
+def test_min_discrete(mu, size, value, axis):
     x = pm.Poisson.dist(name="x", mu=mu, size=(size))
-    x_max = pt.max(x, axis=axis)
+    x_max = pt.min(x, axis=axis)
     x_max_value = pt.scalar("x_max_value")
     x_max_logprob = logp(x_max, x_max_value)
 
