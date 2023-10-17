@@ -240,9 +240,9 @@ def test_min_non_mul_elemwise_fails():
 )
 def test_min_discrete(mu, size, value, axis):
     x = pm.Poisson.dist(name="x", mu=mu, size=(size))
-    x_max = pt.min(x, axis=axis)
-    x_max_value = pt.scalar("x_max_value")
-    x_max_logprob = logp(x_max, x_max_value)
+    x_min = pt.min(x, axis=axis)
+    x_min_value = pt.scalar("x_max_value")
+    x_min_logprob = logp(x_min, x_min_value)
 
     test_value = value
 
@@ -252,6 +252,6 @@ def test_min_discrete(mu, size, value, axis):
 
     np.testing.assert_allclose(
         np.log(exp_rv - exp_rv_prev),
-        (x_max_logprob.eval({x_max_value: test_value})),
+        (x_min_logprob.eval({x_min_value: test_value})),
         rtol=1e-06,
     )
