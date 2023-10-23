@@ -109,6 +109,7 @@ def find_measurable_max(fgraph: FunctionGraph, node: Node) -> Optional[List[Tens
     if axis != base_var_dims:
         return None
 
+    # measurable_max = MeasurableMax(list(axis))
     # distinguish measurable discrete and continuous (because logprob is different)
     if base_var.owner.op.dtype.startswith("int"):
         measurable_max = MeasurableMaxDiscrete(list(axis))
@@ -146,7 +147,6 @@ def max_logprob(op, values, base_rv, **kwargs):
 @_logprob.register(MeasurableMaxDiscrete)
 def max_logprob_discrete(op, values, base_rv, **kwargs):
     r"""Compute the log-likelihood graph for the `Max` operation.
-
     The formula that we use here is :
     .. math::
         \ln(P_{(n)}(x)) = \ln(F(x)^n - F(x-1)^n)
@@ -250,12 +250,13 @@ def find_measurable_max_neg(fgraph: FunctionGraph, node: Node) -> Optional[List[
     return min_rv
 
 
-@node_rewriter(tracks=[Max])
+@node_rewriter(tracks=[pt.mul])
 def find_measurable_max_neg_rev(
     fgraph: FunctionGraph, node: Node
 ) -> Optional[List[TensorVariable]]:
     # Add suppport for both graph
     rv_map_feature = getattr(fgraph, "preserve_rv_mappings", None)
+    pytensor.dprint(fgraph)
 
     if rv_map_feature is None:
         return None  # pragma: no cover
