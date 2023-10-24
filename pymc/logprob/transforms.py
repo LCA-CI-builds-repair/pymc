@@ -40,7 +40,6 @@ from copy import copy
 from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
-import pytensor
 import pytensor.tensor as pt
 
 from pytensor import scan
@@ -673,11 +672,7 @@ def find_measurable_transforms(fgraph: FunctionGraph, node: Node) -> Optional[Li
 
     # Do not apply rewrite to discrete variables
     if measurable_input.type.dtype.startswith("int"):
-        # print("a")
-        # print(node.op)
-        # print(isinstance(node.op, Mul))
         if str(node.op) != "Mul" and str(node.op) != "Add":
-            # print("b")
             return None
 
     # Check that other inputs are not potentially measurable, in which case this rewrite
@@ -961,9 +956,6 @@ class ScaleTransform(RVTransform):
 
     def log_jac_det(self, value, *inputs):
         scale = self.transform_args_fn(*inputs)
-        # print("d")
-        pytensor.dprint(scale)
-        pytensor.dprint(value.shape)
         return -pt.log(pt.abs(pt.broadcast_to(scale, value.shape)))
 
 

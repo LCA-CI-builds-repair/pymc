@@ -36,7 +36,6 @@
 
 from typing import List, Optional
 
-import pytensor
 import pytensor.tensor as pt
 
 from pytensor.graph.basic import Node
@@ -49,8 +48,6 @@ from pytensor.tensor.exceptions import NotScalarConstantError
 from pytensor.tensor.math import Max
 from pytensor.tensor.random.op import RandomVariable
 from pytensor.tensor.variable import TensorVariable
-
-import pymc as pm
 
 from pymc.logprob.abstract import (
     MeasurableVariable,
@@ -109,7 +106,6 @@ def find_measurable_max(fgraph: FunctionGraph, node: Node) -> Optional[List[Tens
     if axis != base_var_dims:
         return None
 
-    # measurable_max = MeasurableMax(list(axis))
     # distinguish measurable discrete and continuous (because logprob is different)
     if base_var.owner.op.dtype.startswith("int"):
         measurable_max = MeasurableMaxDiscrete(list(axis))
@@ -147,6 +143,7 @@ def max_logprob(op, values, base_rv, **kwargs):
 @_logprob.register(MeasurableMaxDiscrete)
 def max_logprob_discrete(op, values, base_rv, **kwargs):
     r"""Compute the log-likelihood graph for the `Max` operation.
+
     The formula that we use here is :
     .. math::
         \ln(P_{(n)}(x)) = \ln(F(x)^n - F(x-1)^n)
@@ -180,7 +177,6 @@ MeasurableVariable.register(MeasurableMaxNegDiscrete)
 
 @node_rewriter(tracks=[Max])
 def find_measurable_max_neg(fgraph: FunctionGraph, node: Node) -> Optional[List[TensorVariable]]:
-    # Add suppport for both graph
     rv_map_feature = getattr(fgraph, "preserve_rv_mappings", None)
 
     if rv_map_feature is None:
@@ -193,12 +189,10 @@ def find_measurable_max_neg(fgraph: FunctionGraph, node: Node) -> Optional[List[
 
     if base_var.owner is None:
         return None
-    # pytensor.dprint(node)
-    # if not rv_map_feature.request_measurable(node.inputs):
-    #     print("rv_map_feature.request_measurable(node.inputs) returns false")
-    #     return None
-    # print("If accepted")
-    # pytensor.dprint(node)
+
+    if not rv_map_feature.request_measurable(node.inputs):
+        return None
+
     # Min is the Max of the negation of the same distribution. Hence, op must be Elemwise
     if not isinstance(base_var.owner.op, Elemwise):
         return None
@@ -215,13 +209,12 @@ def find_measurable_max_neg(fgraph: FunctionGraph, node: Node) -> Optional[List[
         return None
 
     base_rv = base_var.owner.inputs[0]
-    # print(base_rv)
 
     # Non-univariate distributions and non-RVs must be rejected
     if not (isinstance(base_rv.owner.op, RandomVariable) and base_rv.owner.op.ndim_supp == 0):
         return None
 
-    if not rv_map_feature.request_measurable([base_rv]):
+    if isinstance(base_rv.owner.op, RandomVariable) and base_rv.owner.op.dtype.startswith("int"):
         return None
 
     # univariate i.i.d. test which also rules out other distributions
@@ -235,28 +228,18 @@ def find_measurable_max_neg(fgraph: FunctionGraph, node: Node) -> Optional[List[
     if axis != base_var_dims:
         return None
 
-    # distinguish measurable discrete and continuous (because logprob is different)
-    if base_rv.owner.op.dtype.startswith("int"):
-        if isinstance(base_rv.owner.op, RandomVariable):
-            measurable_min = MeasurableMaxNegDiscrete(list(axis))
-        else:
-            return None
-    else:
-        measurable_min = MeasurableMaxNeg(list(axis))
-
+    measurable_min = MeasurableMaxNeg(list(axis))
     min_rv_node = measurable_min.make_node(base_var)
     min_rv = min_rv_node.outputs
 
     return min_rv
 
 
-@node_rewriter(tracks=[pt.mul])
-def find_measurable_max_neg_rev(
+@node_rewriter(tracks=[Max])
+def find_measurable_max_neg_discrete(
     fgraph: FunctionGraph, node: Node
 ) -> Optional[List[TensorVariable]]:
-    # Add suppport for both graph
     rv_map_feature = getattr(fgraph, "preserve_rv_mappings", None)
-    pytensor.dprint(fgraph)
 
     if rv_map_feature is None:
         return None  # pragma: no cover
@@ -268,12 +251,7 @@ def find_measurable_max_neg_rev(
 
     if base_var.owner is None:
         return None
-    # pytensor.dprint(node)
-    # if not rv_map_feature.request_measurable(node.inputs):
-    #     print("rv_map_feature.request_measurable(node.inputs) returns false")
-    #     return None
-    # print("If accepted")
-    pytensor.dprint(node)
+
     # Min is the Max of the negation of the same distribution. Hence, op must be Elemwise
     if not isinstance(base_var.owner.op, Elemwise):
         return None
@@ -290,41 +268,36 @@ def find_measurable_max_neg_rev(
         return None
 
     base_rv = base_var.owner.inputs[1]
-    # print(base_rv)
 
     # Non-univariate distributions and non-RVs must be rejected
     if not (isinstance(base_rv.owner.op, RandomVariable) and base_rv.owner.op.ndim_supp == 0):
         return None
-    # print("a")
+
     if not rv_map_feature.request_measurable([base_rv]):
         return None
-    # print("b")
+
     # univariate i.i.d. test which also rules out other distributions
     for params in base_rv.owner.inputs[3:]:
         if params.type.ndim != 0:
             return None
-    # print("c")
+
     # Check whether axis is supported or not
     axis = set(node.op.axis)
     base_var_dims = set(range(base_var.ndim))
     if axis != base_var_dims:
         return None
-    # print("d")
+
     # distinguish measurable discrete and continuous (because logprob is different)
     if base_rv.owner.op.dtype.startswith("int"):
-        # print("g")
         if isinstance(base_rv.owner.op, RandomVariable):
-            # print("h")
             measurable_min = MeasurableMaxNegDiscrete(list(axis))
         else:
             return None
     else:
         measurable_min = MeasurableMaxNeg(list(axis))
-    # print("e")
+
     min_rv_node = measurable_min.make_node(base_var)
     min_rv = min_rv_node.outputs
-    # print("f")
-    # print(min_rv)
     return min_rv
 
 
@@ -335,11 +308,12 @@ measurable_ir_rewrites_db.register(
     "min",
 )
 
+
 measurable_ir_rewrites_db.register(
-    "find_measurable_max_neg_rev",
-    find_measurable_max_neg_rev,
+    "find_measurable_max_neg_discrete",
+    find_measurable_max_neg_discrete,
     "basic",
-    "min",
+    "min_discrete",
 )
 
 
@@ -352,7 +326,7 @@ def max_neg_logprob(op, values, base_var, **kwargs):
     """
     (value,) = values
     base_rv = base_var.owner.inputs[0]
-    # print("in max neg")
+
     logprob = _logprob_helper(base_rv, -value)
     logcdf = _logcdf_helper(base_rv, -value)
 
@@ -374,9 +348,9 @@ def maxneg_logprob_discrete(op, values, base_rv, **kwargs):
     (value,) = values
     logcdf = _logcdf_helper(base_rv, value)
     logcdf_prev = _logcdf_helper(base_rv, value - 1)
-    # print("in discrete max neg")
+
     [n] = constant_fold([base_rv.size])
 
-    logprob = pm.logdiffexp(n * (1 - logcdf), n * (1 - logcdf_prev))
+    logprob = logdiffexp(n * logcdf_prev, n * logcdf)
 
     return logprob
