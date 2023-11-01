@@ -263,14 +263,14 @@ def test_max_discrete(mu, size, value, axis):
 def test_min_discrete(mu, size, value, axis):
     x = pm.Poisson.dist(name="x", mu=mu, size=(size))
     x_min = pt.min(x, axis=axis)
-    x_min_value = pt.vector("x_min_value")
+    x_min_value = pt.scalar("x_min_value")
     x_min_logprob = logp(x_min, x_min_value)
 
-    test_value = [value]
+    test_value = value
 
     n = size
-    exp_rv = sp.poisson(mu).cdf(test_value[0]) ** n
-    exp_rv_prev = sp.poisson(mu).cdf(test_value[0] - 1) ** n
+    exp_rv = (1 - sp.poisson(mu).cdf(test_value)) ** n
+    exp_rv_prev = (1 - sp.poisson(mu).cdf(test_value - 1)) ** n
 
     np.testing.assert_allclose(
         (np.log(exp_rv_prev - exp_rv)),

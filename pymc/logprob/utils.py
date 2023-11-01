@@ -60,6 +60,9 @@ from pytensor.graph.fg import FunctionGraph
 from pytensor.graph.op import HasInnerGraph
 from pytensor.link.c.type import CType
 from pytensor.raise_op import CheckAndRaise
+from pytensor.scalar.basic import Mul
+from pytensor.tensor.basic import get_underlying_scalar_constant_value
+from pytensor.tensor.exceptions import NotScalarConstantError
 from pytensor.tensor.random.op import RandomVariable
 from pytensor.tensor.variable import TensorVariable
 
@@ -311,3 +314,18 @@ def find_rvs_in_graph(vars: Union[Variable, Sequence[Variable]]) -> Set[Variable
         for node in walk(makeiter(vars), expand, False)
         if node.owner and isinstance(node.owner.op, (RandomVariable, MeasurableVariable))
     }
+
+
+def check_negation(scalar_op, scalar_constant):
+    """Make sure that the base variable invovles a multiplication with -1"""
+
+    try:
+        if not (
+            isinstance(scalar_op, Mul)
+            and get_underlying_scalar_constant_value(scalar_constant) == -1
+        ):
+            return False
+    except NotScalarConstantError:
+        return False
+
+    return True

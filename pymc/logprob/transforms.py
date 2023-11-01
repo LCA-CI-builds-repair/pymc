@@ -127,7 +127,7 @@ from pymc.logprob.rewriting import (
     cleanup_ir_rewrites_db,
     measurable_ir_rewrites_db,
 )
-from pymc.logprob.utils import CheckParameterValue, check_potential_measurability
+from pymc.logprob.utils import CheckParameterValue, check_negation, check_potential_measurability
 
 
 class TransformedVariable(Op):
@@ -672,7 +672,9 @@ def find_measurable_transforms(fgraph: FunctionGraph, node: Node) -> Optional[Li
 
     # Do not apply rewrite to discrete variables
     if measurable_input.type.dtype.startswith("int"):
-        if str(node.op) != "Mul" and str(node.op) != "Add":
+        if check_negation(node.op.scalar_op, node.inputs[0]) is False and not isinstance(
+            node.op.scalar_op, Add
+        ):
             return None
 
     # Check that other inputs are not potentially measurable, in which case this rewrite
