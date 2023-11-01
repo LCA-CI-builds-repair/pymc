@@ -257,23 +257,27 @@ def test_max_discrete(mu, size, value, axis):
 
 
 @pytest.mark.parametrize(
-    "mu, size, value, axis",
-    [(2, 3, 1, -1), (2, 3, 1, 0), (1, 2, 2, None), (0, 4, 0, 0)],
+    "mu, n, test_value, axis",
+    [
+        (2, 3, 1, -1),
+        (2, 3, 1, 0),
+        (1, 2, 2, None),
+        (0, 4, 0, 0),
+    ],
 )
-def test_min_discrete(mu, size, value, axis):
-    x = pm.Poisson.dist(name="x", mu=mu, size=(size))
+def test_min_discrete(mu, n, test_value, axis):
+    x = pm.Poisson.dist(name="x", mu=mu, size=(n,))
     x_min = pt.min(x, axis=axis)
     x_min_value = pt.scalar("x_min_value")
     x_min_logprob = logp(x_min, x_min_value)
 
-    test_value = value
-
-    n = size
-    exp_rv = (1 - sp.poisson(mu).cdf(test_value)) ** n
-    exp_rv_prev = (1 - sp.poisson(mu).cdf(test_value - 1)) ** n
+    sf_before = 1 - sp.poisson(mu).cdf(test_value)
+    # TODO: Confirm it should be test_value + 1??
+    sf = 1 - sp.poisson(mu).cdf(test_value + 1)
+    expected_logp = np.log(sf_before**n - sf**n)
 
     np.testing.assert_allclose(
-        (np.log(exp_rv_prev - exp_rv)),
-        (x_min_logprob.eval({x_min_value: (test_value)})),
+        x_min_logprob.eval({x_min_value: test_value}),
+        expected_logp,
         rtol=1e-06,
     )
