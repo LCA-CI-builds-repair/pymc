@@ -14,6 +14,7 @@
 
 
 from typing import Union
+
 import numpy as np
 import pytensor
 import pytensor.tensor as pt
