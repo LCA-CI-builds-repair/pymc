@@ -619,17 +619,26 @@ def test_transform_univariate_dist_logp_shape():
     assert m.logp(jacobian=True, sum=False)[0].type.shape == (4,)
 
 
-def test_univariate_transform_multivariate_dist_raises():
+@pytest.mark.parametrize(
+    argnames="jacobian", argvalues=[True, False], ids=["jacobian", "no_jacobian"]
+)
+def test_univariate_transform_multivariate_dist(jacobian):
     with pm.Model() as m:
         pm.Dirichlet("x", [1, 1, 1], transform=tr.log)
+    assert m.logp(jacobian=jacobian).type.shape == ()
 
-    for jacobian in (True, False):
-        with pytest.raises(
-            NotImplementedError,
-            match="Univariate transform LogTransform cannot be applied to multivariate",
-        ):
-            m.logp(jacobian=jacobian)
 
+@pytest.mark.parametrize(
+    argnames="jacobian", argvalues=[True, False], ids=["jacobian", "no_jacobian"]
+)
+@pytest.mark.parametrize(argnames="n", argvalues=[2, 3], ids=["n=2", "n=3"])
+def test_lkjcorr_default_transform(jacobian, n):
+    with pm.Model() as m:
+        pm.LKJCorr("Ω_triu", eta=1, n=n, transform=None)
+    assert m.compile_logp(jacobian=jacobian, sum=False)(m.initial_point())[0] == m.compile_logp(
+        jacobian=jacobian, sum=True
+    )(m.initial_point())
+    assert m.rvs_to_transforms[m["Ω_triu"]] is None
 
 def test_invalid_jacobian_broadcast_raises():
     class BuggyTransform(Transform):
