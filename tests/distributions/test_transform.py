@@ -13,19 +13,16 @@
 #   limitations under the License.
 
 
-from typing import Union
 
 import numpy as np
 import pytensor
 import pytensor.tensor as pt
 import pytest
-
 from numpy.testing import assert_allclose, assert_array_equal
 from pytensor.tensor.variable import TensorConstant
 
 import pymc as pm
 import pymc.distributions.transforms as tr
-
 from pymc.logprob.basic import transformed_conditional_logp
 from pymc.logprob.transforms import Transform
 from pymc.pytensorf import floatX, jacobian
@@ -622,9 +619,13 @@ def test_transform_univariate_dist_logp_shape():
 @pytest.mark.parametrize(
     argnames="jacobian", argvalues=[True, False], ids=["jacobian", "no_jacobian"]
 )
-def test_univariate_transform_multivariate_dist(jacobian):
+@pytest.mark.parametrize(argnames="shape", argvalues=[1, 3], ids=["shape=1", "shape=3"])
+def test_univariate_transform_multivariate_dist(jacobian, shape):
     with pm.Model() as m:
-        pm.Dirichlet("x", [1, 1, 1], transform=tr.log)
+        x = pm.Dirichlet("x", [1, 1, 1], shape=shape, transform=tr.log)
+    test_value = floatX(np.ones((4, shape)))
+    assert np.all(pm.logp(x, pt.log(test_value)).eval() < np.inf)
+    assert np.all(tr.LogTransform().log_jac_det(test_value).sum(-1) < np.inf)
     assert m.logp(jacobian=jacobian).type.shape == ()
 
 
