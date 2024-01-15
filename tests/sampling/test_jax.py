@@ -471,3 +471,10 @@ def test_sample_partially_observed():
     assert idata.observed_data["x_observed"].shape == (2,)
     assert idata.posterior["x_unobserved"].shape == (1, 10, 1)
     assert idata.posterior["x"].shape == (1, 10, 3)
+
+
+@pytest.mark.parametrize("method", ["advi", "fullrank_advi"])
+def test_vi_sampling_jax(method):
+    with pm.Model() as model:
+        x = pm.Normal("x")
+        pm.fit(10, method=method, fn_kwargs=dict(mode="JAX"))
