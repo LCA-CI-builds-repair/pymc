@@ -270,11 +270,12 @@ def max_neg_logprob_discrete(op, values, base_rv, **kwargs):
         \ln(P_{(n)}(x)) = \ln((1 - F(x - 1))^n - (1 - F(x))^n)
     where $P_{(n)}(x)$ represents the p.m.f of the maximum statistic and $F(x)$ represents the c.d.f of the i.i.d. variables.
     """
+
     (value,) = values
 
     # The cdf of a negative variable is the survival at the negated value
     logcdf = pt.log1mexp(_logcdf_helper(base_rv, -value))
-    logcdf_prev = pt.log1mexp(_logcdf_helper(base_rv, -(value - 1)))
+    logcdf_prev = pt.log1mexp(_logcdf_helper(base_rv, -(value + 1)))
 
     [n] = constant_fold([base_rv.size])
 
@@ -282,7 +283,7 @@ def max_neg_logprob_discrete(op, values, base_rv, **kwargs):
     logprob = pt.where(
         pt.and_(pt.eq(logcdf, -pt.inf), pt.eq(logcdf_prev, -pt.inf)),
         -pt.inf,
-        logdiffexp(n * logcdf, n * logcdf_prev),
+        logdiffexp(n * logcdf_prev, n * logcdf),
     )
 
     return logprob

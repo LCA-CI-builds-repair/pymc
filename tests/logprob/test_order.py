@@ -37,6 +37,7 @@
 import re
 
 import numpy as np
+import pytensor
 import pytensor.tensor as pt
 import pytest
 import scipy.stats as sp
@@ -258,12 +259,7 @@ def test_max_discrete(mu, size, value, axis):
 
 @pytest.mark.parametrize(
     "mu, n, test_value, axis",
-    [
-        (2, 3, 1, -1),
-        (2, 3, 1, 0),
-        (1, 2, 2, None),
-        (0, 4, 0, 0),
-    ],
+    [(2, 3, 1, -1), (2, 3, 1, 0), (1, 2, 2, None), (0, 4, 0, 0)],
 )
 def test_min_discrete(mu, n, test_value, axis):
     x = pm.Poisson.dist(name="x", mu=mu, size=(n,))
@@ -271,9 +267,9 @@ def test_min_discrete(mu, n, test_value, axis):
     x_min_value = pt.scalar("x_min_value")
     x_min_logprob = logp(x_min, x_min_value)
 
-    sf_before = 1 - sp.poisson(mu).cdf(test_value)
-    # TODO: Confirm it should be test_value + 1??
-    sf = 1 - sp.poisson(mu).cdf(test_value + 1)
+    sf_before = 1 - sp.poisson(mu).cdf(test_value - 1)
+    sf = 1 - sp.poisson(mu).cdf(test_value)
+
     expected_logp = np.log(sf_before**n - sf**n)
 
     np.testing.assert_allclose(
@@ -281,3 +277,19 @@ def test_min_discrete(mu, n, test_value, axis):
         expected_logp,
         rtol=1e-06,
     )
+
+
+def test_min_max_bernoulli():
+    p = 0.7
+    q = 1 - p
+    n = 3
+    x = pm.Bernoulli.dist(p=p, shape=(n,))
+    value = pt.scalar("value", dtype=int)
+
+    max_logp_fn = pytensor.function([value], pm.logp(pt.max(x), value))
+    np.testing.assert_allclose(max_logp_fn(0), np.log(q**n))
+    np.testing.assert_allclose(max_logp_fn(1), np.log(1 - q**n))
+
+    min_logp_fn = pytensor.function([value], pm.logp(pt.min(x), value))
+    np.testing.assert_allclose(min_logp_fn(1), np.log(p**n))
+    np.testing.assert_allclose(min_logp_fn(0), np.log(1 - p**n))

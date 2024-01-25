@@ -47,6 +47,8 @@ from pytensor.graph.basic import equal_computations
 from pytensor.graph.fg import FunctionGraph
 from pytensor.scan import scan
 
+import pymc as pm
+
 from pymc.distributions.continuous import Cauchy
 from pymc.distributions.transforms import _default_transform, log, logodds
 from pymc.logprob.abstract import MeasurableVariable, _logprob
@@ -1262,3 +1264,14 @@ def test_invalid_broadcasted_transform_rv_fails():
     # This logp derivation should fail or count only once the values that are broadcasted
     logprob = logp(y_rv, y_vv)
     assert logprob.eval({y_vv: [0, 0, 0, 0], loc: [0, 0, 0, 0]}).shape == ()
+
+
+def test_discrete_measurable_cdf_icdf():
+    p = 0.7
+    rv = -pm.Bernoulli.dist(p=p)
+
+    # A negated Bernoulli has pmf {p if x == -1; 1-p if x == 0; 0 otherwise}
+    assert pm.logp(rv, -2).eval() == -np.inf  # Correct
+    assert pm.logp(rv, -1).eval() == np.log(p)  # Correct
+    assert pm.logp(rv, 0).eval() == np.log(1 - p)  # Correct
+    assert pm.logp(rv, 1).eval() == -np.inf  # Correct

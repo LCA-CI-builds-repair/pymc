@@ -127,7 +127,11 @@ from pymc.logprob.rewriting import (
     cleanup_ir_rewrites_db,
     measurable_ir_rewrites_db,
 )
-from pymc.logprob.utils import CheckParameterValue, check_negation, check_potential_measurability
+from pymc.logprob.utils import (
+    CheckParameterValue,
+    check_negation,
+    check_potential_measurability,
+)
 
 
 class TransformedVariable(Op):
@@ -469,6 +473,10 @@ def measurable_transform_logcdf(op: MeasurableTransform, value, *inputs, **kwarg
     other_inputs = list(inputs)
     measurable_input = other_inputs.pop(op.measurable_input_idx)
 
+    # Do not apply rewrite to discrete variables
+    if measurable_input.type.dtype.startswith("int"):
+        return NotImplementedError
+
     backward_value = op.transform_elemwise.backward(value, *other_inputs)
 
     # Fail if transformation is not injective
@@ -512,6 +520,10 @@ def measurable_transform_icdf(op: MeasurableTransform, value, *inputs, **kwargs)
     """Compute the inverse CDF graph for a `MeasurabeTransform`."""
     other_inputs = list(inputs)
     measurable_input = other_inputs.pop(op.measurable_input_idx)
+
+    # Do not apply rewrite to discrete variables
+    if measurable_input.type.dtype.startswith("int"):
+        return NotImplementedError
 
     if isinstance(op.scalar_op, MONOTONICALLY_INCREASING_OPS):
         pass
@@ -672,8 +684,8 @@ def find_measurable_transforms(fgraph: FunctionGraph, node: Node) -> Optional[Li
 
     # Do not apply rewrite to discrete variables
     if measurable_input.type.dtype.startswith("int"):
-        if check_negation(node.op.scalar_op, node.inputs[0]) is False and not isinstance(
-            node.op.scalar_op, Add
+        if not (
+            check_negation(node.op.scalar_op, node.inputs[0]) or isinstance(node.op.scalar_op, Add)
         ):
             return None
 
