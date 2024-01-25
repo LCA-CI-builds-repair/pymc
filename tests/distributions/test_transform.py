@@ -640,6 +640,7 @@ def test_lkjcorr_default_transform(jacobian, n):
     )(m.initial_point())
     assert m.rvs_to_transforms[m["Ω_triu"]] is None
 
+
 def test_invalid_jacobian_broadcast_raises():
     class BuggyTransform(Transform):
         name = "buggy"
