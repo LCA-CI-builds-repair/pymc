@@ -628,7 +628,7 @@ def test_univariate_transform_multivariate_dist(jacobian, shape):
         x = pm.Dirichlet("x", [1, 1, 1], shape=shape, transform=tr.log)
     test_value = floatX(np.ones((4, shape)))
     assert np.all(pm.logp(x, pt.log(test_value)).eval() < np.inf)
-    assert np.all(tr.LogTransform().log_jac_det(test_value).sum(-1)) 
+    assert np.all(tr.LogTransform().log_jac_det(test_value).sum(-1))
     assert m.logp(jacobian=jacobian).type.shape == ()
 
 
