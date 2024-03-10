@@ -115,6 +115,254 @@ class Binomial(Discrete):
     rv_op = binomial
 
     @classmethod
+    def group_for_short_name(cls, name):
+        if name.lower() not in cls.__name_registry:
+            raise KeyError(
+                "No such group: {!r}, "
+                "only the following are supported\n\n{}".format(name, cls.__name_registry)
+            )
+
+
+class Group(WithMemoization):
+    """Base class for PyMC groups.
+
+    Parameters
+    ----------
+    name : str
+        The name of the group.
+    rv_space : RV_space
+        The shared RV space for the group.
+    """
+
+    def __init__(self, name, rv_space):
+        self.name = name
+        self.rv_space = rv_space
+
+    def __repr__(self):
+        return "{}(name={}, rv_space={})".format(type(self).__name__, self.name, self.rv_space)
+
+    def __str__(self):
+        return self.__repr__()
+
+    def __hash__(self):
+        return hash(self.name)
+
+    def __eq__(self, other):
+        return isinstance(other, type(self)) and self.name == other.name
+
+    def _repr_html_(self):
+        return "<p>{}</p>".format(self)
+
+    def __getitem__(self, item):
+        return self.rv_space[item]
+
+    def get_value(self, **kwargs):
+        """Get the value of the group.
+
+        Parameters
+        ----------
+        **kwargs
+            Named arguments to pass to pytest.approx.
+
+        Returns
+        -------
+        value
+            The value of the group.
+        """
+        return self.rv_space.get_value(**kwargs)
+
+    def get_values(self, size=None):
+        """Get the values of the group.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of samples to return.
+
+        Returns
+        -------
+        values
+            The values of the group.
+        """
+        return self.rv_space.get_values(size)
+
+    def reset(self, value=None):
+        """Reset the group.
+
+        Parameters
+        ----------
+        value : any, optional
+            The value to reset the group to.
+            If None, the value is reset to the default.
+        """
+        self.rv_space.reset(value=value)
+
+    def observe(self, value, obs_data=None, **kwargs):
+        """Observe the group.
+
+        Parameters
+        ----------
+        value : any
+            The value to observe.
+
+        obs_data : ObsAr, optional
+            An ObsAr container to store the observation. If None,
+            a new ObsAr container is created.
+
+        **kwargs
+            Additional keyword arguments to pass to ObsAr.
+
+        Returns
+        -------
+        obs_data
+            The observed data.
+        """
+        return self.rv_space.observe(value, obs_data=obs_data, **kwargs)
+
+    def reset_values(self, value=None):
+        raise NotImplementedError(
+            "reset_values not implemented in {}".format(self.__class__)
+        )
+
+    def sample(self, size=None, chain_id=None, tune=True, **kwargs):
+        """Sample from the group.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of samples to return.
+
+        chain_id : int, optional
+            The id of the chain to sample from.
+
+        tune : bool, optional
+            Whether to tune the sampler.
+
+        **kwargs
+            Additional keyword arguments to pass to the sampler.
+
+        Returns
+        -------
+        samples
+            The sampled values.
+        """
+        return self.rv_space.sample(size=size, chain_id=chain_id, tune=tune, **kwargs)
+
+    def reconstruct_sample(self, samples):
+        """Reconstruct the samples from a sample path.
+
+        Parameters
+        ----------
+        samples
+            The sample path.
+
+        Returns
+        -------
+        reconstructed_samples
+            The reconstructed samples.
+        """
+        return self.rv_space.reconstruct_sample(samples)
+
+    def get_dist(self, size=None):
+        """Get the distribution of the group.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of samples to return.
+
+        Returns
+        -------
+        dist
+            The distribution of the group.
+        """
+        return self.rv_space.distribution(size=size)
+
+    def to_dist(self, size=None):
+        """Convert the group to a distribution.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of samples to return.
+
+        Returns
+        -------
+        dist
+            The converted distribution.
+        """
+        return self.rv_space.to_dist(size=size)
+
+    def iter_values(self, size=None):
+        """Iterate over the values of the group.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of samples to generate.
+
+        Yields
+        -------
+        value
+            The next value.
+        """
+        return self.rv_space.iter_values(size=size)
+
+    def iter_samples(self, size=None, chain_id=None, tune=True, **kwargs):
+        """Iterate over the samples of the group.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of samples to generate.
+
+        chain_id : int, optional
+            The id of the chain to sample from.
+
+        tune : bool, optional
+            Whether to tune the sampler.
+
+        **kwargs
+            Additional keyword arguments to pass to the sampler.
+
+        Yields
+        -------
+        sample
+            The next sample.
+        """
+        return self.rv_space.iter_samples(
+            size=size, chain_id=chain_id, tune=tune, **kwargs
+        )
+
+    def iter_dist(self, size=None):
+        """Iterate over the distribution of the group.
+
+        Parameters
+        ----------
+        size : int, optional
+            The number of samples to generate.
+
+        Yields
+        -------
+        dist
+            The next distribution.
+        """
+        return self.rv_space.iter_dist(size=size)
+
+    def iter_reconstructed_samples(self, samples):
+        """Iterate over the reconstructed samples of the group.
+
+        Parameters
+        ----------
+        samples
+            The sample path.
+
+        Yields
+        -------
+        reconstructed_sample
+            The next reconstructed sample.
+        """
+        return self.rv_space.iter_reconstructed_samples(samples)
     def dist(cls, n, p=None, logit_p=None, *args, **kwargs):
         if p is not None and logit_p is not None:
             raise ValueError("Incompatible parametrization. Can't specify both p and logit_p.")

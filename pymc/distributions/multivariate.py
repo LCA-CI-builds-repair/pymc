@@ -232,12 +232,95 @@ class MvNormal(Continuous):
         sd_dist = pm.Exponential.dist(1.0, shape=3)
         chol, _, _ = pm.LKJCholeskyCov('chol_cov', n=3, eta=2,
             sd_dist=sd_dist, compute_corr=True)
-        vals_raw = pm.Normal('vals_raw', mu=0, sigma=1, shape=(5, 3))
-        vals = pm.Deterministic('vals', pt.dot(chol, vals_raw.T).T)
-    """
-    rv_op = multivariate_normal
+import aesara.tensor as at
+import aesara.tensor.random
+from aesara.tensor.random.op import RandomVariable
+from pymc.distributions. distribution import Distribution
 
-    @classmethod
+
+class Multivariate(Distribution):
+    """Multivariate distribution base class.
+
+    Parameters
+    ----------
+    rv_op : aesara.tensor.random.Op
+        The random variable operator.
+
+    dims : int
+        The number of dimensions.
+
+    shape : tuple, optional
+        The shape of the variables.
+
+    dtype : dtype, optional
+        The dtype of the variables.
+
+    rvs : RV_shared_like, optional
+        The random variable shared variable.
+    """
+
+    def __init__(
+        self, rv_op, dims, shape=None, dtype=None, rvs=None, *args, **kwargs
+    ):
+        if shape is not None:
+            shape = tuple(shape)
+        if isinstance(shape, int):
+            shape = (shape,)
+        elif shape is None:
+            shape = ()
+
+        if rvs is None:
+            rvs = at.shared(
+                aesara.tensor.zeros(
+                    shape + (dims,), dtype=dtype or at.config.floatX
+                ),
+                self.name + "_rv",
+            )
+
+        super().__init__(
+            rv_op,
+            shape=shape,
+            dtype=dtype,
+            rvs=rvs,
+            *args,
+            **kwargs
+        )
+
+        # create a random variable for the variables
+        self.rv = RandomVariable(rv_op, rvs, self.shape[:-1])
+
+        # expose the random variable as a distribution
+        self.dist = self.rv.dist
+        self.owner = self.rv.owner
+        self.dists = [self.dist]
+
+    @property
+    def ndim(self):
+        """The number of dimensions."""
+        return self.dims + 1
+
+    def __repr__(self):
+        return "Multivariate({}, {}, {}, {})".format(
+            super().__repr__(), self.dims, self.shape, self.dtype
+        )
+
+    def get_value(self, **kwargs):
+        return self.rv.get_value(**kwargs)
+
+    def get_values(self, size=None):
+        return self.rv.get_values(size)
+
+    def reset(self, value=None):
+        self.rv.reset(value=value)
+
+    def sample(self, size=None, chain_id=None, tune=True, **kwargs):
+        return self.rv.sample(size=size, chain_id=chain_id, tune=tune, **kwargs)
+
+    def iter_samples(self, size=None, chain_id=None, tune=True, **kwargs):
+        yield from self.rv.iter_samples(size=size, chain_id=chain_id, tune=tune, **kwargs)
+
+    def reconstruct_sample(self, samples):
+        return self.rv.reconstruct_sample(samples)
     def dist(cls, mu=0, cov=None, *, tau=None, chol=None, lower=True, **kwargs):
         mu = pt.as_tensor_variable(mu)
         cov = quaddist_matrix(cov, chol, tau, lower)
