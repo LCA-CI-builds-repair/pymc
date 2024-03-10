@@ -463,6 +463,7 @@ class Operator:
             )
 
     inputs = property(lambda self: self.approx.inputs)
+
     logp = property(lambda self: self.approx.logp)
     varlogp = property(lambda self: self.approx.varlogp)
     datalogp = property(lambda self: self.approx.datalogp)

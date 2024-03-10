@@ -49,6 +49,7 @@ class CpuLeapfrogIntegrator:
             )
 
     def compute_state(self, q: RaveledVars, p: RaveledVars):
+
         """Compute Hamiltonian functions using a position and momentum."""
         if q.data.dtype != self._dtype or p.data.dtype != self._dtype:
             raise ValueError("Invalid dtype. Must be %s" % self._dtype)

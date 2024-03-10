@@ -241,23 +241,24 @@ class Inference:
         except (KeyboardInterrupt, StopIteration) as e:  # pragma: no cover
             # do not print log on the same line
             scores = scores[:i]
-            if isinstance(e, StopIteration):
-                logger.info(str(e))
-            if n < 10:
-                logger.info(
-                    "Interrupted at {:,d} [{:.0f}%]: Loss = {:,.5g}".format(
-                        i, 100 * i // n, scores[i]
-                    )
+        if isinstance(e, StopIteration):
+            logger.info(str(e))
+        if n < 10:
+            logger.info(
+                "Interrupted at {:,d} [{:.0f}%]: Loss = {:,.5g}".format(
+                    i, 100 * i // n, scores[i]
                 )
-            else:
-                avg_loss = _infmean(scores[min(0, i - 1000) : i + 1])
-                logger.info(
-                    "Interrupted at {:,d} [{:.0f}%]: Average Loss = {:,.5g}".format(
-                        i, 100 * i // n, avg_loss
-                    )
-                )
+            )
         else:
-            if n == 0:
+            avg_loss = _infmean(scores[min(0, i - 1000) : i + 1])
+            logger.info(
+                "Interrupted at {:,d} [{:.0f}%]: Average Loss = {:,.5g}".format(
+                    i, 100 * i // n, avg_loss
+                )
+            )
+    else:
+        if n == 0:
+
                 logger.info("Initialization only")
             elif n < 10:
                 logger.info(f"Finished [100%]: Loss = {scores[-1]:,.5g}")

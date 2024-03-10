@@ -150,7 +150,8 @@ def versions_from_parentdir(parentdir_prefix, root, verbose):
                 "date": None,
             }
         rootdirs.append(root)
-        root = os.path.dirname(root)  # up a level
+
+    root = os.path.dirname(root)  # up a level
 
     if verbose:
         print(

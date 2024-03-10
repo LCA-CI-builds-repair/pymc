@@ -139,6 +139,7 @@ def warn_population_size(
             UserWarning,
             stacklevel=2,
         )
+
     return
 
 
