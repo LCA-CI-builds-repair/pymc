@@ -115,6 +115,13 @@ class Binomial(Discrete):
     rv_op = binomial
 
     @classmethod
+    def group_for_short_name(cls, name):
+        if name.lower() not in cls.__name_registry:
+            raise KeyError(
+                "No such group: {!r}, "
+                "only the following are supported\n\n{}".format(name, cls.__name_registry)
+            )
+```
     def dist(cls, n, p=None, logit_p=None, *args, **kwargs):
         if p is not None and logit_p is not None:
             raise ValueError("Incompatible parametrization. Can't specify both p and logit_p.")

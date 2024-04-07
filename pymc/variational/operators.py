@@ -127,8 +127,6 @@ class KSD(Operator):
     References
     ----------
     -   Qiang Liu, Dilin Wang (2016)
-        Stein Variational Gradient Descent: A General Purpose Bayesian Inference Algorithm
-        arXiv:1608.04471
     """
     has_test_function = True
     returns_loss = False
