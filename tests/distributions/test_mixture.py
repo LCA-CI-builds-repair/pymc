@@ -18,6 +18,8 @@ import warnings
 import numpy as np
 import pytensor
 import pytest
+
+import pymc.distributions.transforms
 import scipy.stats as st
 
 from numpy.testing import assert_allclose
