@@ -138,6 +138,22 @@ class Metropolis(ArrayStepShared):
     ):
         """Create an instance of a Metropolis stepper
 
+    Parameters
+    ----------
+    tune_interval : int, optional
+        The interval at which we tune the scaling factor. The default is 100.
+    model : pymc.Model, optional
+        The model for which to create a stepper. If not provided, one will be
+        created from the supplied model.
+    mode : str, optional
+        The sampling mode, either ``'random'`` or ``'fast'``. The default is ``None``,
+        which means that the mode will be automatically determined.
+    *args
+        Positional arguments passed to the model constructor.
+    **kwargs
+        Keyword arguments passed to the model constructor.
+    """
+    ...
         Parameters
         ----------
         vars: list

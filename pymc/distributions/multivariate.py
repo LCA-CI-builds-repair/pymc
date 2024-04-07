@@ -238,6 +238,13 @@ class MvNormal(Continuous):
     rv_op = multivariate_normal
 
     @classmethod
+    def group_for_short_name(cls, name):
+        if name.lower() not in cls.__name_registry:
+            raise KeyError(
+                "No such group: {!r}, "
+                "only the following are supported\n\n{}".format(name, cls.__name_registry)
+            )
+        return cls.__name_registry[name.lower()]
     def dist(cls, mu=0, cov=None, *, tau=None, chol=None, lower=True, **kwargs):
         mu = pt.as_tensor_variable(mu)
         cov = quaddist_matrix(cov, chol, tau, lower)

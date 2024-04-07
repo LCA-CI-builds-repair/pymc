@@ -144,6 +144,15 @@ class ContextMeta(type):
         """Add ``__enter__`` and ``__exit__`` methods to the new class automatically."""
         if context_class is not None:
             cls._context_class = context_class
+
+        cls.groups = {}
+
+        for parent in bases:
+            if isinstance(parent, Base):
+                cls.groups.update(parent.groups)
+
+    def __repr__(cls):
+        return f"<Group {cls.__name__.lower()}>"
         super().__init__(name, bases, nmspc)
 
     def get_context(cls, error_if_none=True, allow_block_model_access=False) -> Optional[T]:
