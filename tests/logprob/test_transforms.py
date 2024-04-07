@@ -701,7 +701,7 @@ def test_negated_discrete_rv_transform():
     assert logp_fn(-2) == -np.inf
     np.testing.assert_allclose(logp_fn(-1),  np.log(p))
     np.testing.assert_allclose(logp_fn(0), np.log(1 - p))
-    assert logp_fn(1) == -np.inf
+    np.testing.assert_allclose(logp_fn(1), -np.inf)
 
     # Logcdf and icdf not supported yet
     for func in (logcdf, icdf):
