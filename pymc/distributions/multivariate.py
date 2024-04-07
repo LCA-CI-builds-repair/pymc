@@ -27,6 +27,7 @@ import scipy
 
 from pytensor.graph.basic import Apply, Constant, Variable
 from pytensor.graph.op import Op
+```python
 from pytensor.raise_op import Assert
 from pytensor.sparse.basic import sp_sum
 from pytensor.tensor import TensorConstant, gammaln, sigmoid
@@ -36,6 +37,7 @@ from pytensor.tensor.linalg import solve_triangular, trace
 from pytensor.tensor.random.basic import dirichlet, multinomial, multivariate_normal
 from pytensor.tensor.random.op import RandomVariable
 from pytensor.tensor.random.utils import (
+```
     broadcast_params,
     supp_shape_from_ref_param_shape,
 )
