@@ -16,7 +16,7 @@ import warnings
 from functools import singledispatch
 
 import numpy as np
-import pytensor.tensor as pt
+import pymc as pm
 
 # ignore mypy error because it somehow considers that
 # "numpy.core.numeric has no attribute normalize_axis_tuple"

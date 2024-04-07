@@ -27,15 +27,35 @@ import scipy
 
 from pytensor.graph.basic import Apply, Constant, Variable
 from pytensor.graph.op import Op
-from pytensor.raise_op import Assert
-from pytensor.sparse.basic import sp_sum
-from pytensor.tensor import TensorConstant, gammaln, sigmoid
-from pytensor.tensor.linalg import cholesky, det, eigh
-from pytensor.tensor.linalg import inv as matrix_inverse
-from pytensor.tensor.linalg import solve_triangular, trace
-from pytensor.tensor.random.basic import dirichlet, multinomial, multivariate_normal
-from pytensor.tensor.random.op import RandomVariable
-from pytensor.tensor.random.utils import (
+from pymc.tensor import Assert
+from pymc.sparse.basic import sp_sum
+from pymc.tensor import TensorConstant, gammaln, sigmoid
+from pymc.tensor.linalg import cholesky, det, eigh
+from pymc.tensor.linalg import inv as matrix_inverse
+from pymc.tensor.linalg import solve_triangular, trace
+from pymc.tensor.random.basic import dirichlet, multinomial, multivariate_normal
+from pymc.tensor.random.op import RandomVariable
+from pymc.tensor.random.utils import (
+    atleast_2d,
+    both_true,
+    check_less_int,
+    draw_values,
+    expand_packed_triangular,
+    floatX,
+    floatX_array,
+    get_store,
+    join_nonshared_inputs,
+    logp_normal,
+    logp_sum,
+    repetition_ndarray,
+    rho2sd,
+    sd2rho,
+    theano_dict,
+    unstick,
+    upper_triangle,
+    wrap_population_sd,
+    wrap_population_theta,
+)
     broadcast_params,
     supp_shape_from_ref_param_shape,
 )

@@ -18,7 +18,7 @@
 import os
 from pathlib import Path
 
-import pymc
+import pymc as pm
 
 # -- General configuration ------------------------------------------------
 

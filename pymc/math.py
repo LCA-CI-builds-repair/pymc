@@ -25,12 +25,58 @@ import pytensor.tensor.slinalg
 import scipy as sp
 import scipy.sparse
 
-from pytensor.graph.basic import Apply
-from pytensor.graph.op import Op
+from pymc.graph.basic import Apply
+from pymc.graph.op import Op
 
-from pytensor.tensor import (
+from pymc.tensor import (
     abs,
     and_,
+    arange,
+    arcsin,
+    bitwise_or,
+    bitwise_xor,
+    ceil,
+    clip,
+    cos,
+    erf,
+    exp,
+    expm1,
+    fact,
+    floor,
+    gcd,
+    isnan,
+    log,
+    logaddexp,
+    logaddexp2,
+    log1p,
+    log2,
+    logaddexp,
+    logaddexp2,
+    logdet,
+    logdiffexp,
+    logdist,
+    logit,
+    matrix_inverse,
+    minimum,
+    maximum,
+    mod,
+    neg,
+    not_,
+    or_,
+    power,
+    prod,
+    reciprocal,
+    relu,
+    sigmoid,
+    sign,
+    sinc,
+    softplus,
+    sqrt,
+    square,
+    tan,
+    true_divide,
+    xor,
+)
     arccos,
     arccosh,
     arcsin,
