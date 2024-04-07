@@ -64,12 +64,13 @@ class DifferentialEquation(Op):
 
         times = np.arange(0.5, 5, 0.5)
 
-        ode_model = DifferentialEquation(func=odefunc, times=times, n_states=1, n_theta=1, t0=0)
+class ODEModel:
+    ...
 
-    """
     _itypes = [
         TensorType(floatX, (False,)),  # y0 as 1D floatX vector
         TensorType(floatX, (False,)),  # theta as 1D floatX vector
+    ...
     ]
     _otypes = [
         TensorType(floatX, (False, False)),  # model states as floatX of shape (T, S)

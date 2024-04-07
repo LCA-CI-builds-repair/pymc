@@ -120,15 +120,18 @@ def str_for_model(model: Model, formatting: str = "plain", include_params: bool 
             if var_repr is not None
         ]
         return r"""$$
-            \begin{{array}}{{rcl}}
-            {}
-            \end{{array}}
-            $$""".format(
-            "\\\\".join(var_reprs)
-        )
-    else:
-        # align vars on their ~
-        names = [s[: s.index("~") - 1] for s in var_reprs]
+class _PrintMethod:
+    ...
+
+    def _print_node(self, node: Node, ncols: int, nrows: int, transpose: bool):
+        if transpose:
+            ...
+        else:
+            ...
+
+            # align vars on their ~
+            names = [s[: s.index("~") - 1] for s in var_reprs]
+    ...
         distrs = [s[s.index("~") + 2 :] for s in var_reprs]
         maxlen = str(max(len(x) for x in names))
         var_reprs = [

@@ -232,12 +232,16 @@ class MvNormal(Continuous):
         sd_dist = pm.Exponential.dist(1.0, shape=3)
         chol, _, _ = pm.LKJCholeskyCov('chol_cov', n=3, eta=2,
             sd_dist=sd_dist, compute_corr=True)
-        vals_raw = pm.Normal('vals_raw', mu=0, sigma=1, shape=(5, 3))
-        vals = pm.Deterministic('vals', pt.dot(chol, vals_raw.T).T)
-    """
+class MultivariateNormal(WithMemoization, PMCPY3.DistributionImplementation):
     rv_op = multivariate_normal
 
     @classmethod
+    def group_for_short_name(cls, name):
+        if name.lower() not in cls.__name_registry:
+            raise KeyError(
+                "No such group: {!r}, only the following are supported\n\n{}".format(name, cls.__name_registry)
+            )
+    ...
     def dist(cls, mu=0, cov=None, *, tau=None, chol=None, lower=True, **kwargs):
         mu = pt.as_tensor_variable(mu)
         cov = quaddist_matrix(cov, chol, tau, lower)

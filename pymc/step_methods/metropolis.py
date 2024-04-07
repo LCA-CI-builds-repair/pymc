@@ -131,13 +131,23 @@ class Metropolis(ArrayStepShared):
         proposal_dist=None,
         scaling=1.0,
         tune=True,
-        tune_interval=100,
-        model=None,
-        mode=None,
-        **kwargs
-    ):
-        """Create an instance of a Metropolis stepper
+class Metropolis(PMCPY3.StepMethod):
+    ...
 
+    def __init__(
+            self,
+            prob_fn,
+            potential_fn,
+            potential_fn_sim,
+            potential_grad_fn,
+            potential_hessian_fn=None,
+            args=(),
+            tune_interval=100,
+            model=None,
+            mode=None,
+            **kwargs
+    ):
+        ...
         Parameters
         ----------
         vars: list

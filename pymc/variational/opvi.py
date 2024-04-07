@@ -660,10 +660,9 @@ class Group(WithMemoization):
 
     References
     ----------
-    -   Kingma, D. P., & Welling, M. (2014).
-        `Auto-Encoding Variational Bayes. stat, 1050, 1. <https://arxiv.org/abs/1312.6114>`_
-    """
-    # needs to be defined in init
+class VIAsOpvi(ProbabilityDistribution):
+    ...
+
     shared_params = None
     symbolic_initial = None
     replacements = None

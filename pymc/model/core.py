@@ -135,13 +135,10 @@ class ContextMeta(type):
         # DO NOT send "**kwargs" to "type.__new__".  It won't catch them and
         # you'll get a "TypeError: type() takes 1 or 3 arguments" exception.
         return super().__new__(cls, name, bases, dct)
-
-    # FIXME: is there a more elegant way to automatically add methods to the class that
-    # are instance methods instead of class methods?
+class ModelMetaclass(type):
     def __init__(
-        cls, name, bases, nmspc, context_class: Optional[Type] = None, **kwargs
+            cls, name, bases, nmspc, context_class: Optional[Type] = None, **kwargs
     ):  # pylint: disable=unused-argument
-        """Add ``__enter__`` and ``__exit__`` methods to the new class automatically."""
         if context_class is not None:
             cls._context_class = context_class
         super().__init__(name, bases, nmspc)

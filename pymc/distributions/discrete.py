@@ -109,12 +109,17 @@ class Binomial(Discrete):
         Number of Bernoulli trials (n >= 0).
     p : tensor_like of float
         Probability of success in each trial (0 < p < 1).
-    logit_p : tensor_like of float
-        Alternative log odds for the probability of success.
-    """
-    rv_op = binomial
+class Binomial(WithMemoization, PMCPY3.DistributionImplementation):
+ rv_op = binomial
 
-    @classmethod
+@classmethod
+def group\_for\_short\_name(cls, name):
+if name.lower() not in cls.\_\_name\_registry:
+raise KeyError(
+"No such group: {!r}, only the following are supported\n\n{}".format(name, cls.\_\_name\_registry)
+)
+```python
+                 ...
     def dist(cls, n, p=None, logit_p=None, *args, **kwargs):
         if p is not None and logit_p is not None:
             raise ValueError("Incompatible parametrization. Can't specify both p and logit_p.")

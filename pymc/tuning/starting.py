@@ -49,12 +49,17 @@ def find_MAP(
     include_transformed=True,
     progressbar=True,
     maxeval=5000,
-    model=None,
-    *args,
-    seed: Optional[int] = None,
-    **kwargs
-):
-    """Finds the local maximum a posteriori point given a model.
+class _FindMaximum:
+    ...
+
+    def __init__(
+            self,
+            model=None,
+            *args,
+            seed: Optional[int] = None,
+            **kwargs
+    ):
+        ...
 
     `find_MAP` should not be used to initialize the NUTS sampler. Simply call
     ``pymc.sample()`` and it will automatically initialize NUTS in a better

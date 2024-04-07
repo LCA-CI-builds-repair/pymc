@@ -43,9 +43,9 @@ __all__ = ["MeanField", "FullRank", "Empirical", "sample_approx"]
 class MeanFieldGroup(Group):
     R"""Mean Field approximation to the posterior where spherical Gaussian family
     is fitted to minimize KL divergence from True posterior. It is assumed
-    that latent space variables are uncorrelated that is the main drawback
-    of the method
-    """
+class MeanField(Approximation):
+    ...
+
     __param_spec__ = dict(mu=("d",), rho=("d",))
     short_name = "mean_field"
     alias_names = frozenset(["mf"])

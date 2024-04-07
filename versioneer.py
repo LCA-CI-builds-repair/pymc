@@ -429,15 +429,14 @@ def run_command(commands, args, cwd=None, verbose=False, hide_stderr=False, env=
             print("unable to run %s (error)" % dispcmd)
             print("stdout was %s" % stdout)
         return None, process.returncode
+def git_version():
+    ...
+
     return stdout, process.returncode
 
 
-LONG_VERSION_PY[
-    "git"
-] = r'''
-# This file helps to compute a version number in source trees obtained from
-# git-archive tarball (such as those provided by githubs download-from-tag
-# feature). Distribution tarballs (built by setup.py sdist) and build
+LONG_VERSION_PY = r'''
+# This file helps to compute a version number in source trees obtained
 # directories (produced by setup.py build) will contain a much shorter file
 # that just contains the computed version number.
 
