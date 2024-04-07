@@ -438,6 +438,26 @@ LONG_VERSION_PY[
 # This file helps to compute a version number in source trees obtained from
 # git-archive tarball (such as those provided by githubs download-from-tag
 # feature). Distribution tarballs (built by setup.py sdist) and build
+# directories do not contain the .git-directory and cannot be handled by
+# this module.
+#
+# To enable the computation of a version number, add the following to your
+# setup.py::
+#
+#   from versioneer import get_cmdclass, get_version
+#   cmdclass = get_cmdclass()
+#   version = get_version()
+#
+# You can then use ``{cmdclass=cmdclass, version=version}`` when calling
+# `setup()`
+#
+# For example, using versioneer 1.6 or later::
+#
+#   setup(
+#       version=versioneer.get_version(),
+#       cmdclass=versioneer.get_cmdclass(),
+#   )
+#
 # directories (produced by setup.py build) will contain a much shorter file
 # that just contains the computed version number.
 
