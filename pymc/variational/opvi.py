@@ -663,9 +663,13 @@ class Group(WithMemoization):
     -   Kingma, D. P., & Welling, M. (2014).
         `Auto-Encoding Variational Bayes. stat, 1050, 1. <https://arxiv.org/abs/1312.6114>`_
     """
-    # needs to be defined in init
-    shared_params = None
-    symbolic_initial = None
+    has_test_function = True
+    returns_loss = False
+    require_logq = False
+
+    def __init__(self, *args, **kwargs):
+        self.shared_params = None
+        self.symbolic_initial = None
     replacements = None
     input = None
 
