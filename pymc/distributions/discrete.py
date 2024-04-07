@@ -115,6 +115,12 @@ class Binomial(Discrete):
     rv_op = binomial
 
     @classmethod
+    def rv_op(cls, *args, **kwargs):
+        return cls.binomial(*args, **kwargs)
+
+    @classmethod
+    def binomial(cls, *args, **kwargs):
+        return binomial(*args, **kwargs)
     def dist(cls, n, p=None, logit_p=None, *args, **kwargs):
         if p is not None and logit_p is not None:
             raise ValueError("Incompatible parametrization. Can't specify both p and logit_p.")

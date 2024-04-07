@@ -238,6 +238,12 @@ class MvNormal(Continuous):
     rv_op = multivariate_normal
 
     @classmethod
+    def rv_op(cls, *args, **kwargs):
+        return cls.multivariate_normal(*args, **kwargs)
+
+    @classmethod
+    def multivariate_normal(cls, *args, **kwargs):
+        return multivariate_normal(*args, **kwargs)
     def dist(cls, mu=0, cov=None, *, tau=None, chol=None, lower=True, **kwargs):
         mu = pt.as_tensor_variable(mu)
         cov = quaddist_matrix(cov, chol, tau, lower)

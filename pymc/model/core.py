@@ -142,8 +142,26 @@ class ContextMeta(type):
         cls, name, bases, nmspc, context_class: Optional[Type] = None, **kwargs
     ):  # pylint: disable=unused-argument
         """Add ``__enter__`` and ``__exit__`` methods to the new class automatically."""
-        if context_class is not None:
-            cls._context_class = context_class
+        if context_class is None:
+            context_class = Context
+        cls._context_class = context_class
+        super().__init__(name, bases, nmspc, **kwargs)
+        cls.__setattr__ = make_method(cls.__setattr__, cls)
+        cls.__delattr__ = make_method(cls.__delattr__, cls)
+        cls.__getattribute__ = make_method(cls.__getattribute__, cls)
+        cls.__setattr__.__doc__ = """
+        Set an attribute on the Model while deferring error checking."""
+        cls.__delattr__.__doc__ = """
+        Delete an attribute from the Model while deferring error checking."""
+        cls.__getattribute__.__doc__ = """
+        Retrieve an attribute from the Model while deferring error checking."""
+        if cls.context.__wrapped__:
+            cls.__init__.__doc__ = cls.context.__wrapped__.__init__.__doc__
+        else:
+            cls.__init__.__doc__ = None
+        cls.__enter__.__doc__ = cls.context.__wrapped__.__enter__.__doc__
+        cls.__exit__.__doc__ = cls.context.__wrapped__.__exit__.__doc__
+    __init__.__get__ = classmethod(__init__.__get__)
         super().__init__(name, bases, nmspc)
 
     def get_context(cls, error_if_none=True, allow_block_model_access=False) -> Optional[T]:

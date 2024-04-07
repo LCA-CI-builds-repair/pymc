@@ -71,6 +71,10 @@ class DifferentialEquation(Op):
         TensorType(floatX, (False,)),  # y0 as 1D floatX vector
         TensorType(floatX, (False,)),  # theta as 1D floatX vector
     ]
+    @classmethod
+    def _build_evaluator(cls, func, times):
+        return cls.DifferentialEquation(func=func, times=times, n_states=1, n_theta=1, t0=0)
+    ]
     _otypes = [
         TensorType(floatX, (False, False)),  # model states as floatX of shape (T, S)
         TensorType(

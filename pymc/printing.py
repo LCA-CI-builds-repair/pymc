@@ -129,6 +129,13 @@ def str_for_model(model: Model, formatting: str = "plain", include_params: bool 
     else:
         # align vars on their ~
         names = [s[: s.index("~") - 1] for s in var_reprs]
+        latex_veclist = ["$%s$" % ft.__name__ for ft in funcs]
+        return "\n".join(
+            [
+                "{0:{width}s} &\n{1} \\\\".format(n, l, width=max_width)
+                for n, l in zip(names, latex_veclist)
+            ]
+        )
         distrs = [s[s.index("~") + 2 :] for s in var_reprs]
         maxlen = str(max(len(x) for x in names))
         var_reprs = [
