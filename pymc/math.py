@@ -24,13 +24,14 @@ import pytensor.tensor as pt
 import pytensor.tensor.slinalg
 import scipy as sp
 import scipy.sparse
-
+```python
 from pytensor.graph.basic import Apply
 from pytensor.graph.op import Op
 
 from pytensor.tensor import (
     abs,
     and_,
+```
     arccos,
     arccosh,
     arcsin,
