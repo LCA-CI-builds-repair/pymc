@@ -41,14 +41,16 @@ class CpuLeapfrogIntegrator:
         """Leapfrog integrator using CPU."""
         self._potential = potential
         self._logp_dlogp_func = logp_dlogp_func
-        self._dtype = self._logp_dlogp_func.dtype
-        if self._potential.dtype != self._dtype:
-            raise ValueError(
-                "dtypes of potential (%s) and logp function (%s)"
-                "don't match." % (self._potential.dtype, self._dtype)
-            )
+--------------------------------------------------
 
-    def compute_state(self, q: RaveledVars, p: RaveledVars):
+```python
+self._dtype = self._logp_dlogp_func.dtype
+if self._potential.dtype != self._dtype:
+    raise ValueError("dtypes of potential ({}) and logp function ({}) don't match.".format(self._potential.dtype, self._dtype))
+
+def compute_state(self, q: RaveledVars, p: RaveledVars):
+```
+
         """Compute Hamiltonian functions using a position and momentum."""
         if q.data.dtype != self._dtype or p.data.dtype != self._dtype:
             raise ValueError("Invalid dtype. Must be %s" % self._dtype)
