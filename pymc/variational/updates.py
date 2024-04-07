@@ -1006,7 +1006,8 @@ def norm_constraint(tensor_var, max_norm, norm_axes=None, epsilon=1e-7):
         sum_over = tuple(range(1, ndim))
     else:
         raise ValueError(
-            "Unsupported tensor dimensionality {}." "Must specify `norm_axes`".format(ndim)
+            f"Unsupported tensor dimensionality {ndim}."
+            f"Must specify `norm_axes`"
         )
 
     dtype = np.dtype(pytensor.config.floatX).type

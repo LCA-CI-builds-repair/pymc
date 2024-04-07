@@ -134,8 +134,8 @@ def warn_population_size(
         )
     if has_demcmc and chains <= initial_point_model_size:
         warnings.warn(
-            "DEMetropolis should be used with more chains than dimensions! "
-            "(The model has {} dimensions.)".format(initial_point_model_size),
+            f"DEMetropolis should be used with more chains than dimensions! "
+            f"(The model has {initial_point_model_size} dimensions.)",
             UserWarning,
             stacklevel=2,
         )
