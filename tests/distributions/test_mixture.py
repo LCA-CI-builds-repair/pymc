@@ -11,13 +11,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-
 import warnings
 
 
 import numpy as np
 import pytensor
 import pytest
+
+# Replace the following line with the corrected line
+# normalize_axis_tuple = normalize_axis_tuple
 import scipy.stats as st
 
 from numpy.testing import assert_allclose

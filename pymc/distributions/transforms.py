@@ -16,11 +16,12 @@ import warnings
 from functools import singledispatch
 
 import numpy as np
-import pytensor.tensor as pt
+from pytensor.graph.basic import Apply
+from pytensor.graph.op import Op
 
-# ignore mypy error because it somehow considers that
-# "numpy.core.numeric has no attribute normalize_axis_tuple"
-from numpy.core.numeric import normalize_axis_tuple  # type: ignore
+from pytensor.tensor import (
+    abs,
+    and_,
 from pytensor.graph import Op
 from pytensor.tensor import TensorVariable
 
