@@ -1002,15 +1002,18 @@ def norm_constraint(tensor_var, max_norm, norm_axes=None, epsilon=1e-7):
         sum_over = tuple(norm_axes)
     elif ndim == 2:  # DenseLayer
         sum_over = (0,)
-    elif ndim in [3, 4, 5]:  # Conv{1,2,3}DLayer
-        sum_over = tuple(range(1, ndim))
-    else:
-        raise ValueError(
-            "Unsupported tensor dimensionality {}." "Must specify `norm_axes`".format(ndim)
-        )
+        elif ndim in [3, 4, 5]:  # Conv{1,2,3}DLayer
+            sum_over = tuple(range(1, ndim))
+        else:
+            raise ValueError(
+                "Unsupported tensor dimensionality {}."
+                "Must specify `norm_axes`".format(ndim)
+            )
 
-    dtype = np.dtype(pytensor.config.floatX).type
-    norms = pt.sqrt(pt.sum(pt.sqr(tensor_var), axis=sum_over, keepdims=True))
+        dtype = np.dtype(pytensor.config.floatX).type
+        norms = pt.sqrt(pt.sum(pt.sqr(tensor_var), axis=sum_over, keepdims=True))
+# edited to use format specifiers
+raise ValueError("Unsupported tensor dimensionality {}." "Must specify `norm_axes`".format(ndim))
     target_norms = pt.clip(norms, 0, dtype(max_norm))
     constrained_output = tensor_var * (target_norms / (dtype(epsilon) + norms))
 

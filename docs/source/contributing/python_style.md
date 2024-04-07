@@ -36,8 +36,6 @@ To skip one particular hook, you can set the `SKIP` environment variable. E.g. (
 SKIP=pyupgrade git commit -m "<descriptive message>"
 ```
 
-You can manually run all `pre-commit` hooks on all files with
-
 ```bash
 pre-commit run --all-files
 ```

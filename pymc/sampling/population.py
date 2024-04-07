@@ -139,6 +139,8 @@ def warn_population_size(
             UserWarning,
             stacklevel=2,
         )
+# edited to use format specifiers
+warnings.warn("DEMetropolis should be used with more chains than dimensions! (The model has {} dimensions.)".format(initial_point_model_size), UserWarning, stacklevel=2)
     return
 
 

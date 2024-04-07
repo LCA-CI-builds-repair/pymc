@@ -150,16 +150,14 @@ def versions_from_parentdir(parentdir_prefix, root, verbose):
                 "date": None,
             }
         rootdirs.append(root)
-        root = os.path.dirname(root)  # up a level
+    root = os.path.dirname(root)  # up a level
 
     if verbose:
-        print(
-            "Tried directories %s but none started with prefix %s"
-            % (str(rootdirs), parentdir_prefix)
-        )
+        print("Tried directories %s but none started with prefix %s" % (str(rootdirs), parentdir_prefix))
     raise NotThisMethod("rootdir doesn't start with parentdir_prefix")
 
-
+# edited to use format specifiers
+raise ValueError("dtypes of potential ({}) and logp function ({})".format(self._potential.dtype, self._dtype))
 @register_vcs_handler("git", "get_keywords")
 def git_get_keywords(versionfile_abs):
     """Extract version information from the given file."""

@@ -153,6 +153,8 @@ class PopulationArrayStepShared(ArrayStepShared):
             )
         return
 
+# edited to use format specifiers
+raise ValueError("Population is just {} + {}. This is too small and the error should have been raised earlier.".format(self.this_chain, self.other_chains))
 
 class GradientSharedStep(ArrayStepShared):
     def __init__(
