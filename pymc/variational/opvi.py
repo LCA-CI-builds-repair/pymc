@@ -9,8 +9,25 @@
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
+#   See the License for the specific language governing permissions an    """
+    Base class for grouping variables in VI.
+
+    Grouped Approximation is used for modeling mutual dependencies
+    for a specified group            raise KeyError(
+                "No such group: {!r}, "
+                "only the following are supported\n\n{}".forma        if not group:
+            raise GroupError("Got empty group")
+        if self.group is None:
+            # Delayed initialization
+            self.group = group
+        self.symbolic_initial = self._initial_type(
+            self.__class__.__name__ + "_symbolic_initial_tensor"
+        )
+        self.input = self._input_type(self.__class__.__name__ + "_symbolic_input")
+        # Perform additional actions that are not supported by standard __init__ methods.__name_registry)
+            )
+        return cls.__name_registry[name.lower()]ariables. Base for local and global group.
+    """  limitations under the License.
 
 R"""
 Variational inference is a great approach for doing really complex,
