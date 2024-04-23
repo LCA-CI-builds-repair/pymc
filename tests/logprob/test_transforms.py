@@ -16,7 +16,42 @@
 #
 #   Copyright (c) 2021-2022 aesara-devs
 #
-#   Permission is hereby granted, free of charge, to any person obtaining a copy
+#   Permission is hereby granted, fimport numpy.testing as np.testing
+import pytest
+import pymc3 as pm
+
+# Test log probabilities and transformations
+def test_log_probabilities_and_transforms():
+    p = 0.7
+    rv = Bernoulli.dist(p=p)
+    logp_fn = pytensor.function([rv], logp(rv, rv))
+
+    assert logp_fn(-2) == -np.inf
+    np.testing.assert_allclose(logp_fn(-1), np.log(p))
+    np.testing.assert_allclose(logp_fn(0), np.log(1 - p))
+    assert logp_fn(1) == -np.inf
+
+    # Logcdf and icdf not supported yet
+    for func in (logcdf, icdf):
+        with pytest.raises(NotImplementedError):
+            func(rv, 0)
+
+
+def test_shifted_discrete_rv_transform():
+    p = 0.7
+    rv = Bernoulli.dist(p=p) + 5
+    vv = rv.type()
+    rv_logp_fn = pytensor.function([vv], logp(rv, vv))
+
+    assert rv_logp_fn(4) == -np.inf
+    np.testing.assert_allclose(rv_logp_fn(5), np.log(1 - p))
+    np.testing.assert_allclose(rv_logp_fn(6), np.log(p))
+    assert rv_logp_fn(7) == -np.inf
+
+    # Logcdf and icdf not supported yet
+    for func in (logcdf, icdf):
+        with pytest.raises(NotImplementedError):
+            func(rv, 0)on obtaining a copy
 #   of this software and associated documentation files (the "Software"), to deal
 #   in the Software without restriction, including without limitation the rights
 #   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell

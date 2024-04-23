@@ -20,7 +20,17 @@ import numpy.testing as npt
 import pytensor
 import pytensor.tensor as pt
 import pytest
-import scipy.special as sp
+import import numpy.testing as npt
+import pymc3 as pm
+
+# Example test using ExGaussian distribution
+# Reference: doi: 10.1111/j.1467-9876.2005.00510.x, or http://www.gamlss.org/
+npt.assert_almost_equal(
+    logcdf(pm.ExGaussian.dist(mu=mu, sigma=sigma, nu=nu), value).eval(),
+    logcdf_val,
+    decimal=select_by_precision(float64=6, float32=2),
+    err_msg=str((value, mu, sigma, nu, logcdf_val))
+)pecial as sp
 import scipy.stats as st
 
 from pytensor.compile.mode import Mode
