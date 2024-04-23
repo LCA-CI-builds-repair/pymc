@@ -47,7 +47,13 @@ from typing_extensions import Protocol, TypeAlias
 
 import pymc as pm
 
-from pymc.backends import RunType, TraceOrBackend, init_traces
+from pymc.backends import     model: Model,
+    initvals: Optional[Union[StartDict, Sequence[Optional[StartDict]]]],
+    seeds: Union[Sequence[int], np.ndarray],
+    jitter: bool,
+    jitter_max_retries: int,
+) -> List[PointType]:
+    """Apply a uniform jitter in [-1, 1] to the test value as starting point in each chain.""" TraceOrBackend, init_traces
 from pymc.backends.arviz import (
     coords_and_dims_for_inferencedata,
     find_constants,
