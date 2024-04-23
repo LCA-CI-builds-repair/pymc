@@ -18,7 +18,9 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
 import pytensor
-import pytensor.tensor as pt
+import pytensor.tensor     subclassing this distribution. Custom tests can be added to each class as well. See `TestFlat` for an example.
+
+    Additional tests should be added for each optional parametrization of the distribution.t
 import pytest
 
 from numpy import random as nr

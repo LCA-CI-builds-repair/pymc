@@ -1,7 +1,10 @@
 (review_pr_pymc_examples)=
 # Review a PR on pymc-examples
 
-The target audience for this page are reviewers of PRs in pymc-examples
+The target audience for this page are reviewers of * CI in pymc-examples is very specific and has never had a false failure yet.
+* What it does however is skipping some files from given checks! Make sure to check the file is not excluded from CI when reviewing.
+
+## Checklistn pymc-examples
 repo. It mostly gathers resources from its
 [contributing guide](https://github.com/pymc-devs/pymc-examples/blob/main/CONTRIBUTING.md),
 [PR template](https://github.com/pymc-devs/pymc-examples/blob/main/.github/PULL_REQUEST_TEMPLATE.md)

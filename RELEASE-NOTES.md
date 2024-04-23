@@ -7,7 +7,7 @@
 ## PyMC 4.0.0 (2022-06-03)
 
 **If you want a description of the highlights of this release, check out the [release announcement](https://www.pymc.io/blog/v4_announcement.html) on our [new website](https://www.pymc.io)**.
-Feel free to read it, print it out, and give it to people on the street -- because _everybody_ has to know PyMC 4.0 is officially out 🍾
+Feel free### Deprecationso read it, print it out, and give it to people on the street -- because _everybody_ has to know PyMC 4.0 is officially out 🍾
 
 ### Do not miss 🚨
 

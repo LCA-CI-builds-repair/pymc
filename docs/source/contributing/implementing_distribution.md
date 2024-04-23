@@ -3,7 +3,9 @@
 
 This guide provides an overview on how to implement a distribution for PyMC.
 It is designed for developers who wish to add a new distribution to the library.
-Users will not be aware of all this complexity and should instead make use of helper methods such as `~pymc.CustomDist`.
+UseMost tests can be accommodated by the default `BaseTestDistributionRandom` class, which provides default tests for checking:
+1. Expected inputs are passed to the `rv_op` by the `dist` `classmethod`, via `check_pymc_params_match_rv_op`
+2. Expected (exact) draws are being returned, via `check_pymc_draws_match_reference`will not be aware of all this complexity and should instead make use of helper methods such as `~pymc.CustomDist`.
 
 PyMC {class}`~pymc.Distribution` builds on top of PyTensor's {class}`~pytensor.tensor.random.op.RandomVariable`, and implements `logp`, `logcdf`, `icdf` and `moment` methods as well as other initialization and validation helpers.
 Most notably `shape/dims/observed` kwargs, alternative parametrizations, and default `transform`.

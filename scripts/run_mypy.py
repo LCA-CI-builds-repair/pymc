@@ -1,5 +1,13 @@
-"""
-Invokes mypy and compare the reults with files in /pymc except tests
+"Invokes mypy and compares the results with files in /pymc excluding tests and a list of files that are known to fail.
+
+Exit c        print(
+            "These files did not fail before, so please check the above output"
+            f" for errors in {unexpected_failing} and fix them."
+        )
+        print("To reproduce this test locally with more details, run `python scripts/run_mypy.py --verbose`.")
+        sys.exit(1)indicates that there are no unexpected results.
+
+Usageokes mypy and compare the reults with files in /pymc except tests
 and a list of files that are known to fail.
 
 Exit code 0 indicates that there are no unexpected results.

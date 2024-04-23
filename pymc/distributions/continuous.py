@@ -102,8 +102,17 @@ __all__ = [
     "Uniform",
     "Flat",
     "HalfFlat",
-    "Normal",
-    "TruncatedNormal",
+    "    .. math::
+
+        f(x \mid \mu, \kappa) =
+            \frac{e^{\kappa\cos(x-\mu)}}{2\pi I_0(\kappa)}
+
+    where :math:`I_0` is the modified Bessel function of order 0.
+    
+    .. plot::
+        :context: close-figs
+        
+        import matplotlib.pyplot as plt "TruncatedNormal",
     "Beta",
     "Kumaraswamy",
     "Exponential",

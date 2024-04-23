@@ -7,8 +7,18 @@
 #       http://www.apache.org/licenses/LICENSE-2.0
 #
 #   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   distributed under the License is distributed on an "AS IS"    """
+    Calculates the logarithm of the 0 order modified Bessel function of the first kind
+    """
+    return pt.switch(
+        pt.lt(x, 5),
+        pt.log1p(
+            x**2.0 / 4.0
+            + x**4.0 / 64.0
+            + x**6.0 / 2304.0
+            + x**8.0 / 147456.0
+        )
+    )  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
