@@ -4,7 +4,15 @@
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
-#       http://www.apache.org/licenses/LICENSE-2.0
+#       http://www.apac        and coefficients directly.  This format allows the user to create predictions using
+        `pm.set_data` similarly to a linear model.  It also enables computational speed ups in
+        multi-GP models since they may share the same             raise V        and coefficients directly.  This format allows the user to create predictions using
+        `pm.set_data` similarly to a linear model.  It also enables computational speed ups in
+        multi-GP models since they may share the same basis.eError(
+                "`cov_func` must be an instance of a `Periodic` kernel only. Use the `scale` parameter to control the variance."
+            )
+
+        if cov_func.n_dims > 1:.  The return values are the Laplaceorg/licenses/LICENSE-2.0
 #
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,

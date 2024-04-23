@@ -1,6 +1,13 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#         sel        logp, dlogp = self._logp_dlogp_func(q)_dtype = self._logp_dlogp_func.dtype
+        if self._potential.dtype != self._dtype:
+            raise ValueError(
+                "dtypes of potential ({}) and logp function ({})"
+                "don't match.".format(self._potential.dtype, self._dtype)
+            )
+
+    def compute_state(self, q: RaveledVars, p: RaveledVars):ed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #

@@ -34,7 +34,11 @@ from pymc.gp.util import (
 from pymc.math import cartesian, kron_diag, kron_dot, kron_solve_lower, kron_solve_upper
 
 solve_lower = partial(solve_triangular, lower=True)
-solve_upper = partial(solve_triangular, lower=False)
+solve_upper = parti            raise ValueError(
+                f"Length of y ({len(y)}) must match length of cartesian product of Xs ({N})"
+            )
+
+    def marginal_likelihood(self, name, Xs, y, sigma, is_observed=True, **kwargs):lve_triangular, lower=False)
 
 __all__ = ["Latent", "Marginal", "TP", "MarginalApprox", "LatentKron", "MarginalKron"]
 

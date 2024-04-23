@@ -2,7 +2,12 @@
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
+#          raise ValueError(
+            "Joined logps have different number of dimensions, this can happen when "
+            "joining univariate and multivariate distributions",
+        )
+
+    # If the stacked variables depend on each other, we have to replace them by the respective valuesay obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
 #

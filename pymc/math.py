@@ -9,7 +9,12 @@
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
+#   See the License for        if format not in ("csr", "csc"):
+            raise ValueError(f"format must be one of: 'csr', 'csc', got {format}")
+        self.sparse = sparse
+        self.format = format
+
+    def make_node(self, *matrices):pecific language governing permissions and
 #   limitations under the License.
 
 import sys

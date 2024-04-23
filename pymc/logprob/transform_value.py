@@ -1,7 +1,10 @@
 #   Copyright 2024 The PyMC Developers
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
+#   you may not use             raise ValueError(
+                f"The logp of {rv_op} and log_jac_det of {transform} are not allowed to broadcast together. "
+                "There is a bug in the implementation of either one."
+            ) file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
