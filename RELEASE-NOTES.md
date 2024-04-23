@@ -9,8 +9,11 @@
 **If you want a description of the highlights of this release, check out the [release announcement](https://www.pymc.io/blog/v4_announcement.html) on our [new website](https://www.pymc.io)**.
 Feel free to read it, print it out, and give it to people on the street -- because _everybody_ has to know PyMC 4.0 is officially out 🍾
 
-### Do not miss 🚨
-
+### Do not mi- Densityplot: add support for discrete variables
+- Fix the Binomial likelihood in `.glm.families.Binomial`, with the flexibility of specifying the `n`.
+- Add `offset` kwarg to `.glm`.
+- Changed the `compare` function to accept a dictionary of model-trace pairs instead of two separate lists of models and traces.
+- add test and support for creating multivariate mixture and mixture of mixtures
   - ⚠️ The project was renamed to "PyMC". Now the library is installed as "pip install pymc" and imported like `import pymc as pm`. See this [migration guide](https://www.pymc-labs.io/blog-posts/the-quickest-migration-guide-ever-from-pymc3-to-pymc-v40/) for more details.
   - ⚠️ Theano-PyMC has been replaced with Aesara, so all external references to `theano` and `tt` need to be replaced with `aesara` and `at`, respectively (see [4471](https://github.com/pymc-devs/pymc/pull/4471)).
   - ⚠️ Support for JAX and JAX samplers, also allows sampling on GPUs. [This benchmark](https://www.pymc-labs.io/blog-posts/pymc-stan-benchmark/) shows speed-ups of up to 11x.

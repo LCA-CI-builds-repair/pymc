@@ -1,4 +1,9 @@
-(implementing-a-distribution)=
+(implementing-1. Implementing the corresponding `Distribution` class
+1. Adding tests for the new `RandomVariable`
+1. Adding tests for `logp` / `logcdf` / `icdf` and `moment` methods
+1. Documenting the new `Distribution`.
+
+This guide does not attempt to explain the rationale behind the `Distributions` current implementation, and details are provided only insofar as they help to implement new "standard" distributions.ribution)=
 # Implementing a RandomVariable Distribution
 
 This guide provides an overview on how to implement a distribution for PyMC.

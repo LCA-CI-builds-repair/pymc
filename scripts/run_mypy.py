@@ -1,6 +1,11 @@
 """
 Invokes mypy and compare the reults with files in /pymc except tests
-and a list of files that are known to fail.
+and a list of files that are k    """
+    df = mypy_to_pandas(mypy_lines)
+    all_files = {
+        str(fp).replace(str(DP_ROOT), "").strip(os.sep).replace(os.sep, "/")
+        for fp in DP_ROOT.glob("pymc/**/*.py")
+        if "tests" not in str(fp)o fail.
 
 Exit code 0 indicates that there are no unexpected results.
 

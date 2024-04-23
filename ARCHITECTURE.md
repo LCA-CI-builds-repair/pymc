@@ -1,8 +1,8 @@
 # Architecture
 This document describes the high-level architecture of PyMC.
 
-# Bird's Eye View
-[comment]: <> (https://drive.google.com/file/d/1lfEzokkNUJr_JIeSDQfha5a57pokz0qI)
+# Bird's Eye VAll tests for testing functionality of codebase. All modules prefixed with `test_` are tests themselves, whereas all
+other modules contain various supporting code such as fixtures, configurations, etc[comment]: <> (https://drive.google.com/file/d/1lfEzokkNUJr_JIeSDQfha5a57pokz0qI)
 ![Architecture](docs/Architecture.png)
 Lets you define probabilistic graphs or models that can be easily used to compute log probabilities for posterior
 inference or to draw random samples for prior and posterior prediction.
