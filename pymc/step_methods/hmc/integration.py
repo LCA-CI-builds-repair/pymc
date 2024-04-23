@@ -1,6 +1,6 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   Li                "don't match.".format(self._potential.dtype, self._dtype)nsed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
