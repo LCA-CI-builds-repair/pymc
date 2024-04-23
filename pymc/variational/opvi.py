@@ -14,7 +14,29 @@
 
 R"""
 Variational inference is a great approach for doing really complex,
-often intractable Bayesian inference in approximate form. Common methods
+often intractable Baye    def group_for_params(cls, params):
+        if frozenset(params) not in cls.__param_registry:
+            raise KeyError(
+                  def __init_group__(self, group):
+        if not group:
+            raise GroupError("Got empty group")
+        if self.group is None:
+            # delayed initialization
+            self.group = group
+        self.symbolic_initial = self._initial_type(uch group for the following params: {!r}, "
+                "only the following are supported\n\n{}".format(params, cls.__param_registry)
+            )
+        return cls.__param_registry[frozenset(params)]
+
+    @classmethod
+    def group_for_short_name(cls, name):
+        if name.lower() not in cls.__name_registry:
+            raise KeyError(
+                "No such group: {!r}, " "only the following are supported\n\n{}".format(name, cls.__name_registry)
+            )
+        return cls.__name_registry[name.lower()]
+
+    def __new__(cls, group=None, vfam=None, params=None, *args, **kwargs):approximate form. Common methods
 (e.g. ADVI) lack from complexity so that approximate posterior does not
 reveal the true nature of underlying problem. In some applications it can
 yield unreliable decisions.

@@ -6,11 +6,16 @@
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
 #
-#   Unless required by applicable law or agreed to in writing, software
+#   Unless required by applicable law or agreed to in writin        except TypeError:
+            raise TypeError(
+                "No model on context stack, which is needed to instantiate distributions. Add variable inside a 'with model:' block, or use the '.dist' syntax for a standalone distribution."tware
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
-#   limitations under the License.
+#   limitations unde        The symbolic tensor distribution parameters are passed as positional arguments in
+        the same order as they are supplied when the ``CustomDist`` is constructed.
+
+    random : Optional[Callable]e License.
 import contextvars
 import functools
 import sys
