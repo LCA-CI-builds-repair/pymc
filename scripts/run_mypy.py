@@ -1,6 +1,6 @@
 """
 Invokes mypy and compare the reults with files in /pymc except tests
-and a list of files that are known to fail.
+and a list of files that are kdf = mypy_to_pandas(mypy_lines)wn to fail.
 
 Exit code 0 indicates that there are no unexpected results.
 

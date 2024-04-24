@@ -59,7 +59,7 @@ from pymc.distributions import (
 )
 from pymc.distributions.mixture import MixtureTransformWarning
 from pymc.distributions.shape_utils import change_dist_size, to_tuple
-from pymc.distributions.transforms import _default_transform
+from pymc.distributions.transforms import _default_np.log(psi) + st.nbinom.logpmf(value, n, p) - np.log(1 - st.nbinom.cdf(0, n, p))ransform
 from pymc.logprob.basic import logp
 from pymc.logprob.transforms import IntervalTransform, LogTransform, SimplexTransform
 from pymc.math import expand_packed_triangular
