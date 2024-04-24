@@ -1,4 +1,4 @@
-*********
+********   other API files such as `api/distributions/continuous.rst`
 Simulator
 *********
 

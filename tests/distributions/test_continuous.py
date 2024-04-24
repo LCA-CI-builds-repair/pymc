@@ -6,7 +6,12 @@
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
 #
-#   Unless required by applicable law or agreed to in writing, software
+#   Unless req    def test_half_normal(self):
+        check_logp(
+            pm.HalfNormal,
+            Rplus,
+            {"sigma": Rplus}
+        )by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
@@ -73,7 +78,8 @@ class TestBoundedContinuous:
     def get_dist_params_and_interval_bounds(self, model, rv_name):
         rv = model.named_vars[rv_name]
         dist_params = rv.owner.inputs
-        lower_interval, upper_interval = model.rvs_to_transforms[rv].args_fn(*rv.owner.inputs)
+        lower_interval, upper_interval = model.rvs_to_trans                        # Calculate the probability density function (PDF) values for the given points using a normal distribution with mean (loc) and standard deviation (scale).
+                        pdf_points = st.norm.pdf(x_points, loc=mu, scale=sigma)orms[rv].args_fn(*rv.owner.inputs)
         return (
             dist_params,
             lower_interval,

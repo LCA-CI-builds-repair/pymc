@@ -1,7 +1,7 @@
 #   Copyright 2024 The PyMC Developers
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
+#   you may not use this file except in compliance with the Lic            # Compute test values for states and sensitivities from input test values using the _simulate method.se.
 #   You may obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0

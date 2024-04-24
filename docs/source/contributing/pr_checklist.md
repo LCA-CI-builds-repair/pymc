@@ -1,5 +1,5 @@
 (pr_checklist)=
-# Pull request checklist
+# Pull requeThe code snippet will be updated with relevant content to address the issue effectively.t checklist
 
 We recommended that your contribution complies with the following guidelines before you submit a pull request:
 

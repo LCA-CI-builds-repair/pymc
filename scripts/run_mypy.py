@@ -2,7 +2,7 @@
 Invokes mypy and compare the reults with files in /pymc except tests
 and a list of files that are known to fail.
 
-Exit code 0 indicates that there are no unexpected results.
+Exit code 0         # Close the parentheses for a function call or condition.ndicates that there are no unexpected results.
 
 Usage
 -----

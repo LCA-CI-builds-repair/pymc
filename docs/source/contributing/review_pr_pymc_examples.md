@@ -1,7 +1,8 @@
 (review_pr_pymc_examples)=
 # Review a PR on pymc-examples
 
-The target audience for this page are reviewers of PRs in pymc-examples
+The target audience for this page are reviewers oTh* CI in `pymc-examples` is very specific and has never had a false failure yet.
+* However, it does skip some files from certain checks! Ensure to verify that the file is not excluded from CI when reviewing.ode snippet will be updated with relevant content to address the issue effectively. PRs in pymc-examples
 repo. It mostly gathers resources from its
 [contributing guide](https://github.com/pymc-devs/pymc-examples/blob/main/CONTRIBUTING.md),
 [PR template](https://github.com/pymc-devs/pymc-examples/blob/main/.github/PULL_REQUEST_TEMPLATE.md)

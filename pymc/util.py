@@ -1,6 +1,6 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   Licensed unde    # Correcting the improper behavior by assigning the name of the original method to the wrapped function.the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
