@@ -1,7 +1,28 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
+#   Licensed under the Apache License, Version 2.0 (the "License"    ref_scipy = st.norm(0, 1)
+
+    assert np.all(np.array(lo    cens_x_vv = cens_x_rv.clone()
+
+    logp = conditional_logp({cens_x_rv: cens_x_vv, lb_rv: lb_vv})
+    logp_combined = pt.sum([pt.sum(factor) for factor in logp.values()])
+
+    assert_no_rvs(logp_combined)
+
+
+def test_fail_base_and_clip_have_values():
+    """Test failure when both base_rv and clipped_rv are given value vars"""
+    x_rv = pt.random.normal(0, 1)
+    cens_x_rv = pt.clip(x_rv, x_rv, 1)
+    cens_x_rv.name = "cens_x"
+
+    x_vv = x_rv.clone()
+    cens_x_vv = cens_x_rv.clone()
+    with pytest.raises(RuntimeError, match="could not be derived: {cens_x}"):
+        conditional_logp({cens_x_rv: cens_x_vv, x_rv: x_vv}).inf)
+    assert np.all(np.array(logp_fn(2, -2)) != -np.inf)
+    np.testing.assert_almost_equal(logp_fn(-1, 1), ref_scipy.logcdf(-1))
+    np.testing.assert_almost_equal(logp_fn(1, -1), ref_scipy.logpdf(-1))you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0

@@ -1,7 +1,13 @@
 """
 In .github/workflows/pytest.yml, tests are split between multiple jobs.
 
-Here, we check that the jobs ignored by the first job actually end up getting
+Here, we check that the jobs i        raise AssertionError(
+            f"{len(ignored_by_all)} tests are completely ignored:\n{ignored_by_all}"
+        )
+    if run_multiple_times:
+        raise AssertionError(
+            f"{len(run_multiple_times)} tests are run multiple times with the same OS and floatX setting:\n{run_multiple_times}"
+        )y the first job actually end up getting
 run by the other jobs.
 This is intended to be used as a pre-commit hook, see `.pre-commit-config.yaml`.
 You can run it manually with `pre-commit run check-no-tests-are-ignored --all`.

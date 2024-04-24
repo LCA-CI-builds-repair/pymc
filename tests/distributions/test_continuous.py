@@ -2,9 +2,27 @@
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
+#   You mimport pytest
+
+        with pytensor.config.change_flags(mode=Mode("py")):
+            with pytest.raises(ParameterValueError):
+                logp(invalid_dist, np.array(0.5)).eval()
+            with pytest.raises(ParameterValueError):
+                logcdf(invalid_dist, np.array(0.5)).eval()
+         check_logp(
+            pm.AsymmetricLaplace,
+            R,
+            {"b": Rplus, "kappa": Rplus, "mu": R},
+            laplace_asymmetric_logpdf,
+        )      with pytest.raises(ParameterValueError):ain a copy of the License at
 #
-#       http://www.apache.org/licenses/LICENSE-2.0
+#       http://www.apache.org/        See e.g., doi: 10.1111/j.1467-9876.2005.00510.x, or http://www.gamlss.org/."""
+        npt.assert_almost_equal(
+            logcdf(pm.ExGaussian.dist(mu=mu, sigma=sigma, nu=nu), value).eval(),
+            logcdf_val,
+            decimal=select_by_precision(float64=6, float32=2),
+            err_msg=str((value, mu, sigma, nu, logcdf_val)),
+        )es/LICENSE-2.0
 #
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,

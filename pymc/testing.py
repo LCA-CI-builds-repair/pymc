@@ -18,8 +18,26 @@ from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
 import pytensor
-import pytensor.tensor as pt
-import pytest
+import pyte    """
+    Base class for tests that new RandomVariables are correctly
+    implemented, and that the mapping of parameters between the PyMC
+    Distribution and the respective RandomVariable is correct.
+
+    Three default tests are provided which check:
+    1. Expected inputs are passed to the `rv_op` by the `dist` `classmethod`,
+    via `check_pymc_params_match_rv_op`
+    2. Expected (exact) draws are being returned, via
+    `check_pymc_draws_match_reference`
+    3. Shape variable inference is correct, via `check_rv_size`
+
+    Each desired test must be referenced by name in `checks_to_run`, when
+    subclassing this distribution. Custom tests can be added to each class as
+    well. See `TestFlat` for an example.
+
+    Additional tests should be added for each optional parametrization of the
+    distribution. In this case it's enough to include the test
+    `check_pymc_params_match_rv_op` since only this differs.
+    """mport pytest
 
 from numpy import random as nr
 from numpy import testing as npt

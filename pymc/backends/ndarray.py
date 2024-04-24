@@ -1,7 +1,39 @@
 #   Copyright 2024 The PyMC Developers
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
+#   you may not us        if self.draw_idx == self.draws:
+            return
+        # Remove trailing zeros if interrupted before completed all
+        # draws.
+        self.samples = {var: vtrace[: self.draw_idx] for var, vtrace in self.samples.items()}
+        if self._stats is not None:
+            self._stats = [
+                {var: trace[: self.draw_idx] for var, trace in stats.items()}
+                for stats in self._stats
+            }
+        }
+
+    # Selection methods
+
+    def __len__(self):
+        if not self.samples:  # `setup` has not been called.
+            return 0
+        return self.draw_idx
+
+    def get_values(self, varname: str, burn=0, thin=1) -> np.ndarray:
+        """Get values from trace.
+
+        Parameters
+        ----------
+        varname: str
+        burn: int
+        thin: int
+
+        Returns
+        -------
+        A NumPy array
+        """
+        return self.samples[varname][burn::thin] with the License.
 #   You may obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0

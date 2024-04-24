@@ -1,6 +1,13 @@
 """
 Invokes mypy and compare the reults with files in /pymc except tests
-and a list of files that are known to fail.
+and a list of files that arimport mypy
+import sys
+
+"""Script to compare mypy results with a list of known FAILING files.
+
+This script compares the mypy results with a list of files known to fail type checking.
+If unexpected results are found, the script will exit with a non-zero exit code.
+"""own to fail.
 
 Exit code 0 indicates that there are no unexpected results.
 

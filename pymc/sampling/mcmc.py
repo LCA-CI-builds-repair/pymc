@@ -47,7 +47,18 @@ from typing_extensions import Protocol, TypeAlias
 
 import pymc as pm
 
-from pymc.backends import RunType, TraceOrBackend, init_traces
+from pymc.b                        callback(trace=strace, draw=draw)
+
+        except ps.ParallelSamplingError as error:
+            strace = traces[error._chain]
+            for strace in traces:
+                strace.close()
+            raise
+    except KeyboardInterrupt:
+        pass
+    finally:
+        for strace in traces:
+            strace.close()ceOrBackend, init_traces
 from pymc.backends.arviz import (
     coords_and_dims_for_inferencedata,
     find_constants,

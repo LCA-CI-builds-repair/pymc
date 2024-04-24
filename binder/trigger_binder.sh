@@ -1,4 +1,21 @@
-#!/usr/bin/env bash
+#function trigger_binder() {
+    local URL="${1}"
+
+    curl -L --connect-timeout 10 --max-time 30 "${URL}"
+    curl_return=$?
+
+    # Handling different curl return codes
+    if [ "${curl_return}" -eq 0 ]; then
+        printf "\nBinder build successful.\n"
+    elif [ "${curl_return}" -eq 28 ]; then
+        printf "\nBinder build started.\nCheck back soon.\n"
+    else
+        printf "\nError: Binder build failed with return code ${curl_return}.\n"
+        return "${curl_return}"
+    fi
+
+    return 0
+}
 
 function trigger_binder() {
     local URL="${1}"

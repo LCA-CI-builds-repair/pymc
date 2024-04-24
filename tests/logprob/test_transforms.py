@@ -10,9 +10,45 @@
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
-#   limitations under the License.
-#
-#   MIT License
+#   limitations under thimport numpy as np
+import pytensor as pt
+
+def test_transforms():
+    ref_transformed_rv = pt.random.normal()
+    vvassert logp_fn(-2) == -np.inf
+np.testing.assert_allclose(logp_fn(-1),  np.log(p))
+np.testing.assert_allclose(logp_fn(0), np.log(1 - p))
+assert logp_fn(1) == -np.inf
+
+# Logcdf and icdf not supported yet
+for func in (logcdf, icdf):
+    with pytest.raises(NotImplementedError):
+        func(rv, 0)eholder()
+    
+    logp_test = pt.sum(logp(ref_transformed_rv, vv))
+    logp_ref = logp(ref_transformed_rv, vv)
+
+    if canonical_func in (pt.log2, pt.log10):
+        # in the cases of log2 and log10 floating point inprecision causes failure
+        # from equal_computations so evaluate logp and check all close instead
+        vv_test = np.array(0.25)
+        np.testing.assert_allclose(logp_ref.eval({vv: vv_test}), logp_test.eval({vv: vv_test}))
+    else:
+        assert equal_computations([logp_test], [logp_ref])
+
+def test_measurable_power_exponent_with_constant_base():
+    # test power(2, rv) = exp2(rv)
+    # test negative base fails
+    x_rv_pow = pt.pow(2, pt.random.normal())
+    x_rv_exp2 = pt.exp2(pt.random.normal())
+
+    x_vv_pow = x_rv_pow.clone()
+    x_vv_exp2 = x_rv_exp2.clone()
+
+    x_logp_fn_pow = pytensor.function([x_vv_pow], pt.sum(logp(x_rv_pow, x_vv_pow)))
+    x_logp_fn_exp2 = pytensor.function([x_vv_exp2], pt.sum(logp(x_rv_exp2, x_vv_exp2)))
+
+    np.testing.assert_allclose(x_logp_fn_pow(0.1), x_logp_fn_exp2(0.1))ense
 #
 #   Copyright (c) 2021-2022 aesara-devs
 #
