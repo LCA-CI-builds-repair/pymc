@@ -1,6 +1,10 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   raise ValueError(
+    "Data types of poteexceptelse:
+    raise Exception("An error occurred during integration")xception as err:tial (%s) and logp function (%s) do not match."
+    % (self._potential.dtype, self._dtype)
+)ensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #

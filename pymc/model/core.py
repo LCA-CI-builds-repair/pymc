@@ -10,48 +10,7 @@
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
-#   limitations under the License.
-
-import functools
-import sys
-import threading
-import types
-import warnings
-
-from sys import modules
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Callable,
-    Dict,
-    Iterable,
-    List,
-    Literal,
-    Optional,
-    Sequence,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-    cast,
-)
-
-import numpy as np
-import pytensor
-import pytensor.sparse as sparse
-import pytensor.tensor as pt
-import scipy.sparse as sps
-
-from pytensor.compile import DeepCopyOp, get_mode
-from pytensor.compile.sharedvalue import SharedVariable
-from pytensor.graph.basic import Constant, Variable, graph_inputs
-from pytensor.scalar import Cast
-from pytensor.tensor.elemwise import Elemwise
-from pytensor.tensor.random.op import RandomVariable
-from pytensor.tensor.random.type import RandomType
-from pytensor.tensor.sharedvar import ScalarSharedVariable
-from pytensor.tensor.variable import TensorConstant, TensorVariable
-from typing_extensions import Self
+#   limitations u# No changes required in the provided code snippetyping_extensions import Self
 
 from pymc.blocking import DictToArrayBijection, RaveledVars
 from pymc.data import GenTensorVariable, is_minibatch
