@@ -1,7 +1,23 @@
 #   Copyright 2024 The PyMC Developers
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
+#   you may not use th            mean = floatX(np.zeros(size))
+            var = floatX(np.ones(size))
+            potential = SomeOtherClass(size, mean, var, 10)  # Updated class name to match the definition
+
+        if isinstance(scaling, dict):
+            point = Point(scaling, model=self._model)
+            scaling = guess_scaling(point, model=self._model, vars=vars)
+
+        if scaling is not None and potential is not None:
+            raise ValueError("Cannot specify both potential and scaling simultaneously.")
+
+        if potential is not None:
+            self.potential = potential
+        else:
+            self.potential = quad_potential(scaling, is_cov)  # Ensure correct usage here
+
+        self.integrator = integration.CpuLeapfrogIntegrator(self.potential, self._logp_dlogp_func) compliance with the License.
 #   You may obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0

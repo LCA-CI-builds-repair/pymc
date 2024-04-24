@@ -10,7 +10,28 @@
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
-#   limitations under the License.
+#   limi        ------
+        ValueError
+            If inferred ar_order cannot be determined from rhos or if it is less than 1
+        """
+        if ar_order is None:
+            try:
+                (folded_shape,) = constant_fold((rhos.shape[-1],))
+            except NotConstantValueError:
+                raise ValueError(
+                    "Could not infer ar_order from the last dimension of rhos. Please pass it "
+                    "explicitly or ensure rhos have a static shape."
+                )
+            ar_order = int(folded_shape) - int(constant)
+            if ar_order < 1:
+                raise ValueError(
+                    "Inferred ar_order is less than 1. Increase the last dimension "
+                    "of rhos or remove the constant_term."
+                )
+
+        return ar_order
+
+    @classmethodnse.
 import abc
 import warnings
 

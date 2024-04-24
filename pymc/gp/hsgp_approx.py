@@ -9,7 +9,15 @@
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
+#   See        """Linearized version of the approximation. Returns the cosine and sine bases and coefficients
+        of the expansion needed to create the GP.
+
+        This function allows the user to bypass the GP interface and work directly with the basis
+        and coefficients. It enables the creation of predictions using `pm.set_data` similar to a linear model
+        and facilitates computational speed-ups in multi-GP models by sharing the same basis.
+
+        To achieve correct results when using `prior_linearized` with `pm.set_data` and `pm.MutableData`,
+        ensure that the `Xs` are zero-centered, meaning their mean must be subtracted. An example is provided below.e for the specific language governing permissions and
 #   limitations under the License.
 
 import numbers

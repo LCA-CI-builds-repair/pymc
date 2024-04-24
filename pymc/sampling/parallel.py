@@ -4,9 +4,28 @@
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
+#       http://www.apache.org/licenses/LICENSE-2.        try:
+            self._msg_pipe            raise ValueError("No processes.")
+        pipes = [proc._msg_pipe for proc in processes]
+        ready = multiprocessing.connection.wait(pipes)
+        if not ready:
+            raise multiprocessing.TimeoutError("No message received from samplers within the specified time.")((msg, *args))
+        except Exception:
+            # Try to receive an error message
+            message = None
+            try:
+                message = self._msg_pipe.recv()
+            except Exception:
+                pass
+            if message is not None and message[0] == "error":
+                old_error = message[1]
+                if old_error is not None:
+                    error = ParallelSamplingError(
+                        f"Chain {self.chain} failed with: {old_error}", chain=self.chain
+                    )
+                else:
+                    error = RuntimeError(f"Chain {self.chain} failed.")
+                raise error from old_erroruired by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and

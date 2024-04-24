@@ -6,7 +6,9 @@
 
 ## PyMC 4.0.0 (2022-06-03)
 
-**If you want a description of the highlights of this release, check out the [release announcement](https://www.pymc.io/blog/v4_announcement.html) on our [new website](https://www.pymc.io)**.
+**If you want a description of the highlights of this release, check out the [- Use [fastprogress](https://github.com/fastai/fastprogress) instead of tqdm [#3693](https://github.com/pymc-devs/pymc/pull/3693).
+- `DEMetropolis` can now tune both `lambda` and `scaling` parameters, but by default neither of them are tuned. See [#3743](https://github.com/pymc-devs/pymc/pull/3743) for more info.
+- `DEMetropolisZ`, an improved variant of `DEMetropolis`, brings better parallelization and higher efficiency with fewer chains but slower initial convergence. This implementation is experimental. See [#3784](https://github.com/pymc-devs/pymc/pull/3784) for more info.ease announcement](https://www.pymc.io/blog/v4_announcement.html) on our [new website](https://www.pymc.io)**.
 Feel free to read it, print it out, and give it to people on the street -- because _everybody_ has to know PyMC 4.0 is officially out 🍾
 
 ### Do not miss 🚨

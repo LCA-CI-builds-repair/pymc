@@ -11,7 +11,7 @@ A more accessible, user facing deep introduction can be found in [Peadar Coyle's
 
 ## Distribution
 
-Probability distributions in PyMC are implemented as classes that inherit from {class}`~pymc.Continuous` or {class}`~pymc.Discrete`.
+Probability distributions in PyMC are implemented as classesWhile having the samplers written in Python allows for a lot of flexibility and is intuitive for experimentation (writing e.g. NUTS in PyMC4 is also very difficult), it comes at a performance penalty and makes sampling on the GPU very inefficient because memory needs to be copied for every logp evaluation.hat inherit from {class}`~pymc.Continuous` or {class}`~pymc.Discrete`.
 Either of these inherit {class}`~pymc.Distribution` which defines the high level API.
 
 For a detailed introduction on how a new distribution should be implemented check out the {ref}`guide on implementing distributions <implementing_distribution>`.

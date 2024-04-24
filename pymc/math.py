@@ -1,6 +1,6 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   Lifrom numpy import dot, eqnsed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #
@@ -8,8 +8,32 @@
 #
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, eitheimport torch as pt
+
+        return [(shapes[0][0],) + (shapes[0][1],) * 2]
+
+
+def batched_diag(C):
+    C = pt.as_tensor(C)
+    dim = C.shape[-1]
+    if C.ndim == 2:
+        # diag -> matrices
+        return BatchedDiag()(C)
+    elif C.ndim == 3:
+        # matrices -> diag
+        idx = pt.arange(dim)
+        return C[..., idx, idx]
+    else:
+        raise ValueError("Input should be 2 or 3 dimensional")
+
+
+class BlockDiagonalMatrix(Op):
+    __props__ = ("sparse", "format")
+
+    def __init__(self, sparse=False, format="csr"):
+        if format not in ("csr", "csc"):
+            raise ValueError(f"Invalid format: '{format}'. Format must be either 'csr' or 'csc'.")
+        self.sparse = sparse  See the License for the specific language governing permissions and
 #   limitations under the License.
 
 import sys

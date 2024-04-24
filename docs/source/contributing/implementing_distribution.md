@@ -3,7 +3,17 @@
 
 This guide provides an overview on how to implement a distribution for PyMC.
 It is designed for developers who wish to add a new distribution to the library.
-Users will not be aware of all this complexity and should instead make use of helper methods such as `~pymc.CustomDist`.
+Users will not be aware of all this complexity and should instead make use of helper methods such as `~pymc.CustomDThere are a couple of important details worth keeping## Details to Keep in Mind
+
+Here are some key points to consider when implementing a new distribution in PyMC3:
+
+- When manually broadcasting parameters, ensure to include test conditions that would fail if not done correctly. One approach is to use a scalar for the used parameter and vector(s) for the unused one(s) with size `None`.
+- Test different combinations of size and broadcasting to cover various cases effectively.
+
+## 6. Documenting the new `Distribution`
+
+New distributions should have a comprehensive docstring, following the format of previously implemented distributions. Typically, it resembles the following structure:hen implementing a new distribution in PyMC3:
+t`.
 
 PyMC {class}`~pymc.Distribution` builds on top of PyTensor's {class}`~pytensor.tensor.random.op.RandomVariable`, and implements `logp`, `logcdf`, `icdf` and `moment` methods as well as other initialization and validation helpers.
 Most notably `shape/dims/observed` kwargs, alternative parametrizations, and default `transform`.

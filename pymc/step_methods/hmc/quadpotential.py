@@ -1,7 +1,65 @@
 #   Copyright 2024 The PyMC Developers
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
+#   you may not us        mass matrix.
+        """
+        pass
+
+    def c        ----------
+        n : int
+            The number of parameters.
+        initial_mean : np.ndarray
+            An initial g        ------
+        ValueError if any standard deviations are 0 or infinite
+
+        Returns
+        -------
+        None
+        """
+        if np.any(self._stds == 0):
+            errmsg = ["Mass matrix contains zeros on the diagonal. "]
+            last_idx = 0
+            for name, shape, dtype in map_info:
+                arr_len = np.prod(shape, dtype=int)
+                indices = np.where(self._stds[last_idx : last_idx + arr_len] == 0)[0]
+                errmsg.append(f"The derivative of RV `{name}`.ravel()[{indices}] is zero.")
+                last_idx += arr_len
+
+            raise ValueError("\n".join(errmsg))erior mean of each parameter.
+        initial_diag : np.ndarray
+            An estimate of the posterior variance of each parameter.
+        initial_weight : int
+            How much weight the initial guess has compared to new samples during tuning.
+            Measured in equivalent number of samples.
+        adaptation_window : int
+            The size of the adaptation window during tuning. It specifies how many samples
+            are used to estimate the mass matrix in each section of the adaptation.
+        adaptation_window_multiplier : float
+            The factor with which we increase the adaptation window after each adaptation
+            window.
+        dtype : np.dtype
+            The dtype used to store the mass matrix.
+        discard_window : int
+            The size of the discard window during tuning. It specifies how many samples to discard
+            before starting to update the mass matrix.lf, map_info=None):
+        """Check if the mass matrix is valid, and raise ValueError if not.
+
+        Parameters
+        ----------
+        map_info: List of (name, shape, dtype)
+            List tuples with variable name, shape, and dtype.
+
+        Raises
+        ------
+        ValueError if any standard deviations are 0 or infinite.
+
+        Returns
+        -------
+        None
+        """
+        # Check if any standard deviations are 0 or infinite and raise an error if found
+        if any(std == 0 or np.isinf(std) for _, _, std in map_info):
+            raise ValueError("Invalid mass matrix: standard deviations should not be 0 or infinite.")n compliance with the License.
 #   You may obtain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0

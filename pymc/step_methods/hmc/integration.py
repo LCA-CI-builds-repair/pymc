@@ -1,6 +1,51 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   Li                "don't match." % (self._potential.dtype, self._dtype)
+            )
+
+    def compute_state(self, q: RaveledVars, p: RaveledVars):
+        """Compute Hamiltonian functions using a position and momentum."""
+        if q.data.dtype != self._dtype or p.data.dtype != self._dtype:
+            raise ValueError("Invalid dtype. Must be %s" % self._dtype)
+
+        logp, dlogp = self._logp_dlogp_func(q)
+
+        v = self._potential.velocity(p.data, out=None)
+        kinetic = self._potential.energy(p.data, velocity=v)
+        energy = kinetic - logp
+        return State(q, p, v, dlogp, energy, logp, 0)
+
+    def step(self, epsilon: float, state: State) -> Union[None, State]:
+        """Leapfrog integrator step.
+
+        Half a momentum update, full position update, half momentum update.
+
+        Parameters
+        ----------
+        epsilon: float, > 0
+            step scale
+        state: State namedtuple,
+            current position data
+        out: (optional) State namedtuple,
+            preallocated arrays to write to in place
+
+        Returns
+        -------
+        None if `out` is provided, else a State namedtuple
+        """
+        try:
+            return self._step(epsilon, state)
+        except linalg.LinAlgError as err:
+            msg = "LinAlgError during leapfrog step."
+            raise IntegrationError(msg) from err
+        except ValueError as err:
+            # Raised by many scipy.linalg functions
+            scipy_msg = "array must not contain infs or nans"
+            if len(err.args) > 0 and scipy_msg in err.args[0].lower():
+                msg = "Infs or nans in scipy.linalg during leapfrog step."
+                raise IntegrationError(msg)
+            else:
+                raisethe "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #

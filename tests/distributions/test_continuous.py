@@ -21,7 +21,24 @@ import pytensor
 import pytensor.tensor as pt
 import pytest
 import scipy.special as sp
+impimport pymc as pm
 import scipy.stats as st
+
+# Make sure variables like R, Rplusbig, mu, beta, value are defined or imported appropriately
+
+check_logp(
+    pm.Gumbel,
+    R,
+    {"mu": mu, "beta": beta},
+    lambda value, mu, beta: st.gumbel_r.logpdf(value, loc=mu, scale=beta),
+)
+
+check_logcdf(
+    pm.Gumbel,
+    R,
+    {"mu": mu, "beta": beta},
+    lambda value, mu, beta: st.gumbel_r.logcdf(value, loc=mu, scale=beta),
+)ats as st
 
 from pytensor.compile.mode import Mode
 

@@ -6,7 +6,19 @@
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
 #
-#   Unless required by applicable law or agreed to in writing, software
+#   Unless required by applicable    if acc_rate < 0.001:
+        scale *= 0.1  # reduce by 90 percent
+    elif acc_rate < 0.05:
+        scale *= 0.5  # reduce by 50 percent
+    elif acc_rate < 0.2:
+        scale *= 0.9  # reduce by ten percent
+    elif acc_rate > 0.95:
+        scale *= 10.0  # increase by factor of ten
+    elif acc_rate > 0.75:
+        scale *= 2.0  # increase by double
+    elif acc_rate > 0.5:
+        scale *= 1.1  # increase by ten percent
+    # Do not change if none of the above conditions are metftware
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
