@@ -2,7 +2,16 @@
 Invokes mypy and compare the reults with files in /pymc except tests
 and a list of files that are known to fail.
 
-Exit code 0 indicates that there are no unexpected results.
+Exit        print(f"{len(passing)}/{len(all_files)} files pass as expected.")
+    else:
+        print("!!!!!!!!!")
+        print(f"{len(unexpected_failing)} files unexpectedly failed.")
+        print("\n".join(sorted(map(str, unexpected_failing))))
+        print(
+            f"These files did not fail before, so please check the above output for errors in the following files: {', '.join(unexpected_failing)} and fix them."
+        )
+        print("You can run `python scripts/run_mypy.py --verbose` to reproduce this test locally.")
+        sys.exit(1)icates that there are no unexpected results.
 
 Usage
 -----

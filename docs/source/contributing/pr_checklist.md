@@ -1,5 +1,5 @@
 (pr_checklist)=
-# Pull request checklist
+# Pull req*  All other tests pass when everything is rebuilt from scratch. See {ref}`running_the_test_suite` for more details.st checklist
 
 We recommended that your contribution complies with the following guidelines before you submit a pull request:
 

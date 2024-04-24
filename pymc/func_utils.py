@@ -1,6 +1,11 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   Licensed under the         For instance, for a StudentT, you fix nu to a constant and get the optimized
+        mu and sigma.
+    mass_below_lower : float, optional, default None
+        The probability mass below the ``lower`` bound. If ``None``,
+        it defaults to ``(1 - mass) / 2``, which ensures that the probability
+        mass below the ``lower`` value is equal to the probability mass above the ``upper`` value.License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #

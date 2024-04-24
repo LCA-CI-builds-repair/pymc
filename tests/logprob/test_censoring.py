@@ -1,8 +1,23 @@
 #   Copyright 2024 The PyMC Developers
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
+#   you may not use this file except in compliance with the License    """Test failure when both base_rv and clipped_rv are given value vars"""
+    x_rv = pt.random.normal(0, 1)
+    cens_x_rv = pt.clip(x_rv, x_rv, 1)
+    cens_x_rv.name = "cens_x"
+
+    x_vv = x_rv.clone()
+    cens_x_vv = cens_x_rv.clone()
+    with pytest.raises(RuntimeError, match="could not be derived: cens_x"):
+        conditional_logp({cens_x_rv: cens_x_vv, x_rv: x_vv})
+
+
+def test_fail_multiple_clip_single_base():
+    """Test failure when multiple clipped_rvs share a single base_rv"""
+    base_rv = pt.random.normal(0, 1)
+    cens_rv1 = pt.clip(base_rv, -1, 1)
+    cens_rv1.name = "cens1"
+    cens_rv2 = pt.clip(base_rv, -1, 1)ain a copy of the License at
 #
 #       http://www.apache.org/licenses/LICENSE-2.0
 #

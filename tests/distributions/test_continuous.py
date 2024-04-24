@@ -20,12 +20,109 @@ import numpy.testing as npt
 import pytensor
 import pytensor.tensor as pt
 import pytest
-import scipy.special as sp
-import scipy.stats as st
+imp        See e.g., doi: 10.1111/j.1467-9876.2005.00510.x, or http://www.gamlss.org/."""
+        npt.assert_almost_equal(
+            logcdf(pm.ExGaussian.dist    @pytest.mark.parametrize("transform", [pm.util.UNSET, None])
+    def test_interpolated_transform(self, transform):
+        # Issue: https://github.com/pymc-devs/pymc/issues/5048
+        x_points = np.linspace(0, 10, 10)
+        pdf_points = st.norm.pdf(x_points, loc=1, scale=1)
+        with pm.Model() as m:
+            x = pm.Interpolated("x", x_points, pdf_points, transform=transform)
 
-from pytensor.compile.mode import Mode
+        if transform is pm.util.UNSET:
+            assert np.isfinite(m.logp({"x_interval__": -1.0}))
+            assert np.isfinite(m.logp({"x_interval__": 11.0}))
+        else:
+            assert not np.isfinite(m.logp({"x": -1.0}))sigma, nu=nu), value).eval(),
+            logcdf_val,
+            decimal=select_by_precision(float64=6, float32=2),
+            err_msg=str((value, mu, sigma, nu, logcdf_val)),
+        )
 
-import pymc as pm
+    def test_ex_gaussian_cdf_outside_edges(self):
+        check_logcdf(
+            pm.ExGaussian(),
+            R,
+            {"mu": R, "sigma": Rplus, "nu": Rplus},
+            value=None,
+            skip_paramdomain_inside_edge_test=True,  # Valid values are tested above
+        )
+
+    @pytest.mark.skipif(lambda: pytensor.config.floatX == "float32", reason="Fails on float32")
+    def test_vonmises(self):
+        check_logp(
+            pm.VonMises(),
+            Circ,
+            {"mu": R, "kappa": Rplus},
+            lambda value, mu, kappa: floatX(st.vonmises.logpdf(value, kappa, loc=mu)),
+        )
+
+    def test_gumbel(self):
+        check_logp(
+            pm.Gumbel(),
+            R,
+            {"mu": R, "beta": Rplusbig},
+            lambda value, mu, beta: st.gumbel_r.logpdf(value, loc=mu, scale=beta),
+        )
+        check_logcdf(
+            pm.Gumbel(),
+            R,
+            {"mu": R, "beta": Rplusbig},
+            lambda value, mu, beta: st.gumbel_r.logcdf(value, loc=mu, scale=beta),
+        )
+        check_icdf(
+            pm.Gumbel(),
+            {"mu": R, "beta": Rplusbig},
+            lambda q, mu, beta: st.gumbel_r.ppf(q, loc=mu, scale=beta),
+        )
+
+    def test_logistic(self):
+        check_logp(
+            pm.Logistic(),
+            R,
+            {"mu": R, "s": Rplus},
+            lambda value, mu, s: st.logistic.logpdf(value, mu, s),
+            decimal=select_by_precision(float64=6, float32=1),
+        )
+        check_logcdf(
+            pm.Logistic(),
+            R,
+            {"mu": R, "s": Rplus},
+            lambda value, mu, s: st.logistic.logcdf(value, mu, s),
+            decimal=select_by_precision(float64=6, float32=1),
+        )
+        check_icdf(
+            pm.Logistic(),
+            {"mu": R, "s": Rplus},
+            lambda q, mu, s: st.logistic.ppf(q, mu, s),
+            decimal=select_by_precision(float64=6, float32=1),
+        )
+
+    def test_logitnormal(self):
+        check_logp(
+            pm.LogitNormal(),
+            Unit,
+            {"mu": R, "sigma": Rplus},
+            lambda value, mu, sigma: (
+                st.norm.logpdf(sp.logit(value), mu, sigma) - (np.log(value) + np.log1p(-value))
+            ),
+            decimal=select_by_precision(float64=6, float32=1),
+        )
+
+    @pytest.mark.skipif(
+        lambda: pytensor.config.floatX == "float32",
+        reason="Some combinations underflow to -inf in float32 in pymc version",
+    )
+    def test_rice(self):
+        check_logp(
+            pm.Rice(),
+            Rplus,
+            {"b": Rplus, "sigma": Rplusbig},
+            lambda value, b, sigma: st.rice.logpdf(value, b=b, loc=0, scale=sigma),
+        )
+        if pytensor.config.floatX == "float32":
+            raise Exception("Flaky test: It passed this time, but XPASS is not allowed.")mport pymc as pm
 
 from pymc.distributions.continuous import get_tau_sigma, interpolated
 from pymc.distributions.dist_math import clipped_beta_rvs

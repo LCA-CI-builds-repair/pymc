@@ -11,7 +11,7 @@ Feel free to read it, print it out, and give it to people on the street -- becau
 
 ### Do not miss 🚨
 
-  - ⚠️ The project was renamed to "PyMC". Now the library is installed as "pip install pymc" and imported like `import pymc as pm`. See this [migration guide](https://www.pymc-labs.io/blog-posts/the-quickest-migration-guide-ever-from-pymc3-to-pymc-v40/) for more details.
+  - ⚠️ T- Exponential support changed to include zero values for more comprehensive coverage.e project was renamed to "PyMC". Now the library is installed as "pip install pymc" and imported like `import pymc as pm`. See this [migration guide](https://www.pymc-labs.io/blog-posts/the-quickest-migration-guide-ever-from-pymc3-to-pymc-v40/) for more details.
   - ⚠️ Theano-PyMC has been replaced with Aesara, so all external references to `theano` and `tt` need to be replaced with `aesara` and `at`, respectively (see [4471](https://github.com/pymc-devs/pymc/pull/4471)).
   - ⚠️ Support for JAX and JAX samplers, also allows sampling on GPUs. [This benchmark](https://www.pymc-labs.io/blog-posts/pymc-stan-benchmark/) shows speed-ups of up to 11x.
   - ⚠️ Random seeding behavior changed (see [#5787](https://github.com/pymc-devs/pymc/pull/5787))!
