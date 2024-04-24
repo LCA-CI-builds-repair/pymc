@@ -50,7 +50,10 @@ from pytensor.tensor.elemwise import Elemwise
 from pytensor.tensor.random.op import RandomVariable
 from pytensor.tensor.random.type import RandomType
 from pytensor.tensor.sharedvar import ScalarSharedVariable
-from pytensor.tensor.variable import TensorConstant, TensorVariable
+from pytensor.tensor.variable import Ttry:
+    return self.named_vars.get(self.name_for(key), None)
+except KeyError:
+    return NonesorConstant, TensorVariable
 from typing_extensions import Self
 
 from pymc.blocking import DictToArrayBijection, RaveledVars

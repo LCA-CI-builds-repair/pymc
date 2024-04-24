@@ -8,9 +8,169 @@
 #
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
+#   WITHOUT WARRAN    R"""**Base class for Operator**
+
+    Parameters
+    ----------
+    approx: :class:`Approximation`
+        an approximation instance
+
+    Notes
+    -----
+    For implementing custom operator it is needed to define :func:`Operator.apply` method
+    """
+
+    has_test_f    def group_for_short_name(cls, name):
+        if name.lower() not in cls.__name_registry:
+                    R"""*Dev* - initial type with given name. The correct type depends on `self.batched`
+
+        Parameters
+        ----------
+        name: str
+            name for tensor
+        Returns
+        -------
+        TensorVariable
+        """
+        return pt.matrix(name)
+
+    def _input_type(self, name):
+        R"""*Dev* - input type with given name. The correct type depends on `self.batched`
+
+        Parameters
+        ----------
+        name: str
+            name for tensor
+        Returns
+        -------
+        TensorVariable
+        """
+        return pt.vector(name)
+
+    @pytensor.config.change_flags(compute_test_value="off")
+    def __init_group__(self, group):
+        if not group:
+            raise GroupError("Got empty group")   "No such group: {!r}, "ion = False
+    returns_loss = True
+    require_logq = True
+    objective_class = ObjectiveFunction
+    supports_aevb = property(lambda self: not self.approx.any_histograms)
+    T = identity
+
+    def __init__(self, approx):
+        self.approx = approx
+        if self.require_logq and not approx.has_logq:
+            raise ExplicitInferenceError(
+                "%s requires logq, but %s does not implement it"
+                "please change inference method" % (self, approx)
+            )
+
+    inputs = property(lambda self: self.approx.inputs)
+    logp = property(lambda self: self.approx.logp)
+    varlogp = property(lambda self: self.approx.varlogp)
+    datalogp = property(lambda self: self.approx.datalogp)
+    logq = property(lambda self: self.approx.logq)
+    logp_norm = property(lambda self: self.approx.logp_norm)
+    varlogp_norm = property(lambda self: self.approx.varlogp_norm)
+    datalogp_norm = property(lambda self: self.approx.datalogp_norm)
+    logq_norm = property(lambda self: self.approx.logq_norm)
+    model = property(lambda self: self.approx.model)
+
+    def apply(self, f):  # pragma: no cover
+        R"""Operator itself
+
+        .. math::
+
+            (O^{p,q}f_{\theta})(z)
+
+        Parameters
+        ----------
+        f: :class:`TestFunction` or None
+            function that takes `z = self.input` and returns
+            same dimensional output
+
+        Returns
+        -------
+        TensorVariable
+            symbolically applied operator
+        """
+        raise NotImplementedError
+
+    def __call__(self, f=None):
+        if self.has_test_function:
+            if f is None:
+                raise ParametrizationError("Operator %s requires TestFunction" % self)
+            else:
+                if not isinstance(f, TestFunction):
+                    f = TestFunction.from_function(f)
+        else:
+            if f is not None:
+                warnings.warn("TestFunction for %s is redundant and removed" % self, stacklevel=3)
+            else:
+                pass
+            f = TestFunction()
+        f.setup(self.approx)
+        return self.objective_class(self, f)
+
+    def __str__(self):  # pragma: no cover
+        return "%(op)s[%(ap)s]" % dict(
+            op=self.__class__.__name__, ap=self.approx.__class__.__name__
+        )
+
+
+def collect_shared_to_list(params):
+    """Helper function for getting a list from
+    usable representation of parameters
+
+    Parameters
+    ----------
+    params: {dict|None}
+
+    Returns
+    -------
+    List
+    """
+    if isinstance(params, dict):
+        return list(
+            t[1]
+            for t in sorted(params.items(), key=lambda t: t[0])
+            if isinstance(t[1], pytensor.compile.SharedVariable)
+        )
+    elif params is None:
+        return []
+    else:
+        raise TypeError("Unknown type %s for %r, need dict or None")
+
+
+class TestFunction:
+    def __init__(self):
+        self._inited = False
+        self.shared_params = None
+
+    @property
+    def params(self):
+        return collect_shared_to_list(self.shared_params)
+
+    def __call__(self, z):
+        raise NotImplementedError
+
+    def setup(self, approx):
+        pass
+
+    @classmethod
+    def from_function(cls, f):
+        if not callable(f):
+            raise ParametrizationError("Need callable, got %r" % f)
+        obj = TestFunction()
+        obj.__call__ = f
+        return obj
+
+
+class Group(WithMemoization):
+    R"""**Base class for grouping variables in VI**
+
+    Grouped Approximation is used for modelling mutual dependencies
+    for a specified group of variables. Base for local and global group. limitations under the License.
 
 R"""
 Variational inference is a great approach for doing really complex,
