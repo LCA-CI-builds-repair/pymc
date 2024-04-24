@@ -1,6 +1,20 @@
 #   Copyright 2024 The PyMC Developers
 #
-#   Licensed under the Apache License, Version 2.0 (the "License");
+#   Licensed under the Apache License, Version        with pytest.raises(pm.exceptions.DtypeError) as exinfo:
+            raise pm.exceptions.DtypeError("Just the message.")
+        assert "Just" in str(exinfo.value)
+
+        with pytest.raises(pm.exceptions.DtypeError) as exinfo:
+            raise pm.exceptions.DtypeError("With types.", actual=str)
+        assert "str" in str(exinfo.value)
+
+        with pytest.raises(pm.exceptions.DtypeError) as exinfo:
+            raise pm.exceptions.DtypeError("With types.", expected=float)
+        assert "float" in str(exinfo.value)
+
+        with pytest.raises(pm.exceptions.DtypeError) as exinfo:
+            raise pm.exceptions.DtypeError("With types.", actual=int, expected=str)
+        assert "int" in str(exinfo.value) and "str" in str(exinfo.value)nse");
 #   you may not use this file except in compliance with the License.
 #   You may obtain a copy of the License at
 #

@@ -49,8 +49,25 @@ from pytensor.scalar import Cast
 from pytensor.tensor.elemwise import Elemwise
 from pytensor.tensor.random.op import RandomVariable
 from pytensor.tensor.random.type import RandomType
-from pytensor.tensor.sharedvar import ScalarSharedVariable
-from pytensor.tensor.variable import TensorConstant, TensorVariable
+from pytensor.tensor.sharedvar import ScalarSharedV            if isinsta        """Checks         try:
+            return self.named_vars[key]
+        except KeyError:
+            return self.named_vars[self.name_for(key)] has prefix and adds if needed"""
+        name = self._validate_name(name)
+        if self.prefix:
+            if not name.startswith(self.prefix + "::"):
+                name = f"{self.prefix}::{name}"
+        return name str):
+                dims = (dims,)
+            for dim in dims:
+                if dim not in self.coords and dim is not None:
+                    raise ValueError(f"Dimension {dim} is not specified in `coords`.")
+            if any(var.name == dim for dim in dims if dim is not None):
+                raise ValueError(f"Variable `{var.name}` has the same name as its dimension label.")
+            self.named_vars_to_dims[var.name] = dims
+
+        self.named_vars[var.name] = var
+        if not hasattr(self, var.name):m pytensor.tensor.variable import TensorConstant, TensorVariable
 from typing_extensions import Self
 
 from pymc.blocking import DictToArrayBijection, RaveledVars

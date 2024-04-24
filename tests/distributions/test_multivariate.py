@@ -29,9 +29,25 @@ from pytensor.tensor.blockwise import Blockwise
 from pytensor.tensor.random.utils import broadcast_params
 from pytensor.tensor.slinalg import Cholesky
 
-import pymc as pm
-
-from pymc.distributions.multivariate import (
+im        (
+            np.array([0.0, 0.25, 0.25, 0.25, 0.25]),
+            1,
+            None,
+            np.array([0, 1, 0, 0, 0]),
+        ),
+        pytest.param(
+            np.array([0.1441, 0.1363, 0.1385, 0.1348, 0.1521, 0.1500, 0.1442]),
+            4,
+            None,
+            np.array([1, 1, 1, 1, 0, 0, 0]),
+            marks=pytest.mark.xfail(
+                raises=AssertionError, reason="Known failure in mode approximation"
+            ),
+        ),
+    ],
+)
+def test_multinomial_moment(self, p, n, size, expected):
+    with pm.Model() as model:distributions.multivariate import (
     MultivariateIntervalTransform,
     _LKJCholeskyCov,
     _OrderedMultinomial,

@@ -9,7 +9,52 @@
 #   Unless required by applicable law or agreed to in writing, software
 #   distributed under the License is distributed on an "AS IS" BASIS,
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
+#   See the License for the specific language governing    def setup(self, approx):
+        pass
+
+    @classmethod
+    def from_function(cls, f):
+        if not callable(f):
+            raise Parametriza            raise KeyError(
+                "No such group for the following params: {!r}, "
+                "only the following are supported\n\n{}".format(params, list(cls.__param_registry.keys()))
+            )
+        return cls.__param_registry[frozenset(params)]
+
+    @classmethod
+    def group_for_short_name(cls, name):
+        if name.lower() not in cls.__name_registry:
+            raise KeyError(
+                "No such group: {!r}, "
+                "class Group:
+    @classmethod
+    def group_for_params(cls, params):
+        raise NotImplementedError
+
+    @classmethod
+    def group_for_short_name(cls, name):
+        raise NotImplementedError
+
+
+group_for_params = Group.group_for_params
+group_for_short_name = Group.group_for_short_name
+
+
+class Approximation(WithMemoization):
+    """**Wrapper for grouped approximations**
+
+    Wraps list of groups, creates an Approximation instance that collects
+    sampled variables from all the groups, also collects logQ needed for
+    explicit Variational Inference.
+
+    Parameters
+    ----------
+    # Add your parameters heresupported\n\n{}".format(name, list(cls.__name_registry.keys()))
+            )
+        return cls.__name_registry[name.lower()]d callable, got %r" % f)
+        obj = TestFunction()
+        obj.__call__ = f
+        return obj and
 #   limitations under the License.
 
 R"""
