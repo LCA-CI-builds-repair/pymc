@@ -1134,15 +1134,7 @@ class MarginalKron(Base):
         return mu, covs
 
     def _check_inputs(self, Xs, y):
-        N = int(np.prod([len(X) for X in Xs]))
-        if len(Xs) != len(self.cov_funcs):
-            raise ValueError("Must provide a covariance function for each X")
-        if N != len(y):
-            raise ValueError(
                 f"Length of y ({len(y)}) must match length of cartesian product of Xs ({N})"
-            )
-
-    def marginal_likelihood(self, name, Xs, y, sigma, is_observed=True, **kwargs):
         """
         Returns the marginal likelihood distribution, given the input
         locations `cartesian(*Xs)` and the data `y`.

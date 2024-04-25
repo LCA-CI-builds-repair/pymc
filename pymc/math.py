@@ -514,15 +514,7 @@ def batched_diag(C):
 
 
 class BlockDiagonalMatrix(Op):
-    __props__ = ("sparse", "format")
-
-    def __init__(self, sparse=False, format="csr"):
-        if format not in ("csr", "csc"):
             raise ValueError(f"format must be one of: 'csr', 'csc', got {format}")
-        self.sparse = sparse
-        self.format = format
-
-    def make_node(self, *matrices):
         if not matrices:
             raise ValueError("no matrices to allocate")
         matrices = list(map(pt.as_tensor, matrices))
