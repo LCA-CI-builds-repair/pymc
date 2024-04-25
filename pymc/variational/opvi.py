@@ -700,8 +700,7 @@ class Group(WithMemoization):
     def group_for_params(cls, params):
         if frozenset(params) not in cls.__param_registry:
             raise KeyError(
-                "No such group for the following params: {!r}, "
-                "only the following are supported\n\n{}".format(params, cls.__param_registry)
+                "No such group for the following params: {!r}, " "only the following are supported\n\n{}".format(params, cls.__param_registry)
             )
         return cls.__param_registry[frozenset(params)]
 
@@ -709,8 +708,7 @@ class Group(WithMemoization):
     def group_for_short_name(cls, name):
         if name.lower() not in cls.__name_registry:
             raise KeyError(
-                "No such group: {!r}, "
-                "only the following are supported\n\n{}".format(name, cls.__name_registry)
+                "No such group: {!r}, " "only the following are supported\n\n{}".format(name, cls.__name_registry)
             )
         return cls.__name_registry[name.lower()]
 
