@@ -1681,14 +1681,14 @@ class TestHurdleMixtures:
         def logp_fn(value, psi, mu):
             if value == 0:
                 return np.log(1 - psi)
+            elif value == 1:
+                return -np.inf
             else:
                 return (
-                    np.log(psi) + st.poisson.logpmf(value, mu) - np.log(1 - st.poisson.cdf(0, mu))
+                    np.log(psi) + st.nbinom.logpmf(value - 1, 1, mu) - np.log(1 - st.nbinom.cdf(0, 1, mu))
                 )
 
-        check_logp(HurdlePoisson, Nat, {"psi": Unit, "mu": Rplus}, logp_fn)
-
-    def test_hurdle_negativebinomial_logp(self):
+        check_logp(HurdleNegativeBinomial, Nat, {"psi": Unit, "mu": Rplus}, logp_fn)
         def logp_fn(value, psi, mu, alpha):
             n, p = NegativeBinomial.get_n_p(mu=mu, alpha=alpha)
             if value == 0:
