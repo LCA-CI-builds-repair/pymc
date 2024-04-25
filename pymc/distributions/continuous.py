@@ -2823,13 +2823,6 @@ class ExGaussian(Continuous):
         )
 
         return check_parameters(
-            res,
-            sigma > 0,
-            nu > 0,
-            msg="sigma > 0, nu > 0",
-        )
-
-
 class VonMises(CircularContinuous):
     r"""
     Univariate VonMises log-likelihood.

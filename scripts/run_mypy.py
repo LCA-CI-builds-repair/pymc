@@ -1,5 +1,5 @@
 """
-Invokes mypy and compare the reults with files in /pymc except tests
+Invokes mypy and compare the results with files in /pymc except tests
 and a list of files that are known to fail.
 
 Exit code 0 indicates that there are no unexpected results.
@@ -17,7 +17,7 @@ import sys
 
 from typing import Iterator
 
-import pandas
+import pandas as pd
 
 DP_ROOT = pathlib.Path(__file__).absolute().parent.parent
 FAILING = """
