@@ -419,8 +419,10 @@ def check_logcdf(
         1. Test PyMC logcdf and equivalent scipy logcdf methods give similar
         results for valid values and parameters inside the supported edges.
         Edges are excluded by default, but can be artificially included by
-        creating a domain with repeated values (e.g., `Domain([0, 0, .5, 1, 1]`)
+        creating a domain with repeated values (e.g., `Domain([0, 0, .5, 1, 1])`).
+        
         Can be skipped via skip_paramdomain_inside_edge_test
+        
         2. Test PyMC logcdf method returns -inf for invalid parameter values
         outside the supported edges. Can be skipped via skip_paramdomain_outside_edge_test
         3. Test PyMC logcdf method returns -inf and 0 for values below and

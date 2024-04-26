@@ -709,10 +709,10 @@ class Group(WithMemoization):
     def group_for_short_name(cls, name):
         if name.lower() not in cls.__name_registry:
             raise KeyError(
-                "No such group: {!r}, "
-                "only the following are supported\n\n{}".format(name, cls.__name_registry)
-            )
-        return cls.__name_registry[name.lower()]
+    # Method to retrieve the name registry from the class based on the provided name
+    "No such group: {!r}, "
+    "only the following are supported\n\n{}".format(name, cls.__name_registry)
+    return cls.__name_registry[name.lower()]
 
     def __new__(cls, group=None, vfam=None, params=None, *args, **kwargs):
         if cls is Group:
