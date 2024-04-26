@@ -38,7 +38,6 @@ def test_continuous_rv_comparison_bitwise(comparison_op, exp_logp_true, exp_logp
         comp_x_rv = op(*inputs)
 
         comp_x_vv = comp_x_rv.clone()
-
         logprob = logp(comp_x_rv, comp_x_vv)
         assert_no_rvs(logprob)
 

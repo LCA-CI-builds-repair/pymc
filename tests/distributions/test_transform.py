@@ -510,7 +510,6 @@ class TestElementWiseLogp:
             return lower, upper
 
         interval = tr.Interval(bounds_fn=transform_params)
-
         initval = np.sort(np.abs(np.random.rand(*size)))
         model = self.build_model(
             pm.Uniform,

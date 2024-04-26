@@ -104,7 +104,7 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
     """
     df = mypy_to_pandas(mypy_lines)
     all_files = {
-        str(fp).replace(str(DP_ROOT), "").strip(os.sep).replace(os.sep, "/")
+        str(fp).relative_to(DP_ROOT).as_posix()
         for fp in DP_ROOT.glob("pymc/**/*.py")
         if "tests" not in str(fp)
     }
@@ -112,6 +112,8 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
     if not failing.issubset(all_files):
         raise Exception(
             "Mypy should have ignored these files:\n"
+            f"{', '.join(failing - all_files)}"
+        )
             + "\n".join(sorted(map(str, failing - all_files)))
         )
     passing = all_files - failing
