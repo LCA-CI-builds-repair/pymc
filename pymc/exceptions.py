@@ -13,6 +13,7 @@
 #   limitations under the License.
 
 __all__ = [
+[
     "SamplingError",
     "IncorrectArgumentsError",
     "TraceDirectoryError",
@@ -34,8 +35,6 @@ class TraceDirectoryError(ValueError):
     """Error from trying to load a trace from an incorrectly-structured directory,"""
 
     pass
-
-
 class ImputationWarning(UserWarning):
     """Warning that there are missing values that will be imputed."""
 
@@ -49,6 +48,7 @@ class ShapeWarning(UserWarning):
 
 
 class ShapeError(Exception):
+    """Error that the shape of a variable is incorrect."""
     """Error that the shape of a variable is incorrect."""
 
     def __init__(self, message, actual=None, expected=None):

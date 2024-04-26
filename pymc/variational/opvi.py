@@ -505,6 +505,7 @@ class Operator:
                 warnings.warn("TestFunction for %s is redundant and removed" % self, stacklevel=3)
             else:
                 pass
+            # Instantiate a TestFunction
             f = TestFunction()
         f.setup(self.approx)
         return self.objective_class(self, f)
@@ -1553,8 +1554,7 @@ class Approximation(WithMemoization):
             Return trace in Arviz format.
 
         Returns
-        -------
-        trace: :class:`pymc.backends.base.MultiTrace`
+        trace: class:`pymc.backends.base.MultiTrace`
             Samples drawn from variational posterior.
         """
         # TODO: add tests for include_transformed case

@@ -66,23 +66,21 @@ class ModelValuedVar(ModelVar):
         super().__init__()
 
     def make_node(self, rv, value, *dims):
-        assert isinstance(rv, Variable)
-        dims = self._parse_dims(rv, *dims)
-        if value is not None:
-            assert isinstance(value, Variable)
-            assert rv.type.dtype == value.type.dtype
-            return Apply(self, [rv, value, *dims], [rv.type(name=rv.name)])
-
-
 class ModelFreeRV(ModelValuedVar):
+    """Representation of a free random variable in the model."""
+
     pass
 
 
 class ModelObservedRV(ModelValuedVar):
+    """Representation of an observed random variable in the model."""
+
     pass
 
 
 class ModelPotential(ModelVar):
+    """Representation of a potential function in the model."""
+
     pass
 
 

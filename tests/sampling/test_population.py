@@ -49,7 +49,7 @@ class TestPopulationSamplers:
                     draws=5,
                     tune=5,
                     chains=6,
-                    step=DEMetropolis(),
+                    step=pm.DEMetropolis(),  # Assuming pm is the PyMC package namespace
                     # make tests faster by not parallelizing; disable convergence warning
                     cores=1,
                     compute_convergence_checks=False,

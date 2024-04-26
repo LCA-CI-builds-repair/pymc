@@ -686,13 +686,17 @@ def get_versions():
         pieces = git_pieces_from_vcs(cfg.tag_prefix, root, verbose)
         return render(pieces, cfg.style)
     except NotThisMethod:
-        pass
+        # Handle the NotThisMethod exception
+        log.error("An error occurred in git_pieces_from_vcs.")
+        # Add error handling or logging as needed
 
     try:
         if cfg.parentdir_prefix:
             return versions_from_parentdir(cfg.parentdir_prefix, root, verbose)
     except NotThisMethod:
-        pass
+        # Handle the NotThisMethod exception
+        log.error("An error occurred in versions_from_parentdir.")
+        # Add error handling or logging as needed
 
     return {
         "version": "0+unknown",

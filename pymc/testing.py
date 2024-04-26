@@ -777,6 +777,7 @@ class BaseTestDistributionRandom:
     Base class for tests that new RandomVariables are correctly
     implemented, and that the mapping of parameters between the PyMC
     Distribution and the respective RandomVariable is correct.
+"""
 
     Three default tests are provided which check:
     1. Expected inputs are passed to the `rv_op` by the `dist` `classmethod`,
@@ -786,7 +787,6 @@ class BaseTestDistributionRandom:
     3. Shape variable inference is correct, via `check_rv_size`
 
     Each desired test must be referenced by name in `checks_to_run`, when
-    subclassing this distribution. Custom tests can be added to each class as
     well. See `TestFlat` for an example.
 
     Additional tests should be added for each optional parametrization of the

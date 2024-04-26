@@ -434,6 +434,7 @@ class BinaryMetropolis(ArrayStep):
                 if k == 2:
                     return Competence.COMPATIBLE
             except MissingInputError:
+                # Add relevant code or comments to handle the MissingInputError
                 pass
         return Competence.INCOMPATIBLE
 
