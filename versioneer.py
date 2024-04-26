@@ -633,7 +633,7 @@ def git_versions_from_keywords(keywords, tag_prefix, verbose):
         if verbose:
             print("discarding '%%s', no digits" %% ",".join(refs - tags))
     if verbose:
-        print("likely tags: %%s" %% ",".join(sorted(tags)))
+        print(f"likely tags: {','.join(sorted(tags))}")
     for ref in sorted(tags):
         # sorting will prefer e.g. "2.0" over "2.0rc1"
         if ref.startswith(tag_prefix):

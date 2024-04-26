@@ -134,7 +134,7 @@ class QuadPotential:
 
         Parameters
         ----------
-        map_info: List of (name, shape, dtype)
+        map_info: List of (name, shape, dtype).
             List tuples with variable name, shape, and dtype.
 
         Raises
@@ -303,7 +303,7 @@ class QuadPotentialDiagAdapt(QuadPotential):
 
         Parameters
         ----------
-        map_info: List of (name, shape, dtype)
+        map_info: List of (name, shape, dtype).
             List tuples with variable name, shape, and dtype.
 
         Raises

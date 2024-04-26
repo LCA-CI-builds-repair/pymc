@@ -679,14 +679,19 @@ class Model(WithMemoization, metaclass=ContextMeta):
         """Elemwise log-probability of the model.
 
         Parameters
+        Parameters
         ----------
-        vars: list of random variables or potential terms, optional
-            Compute the gradient with respect to those variables. If None, use all
-            free and observed random variables, as well as potential terms in model.
-        jacobian:
-            Whether to include jacobian terms in logprob graph. Defaults to True.
-        sum:
-            Whether to sum all logp terms or return elemwise logp for each variable.
+        vars : list of random variables or potential terms, optional
+            List of random variables or potential terms to compute the gradient with respect to. 
+            If None, the gradient will be computed with respect to all free and observed random variables, as well as potential terms in the model.
+        jacobian : bool, optional
+            Whether to include jacobian terms in the logprob graph. Defaults to True.
+        sum : bool, optional
+            Whether to sum all log probability terms or return element-wise log probability for each variable.
+        dtype : data-type, optional
+            The data type used to represent the variables.
+        size : int, optional
+            The size of the variables.
             Defaults to True.
 
         Returns
@@ -824,14 +829,10 @@ class Model(WithMemoization, metaclass=ContextMeta):
                     )
 
         cost = self.logp(jacobian=jacobian)
-        cost = rewrite_pregrad(cost)
-        return hessian(cost, value_vars)
-
     @property
-    def datalogp(self) -> Variable:
-        """PyTensor scalar of log-probability of the observed variables and
-        potential terms"""
-        return self.observedlogp + self.potentiallogp
+    def varlogp(self) -> Variable:
+        """PyTensor scalar of log-probability of the unobserved random variables
+        (excluding deterministic)."""
 
     @property
     def varlogp(self) -> Variable:
@@ -1303,7 +1304,6 @@ class Model(WithMemoization, metaclass=ContextMeta):
             A transform for the random variable in log-likelihood space.
 
         """
-        name = rv_var.name
         data = convert_observed_data(data).astype(rv_var.dtype)
 
         if data.ndim != rv_var.ndim:

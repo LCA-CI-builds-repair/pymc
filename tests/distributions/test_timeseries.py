@@ -240,7 +240,8 @@ class TestRandomWalk:
             shape_source_kwargs["observed"] = np.zeros(shape)
         else:
             raise ValueError
-
+### Summary of Changes:
+There is no code snippet provided in the context to edit. If you have a specific code snippet in mind that needs editing, please provide it so that I can assist you with the necessary changes.
         coords = {f"dim{i}": range(s) for i, s in enumerate(shape)}
         with Model(coords=coords):
             x = RandomWalk(
@@ -433,14 +434,13 @@ class TestPredefinedRandomWalk:
                 "chol_cov", n=3, eta=2, sd_dist=sd_dist, compute_corr=True
             )
             with pytest.warns(UserWarning, match="Initial distribution not specified"):
-                if param == "chol":
                     mv = MvGaussianRandomWalk("mv", mu, chol=chol, shape=(10, 7, 3))
                 elif param == "cov":
                     mv = MvGaussianRandomWalk(
                         "mv", mu, cov=pm.math.dot(chol, chol.T), shape=(10, 7, 3)
                     )
                 else:
-                    raise ValueError
+                    raise ValueError("Invalid parameter specified")
         assert draw(mv, draws=5).shape == (5, 10, 7, 3)
 
     @pytest.mark.parametrize("param", ["scale", "chol", "tau"])

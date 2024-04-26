@@ -297,8 +297,8 @@ def find_measurable_index_mixture(fgraph, node):
     old_mixture_rv = node.default_output()
     mixture_rvs, join_axis = get_stack_mixture_vars(node)
 
-    # We don't support symbolic join axis
-    if mixture_rvs is None or not isinstance(join_axis, (NoneTypeT, Constant)):
+    # Check if mixture_rvs is None or join_axis is not a Constant
+    if mixture_rvs is None or not isinstance(join_axis, (Constant)):
         return None
 
     if rv_map_feature.request_measurable(mixture_rvs) != mixture_rvs:
@@ -345,11 +345,12 @@ def logprob_MixtureRV(
             # Since some form of advanced indexing is necessarily occurring, we
             # need to reformat the MakeVector arguments so that they fit the
             # `Join` format expected by the logic below.
-            join_axis_val = 0
+            # Set the value of the join axis
+            join_axis_value = 0
             comp_rvs = [comp[None] for comp in comp_rvs]
             original_shape = (len(comp_rvs),)
         else:
-            join_axis_val = constant_fold((join_axis,))[0].item()
+            join_axis_value = constant_fold((join_axis,))[0].item()
             original_shape = shape_tuple(comp_rvs[0])
 
         bcast_indices = expand_indices(indices, original_shape)

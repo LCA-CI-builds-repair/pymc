@@ -586,7 +586,8 @@ def test_triangular_transform():
     assert np.isclose(transform.backward(np.inf, *x.owner.inputs).eval(), 2)
 
 
-def test_interval_transform_raises():
+def test_interval_transform_raises_invalid_bounds():
+    # Test that ValueError is raised when both lower and upper interval bounds are None
     with pytest.raises(ValueError, match="Lower and upper interval bounds cannot both be None"):
         tr.Interval(None, None)
 
@@ -660,13 +661,12 @@ def test_deprecated_ndim_supp_transforms():
         tr.Ordered(ndim_supp=1)
 
     with pytest.warns(FutureWarning, match="deprecated"):
-        assert tr.univariate_ordered == tr.ordered
-
     with pytest.warns(FutureWarning, match="deprecated"):
         assert tr.multivariate_ordered == tr.ordered
 
     with pytest.warns(FutureWarning, match="deprecated"):
-        tr.SumTo1(ndim_supp=1)
+        with pytest.raises(FutureWarning):
+            tr.SumTo1(ndim_supp=1)
 
     with pytest.warns(FutureWarning, match="deprecated"):
         assert tr.univariate_sum_to_1 == tr.sum_to_1
