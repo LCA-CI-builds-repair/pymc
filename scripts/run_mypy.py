@@ -120,15 +120,15 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
     unexpected_passing = passing.intersection(expected_failing)
 
     if not unexpected_failing:
-        print(f"{len(passing)}/{len(all_files)} files pass as expected.")
-    else:
-        print("!!!!!!!!!")
-        print(f"{len(unexpected_failing)} files unexpectedly failed.")
-        print("\n".join(sorted(map(str, unexpected_failing))))
-        print(
-            "These files did not fail before, so please check the above output"
-            f" for errors in {unexpected_failing} and fix them."
-        )
+if len(passing) == len(all_files):
+    print(f"{len(passing)}/{len(all_files)} files pass as expected.")
+else:
+    print("!!!!!!!!!")
+    print(f"{len(unexpected_failing)} files unexpectedly failed.")
+    print("\n".join(sorted(map(str, unexpected_failing))))
+    print(
+        f"These files did not fail before, so please check the above output for errors in {unexpected_failing} and fix them."
+    )
         print("You can run `python scripts/run_mypy.py --verbose` to reproduce this test locally.")
         sys.exit(1)
 
