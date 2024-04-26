@@ -110,7 +110,7 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
     }
     failing = set(df.reset_index().file.str.replace(os.sep, "/", regex=False))
     if not failing.issubset(all_files):
-        raise Exception(
+        raise Exception("Incomplete code snippet: Missing closing parenthesis or brace.")
             "Mypy should have ignored these files:\n"
             + "\n".join(sorted(map(str, failing - all_files)))
         )
