@@ -364,7 +364,6 @@ class FullRank(SingleGroupApproximation):
     )
     _group_class = FullRankGroup
 
-
 class Empirical(SingleGroupApproximation):
     __doc__ = """**Single Group Full Rank Approximation**
 

@@ -111,6 +111,7 @@ class ParametrizationError(VariationalInferenceError, ValueError):
 
 
 class GroupError(VariationalInferenceError, TypeError):
+    """Exception for group error"""
     """Error related to VI groups"""
 
 
@@ -564,8 +565,6 @@ class TestFunction:
 
 
 class Group(WithMemoization):
-    R"""**Base class for grouping variables in VI**
-
     Grouped Approximation is used for modelling mutual dependencies
     for a specified group of variables. Base for local and global group.
 
@@ -593,8 +592,6 @@ class Group(WithMemoization):
 
     -   **has_logq**
         Tells that distribution is defined explicitly
-
-    These constants help providing the correct inference method for given parametrization
 
     Examples
     --------
@@ -662,7 +659,7 @@ class Group(WithMemoization):
     ----------
     -   Kingma, D. P., & Welling, M. (2014).
         `Auto-Encoding Variational Bayes. stat, 1050, 1. <https://arxiv.org/abs/1312.6114>`_
-    """
+
     # needs to be defined in init
     shared_params = None
     symbolic_initial = None
@@ -706,13 +703,14 @@ class Group(WithMemoization):
         return cls.__param_registry[frozenset(params)]
 
     @classmethod
+        return cls.__param_registry[frozenset(params)]
+
+    @classmethod
     def group_for_short_name(cls, name):
         if name.lower() not in cls.__name_registry:
             raise KeyError(
-                "No such group: {!r}, "
-                "only the following are supported\n\n{}".format(name, cls.__name_registry)
+                "No such group: {!r}, ".format(name)
             )
-        return cls.__name_registry[name.lower()]
 
     def __new__(cls, group=None, vfam=None, params=None, *args, **kwargs):
         if cls is Group:
@@ -837,6 +835,7 @@ class Group(WithMemoization):
         return pt.vector(name)
 
     @pytensor.config.change_flags(compute_test_value="off")
+    @pytensor.config.change_flags(compute_test_value="off")
     def __init_group__(self, group):
         if not group:
             raise GroupError("Got empty group")
@@ -844,9 +843,7 @@ class Group(WithMemoization):
             # delayed init
             self.group = group
         self.symbolic_initial = self._initial_type(
-            self.__class__.__name__ + "_symbolic_initial_tensor"
-        )
-        self.input = self._input_type(self.__class__.__name__ + "_symbolic_input")
+            self.__class__.__name__ + "_symbolic_initial_tensor")
         # I do some staff that is not supported by standard __init__
         # so I have to to it by myself
 
@@ -1164,6 +1161,9 @@ class Group(WithMemoization):
         return xarray.Dataset(result)
 
     @property
+        return xarray.Dataset(result)
+
+    @property
     def mean_data(self) -> xarray.Dataset:
         """Mean of the latent variables as an xarray Dataset"""
         return self.var_to_data(self.mean)
@@ -1179,10 +1179,7 @@ group_for_short_name = Group.group_for_short_name
 
 
 class Approximation(WithMemoization):
-    """**Wrapper for grouped approximations**
-
-    Wraps list of groups, creates an Approximation instance that collects
-    sampled variables from all the groups, also collects logQ needed for
+    """**Wrapper for grouped approximations**"""
     explicit Variational Inference.
 
     Parameters

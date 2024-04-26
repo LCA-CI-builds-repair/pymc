@@ -1473,11 +1473,11 @@ class Model(WithMemoization, metaclass=ContextMeta):
     def __getitem__(self, key):
         try:
             return self.named_vars[key]
-        except KeyError as e:
+        except KeyError:
             try:
                 return self.named_vars[self.name_for(key)]
-            except KeyError:
-                raise e
+            except KeyError as e:
+                raise KeyError(f"Key '{key}' not found in named_vars or its corresponding name.") from e
 
     def __contains__(self, key):
         return key in self.named_vars or self.name_for(key) in self.named_vars

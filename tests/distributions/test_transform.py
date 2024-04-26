@@ -637,7 +637,7 @@ def test_invalid_jacobian_broadcast_raises():
             return value
 
         def backward(self, value, *inputs):
-            return value
+            return value  # Incorrect implementation, should return the inverse transformation
 
         def log_jac_det(self, value, *inputs):
             return pt.zeros_like(value.sum(-1, keepdims=True))

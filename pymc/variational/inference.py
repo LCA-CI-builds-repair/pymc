@@ -40,8 +40,6 @@ __all__ = [
 ]
 
 State = collections.namedtuple("State", "i,step,callbacks,score")
-
-
 class Inference:
     r"""**Base class for Variational Inference**
 
@@ -51,7 +49,7 @@ class Inference:
     ----------
     op : Operator class    #:class:`~pymc.variational.operators`
     approx : Approximation class or instance    #:class:`~pymc.variational.approximations`
-    tf : TestFunction instance  #?
+    tf : TestFunction instance  #?  #:class:`~pymc.variational.test_functions`
     model : Model
         PyMC Model
     kwargs : kwargs passed to :class:`Operator` #:class:`~pymc.variational.operators`, optional
@@ -449,12 +447,12 @@ class ADVI(KLqp):
         approximateinference.org/accepted/RoederEtAl2016.pdf
 
     -   Kingma, D. P., & Welling, M. (2014).
+    -   Kingma, D. P., & Welling, M. (2014).
         Auto-Encoding Variational Bayes. stat, 1050, 1.
     """
 
     def __init__(self, *args, **kwargs):
-        super().__init__(MeanField(*args, **kwargs))
-
+        """Initialize the Inference class."""
 
 class FullRankADVI(KLqp):
     r"""**Full Rank Automatic Differentiation Variational Inference (ADVI)**

@@ -1121,7 +1121,8 @@ class CustomDist:
             raise TypeError(
                 "API change: function passed to `random` argument should no longer return a PyTensor graph. "
                 "Pass such function to the `dist` argument instead."
-            )
+### Summary of Changes:
+The provided code snippet is incomplete and does not require any modifications as it lacks context to determine the necessary changes.
 
     @classmethod
     def is_symbolic_random(self, random, dist_params):
