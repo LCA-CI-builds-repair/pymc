@@ -2697,9 +2697,8 @@ class ExGaussianRV(RandomVariable):
     _print_name = ("ExGaussian", "\\operatorname{ExGaussian}")
 
     @classmethod
-    def rng_fn(cls, rng, mu, sigma, nu, size=None) -> np.ndarray:
-        return np.asarray(rng.normal(mu, sigma, size=size) + rng.exponential(scale=nu, size=size))
-
+    def rng_fn(rng, mu, sigma, nu, size=None) -> np.ndarray:
+        return np.asarray(rng.normal(mu, sigma, size=size) + rng.exponential(scale=nu, size=size)
 
 exgaussian = ExGaussianRV()
 
@@ -2823,11 +2822,11 @@ class ExGaussian(Continuous):
         )
 
         return check_parameters(
+        return check_parameters(
             res,
             sigma > 0,
             nu > 0,
-            msg="sigma > 0, nu > 0",
-        )
+            msg="sigma > 0, nu > 0"
 
 
 class VonMises(CircularContinuous):

@@ -1739,7 +1739,7 @@ class MatrixNormal(Continuous):
     properties for inversion. For example, if draws from MvNormal had the same
     covariance structure, but were scaled by different powers of an unknown
     constant, both the covariance and scaling could be learned as follows
-    (see the docstring of `LKJCholeskyCov` for more information about this)
+    (see the docstring of `LKJCholeskyCovPacked` for more information about this)
 
     .. code:: python
 

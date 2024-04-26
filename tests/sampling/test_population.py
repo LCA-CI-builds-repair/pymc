@@ -51,7 +51,7 @@ class TestPopulationSamplers:
                     chains=6,
                     step=DEMetropolis(),
                     # make tests faster by not parallelizing; disable convergence warning
-                    cores=1,
+                    cores=None,
                     compute_convergence_checks=False,
                 )
 

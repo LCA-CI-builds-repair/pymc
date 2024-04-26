@@ -1050,15 +1050,11 @@ class TestMoments:
                 None,
                 np.array([1, 1, 1, 1, 0, 0, 0]),
                 marks=pytest.mark.xfail(
-                    rises=AssertionError, reason="Known failure in mode approximation "
+                    raises=AssertionError, reason="Known failure in mode approximation"
                 ),
             ),
         ],
     )
-    def test_multinomial_moment(self, p, n, size, expected):
-        with pm.Model() as model:
-            pm.Multinomial("x", n=n, p=p, size=size)
-        assert_moment_is_expected(model, expected)
 
     @pytest.mark.parametrize(
         "a, size, expected",

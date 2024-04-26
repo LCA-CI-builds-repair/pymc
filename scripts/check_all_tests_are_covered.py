@@ -112,7 +112,6 @@ def from_yaml():
         raise AssertionError(
             f"{len(run_multiple_times)} tests are run multiple times with the same OS and floatX setting:\n{run_multiple_times}"
         )
-    return
 
 
 if __name__ == "__main__":

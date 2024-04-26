@@ -1293,7 +1293,6 @@ def init_nuts(
           depend on the exact behaviour, choose an initialization method explicitly.
         * adapt_diag: Start with a identity mass matrix and then adapt a diagonal based on the
           variance of the tuning samples. All chains use the test value (usually the prior mean)
-          as starting point.
         * jitter+adapt_diag: Same as ``adapt_diag``, but use test value plus a uniform jitter in
           [-1, 1] as starting point in each chain.
         * jitter+adapt_diag_grad:

@@ -313,8 +313,7 @@ def find_measurable_index_mixture(fgraph, node):
     new_node = mix_op.make_node(*([join_axis] + mixing_indices + mixture_rvs))
 
     new_mixture_rv = new_node.default_output()
-
-    if pytensor.config.compute_test_value != "off":
+    if pytensor.config.compute_test_value is not None:
         # We can't use `MixtureRV` to compute a test value; instead, we'll use
         # the original node's test value.
         if not hasattr(old_mixture_rv.tag, "test_value"):

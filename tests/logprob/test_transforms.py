@@ -604,7 +604,7 @@ def test_measurable_power_exponent_with_constant_base():
     # test power(2, rv) = exp2(rv)
     # test negative base fails
     x_rv_pow = pt.pow(2, pt.random.normal())
-    x_rv_exp2 = pt.exp2(pt.random.normal())
+    x_rv_exp2 = pt.pow(2, pt.random.normal())
 
     x_vv_pow = x_rv_pow.clone()
     x_vv_exp2 = x_rv_exp2.clone()

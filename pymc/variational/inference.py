@@ -697,16 +697,16 @@ def fit(
     obj_n_mc: `int`
         Number of monte carlo samples used for approximation of objective gradients
     tf_n_mc: `int`
-        Number of monte carlo samples used for approximation of test function gradients
-    obj_optimizer: function (grads, params) -> updates
-        Optimizer that is used for objective params
-    test_optimizer: function (grads, params) -> updates
-        Optimizer that is used for test function params
-    more_obj_params: `list`
-        Add custom params for objective optimizer
-    more_tf_params: `list`
-        Add custom params for test function optimizer
-    more_updates: `dict`
+        Number of Monte Carlo samples used for the approximation of test function gradients
+    obj_optimizer: Callable[[List[float], List[float]], Dict[str, float]]
+        Optimizer used for objective params
+    test_optimizer: Callable[[List[float], List[float]], Dict[str, float]]
+        Optimizer used for test function params
+    more_obj_params: List[str]
+        Custom params for objective optimizer
+    more_tf_params: List[str]
+        Custom params for test function optimizer
+    more_updates: Dict[str, Any]
         Add custom updates to resulting updates
     total_grad_norm_constraint: `float`
         Bounds gradient norm, prevents exploding gradient problem

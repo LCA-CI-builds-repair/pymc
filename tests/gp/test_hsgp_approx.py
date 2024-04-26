@@ -261,7 +261,7 @@ class TestHSGPPeriodic(_BaseFixtures):
     @pytest.mark.xfail(
         reason="For `pm.gp.cov.Periodic`, this test does not pass.\
         The mmd is around `0.0468`.\
-        The test passes more often when subtracting the mean from the mean from the samples.\
+        The test passes more often when subtracting the mean from the mean from the samples."
         It might be that the period is slightly off for the approximate power spectral density.\
         See https://github.com/pymc-devs/pymc/pull/6877/ for the full discussion."
     )

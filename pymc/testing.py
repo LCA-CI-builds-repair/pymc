@@ -448,7 +448,7 @@ def check_logcdf(
     skip_paramdomain_inside_edge_test : Bool
         Whether to run test 1., which checks that pymc and scipy distributions
         match for valid values and parameters inside the respective domain edges
-    skip_paramdomain_outside_edge_test : Bool
+    skip_paramdomain_outside_edge_test : bool
         Whether to run test 2., which checks that pymc distribution logcdf
         returns -inf for invalid parameter values outside the supported domain edge
 
@@ -790,7 +790,7 @@ class BaseTestDistributionRandom:
     well. See `TestFlat` for an example.
 
     Additional tests should be added for each optional parametrization of the
-    distribution. In this case it's enough to include the test
+    distribution. In this case, it's enough to include the test
     `check_pymc_params_match_rv_op` since only this differs.
 
     Note on `check_rv_size` test:

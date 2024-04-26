@@ -86,19 +86,18 @@ def scipy_logprob_tester(
 
         if name is None:
             name = rv_var.__name__
-
         test_fn = getattr(stats, name)
 
-    if test == "logprob":
-        pytensor_res = logp(rv_var, pt.as_tensor(obs))
-    elif test == "logcdf":
-        pytensor_res = logcdf(rv_var, pt.as_tensor(obs))
-    elif test == "icdf":
-        pytensor_res = icdf(rv_var, pt.as_tensor(obs))
-    else:
-        raise ValueError(f"test must be one of (logprob, logcdf, icdf), got {test}")
+        if test == "logprob":
+            pytensor_res = logp(rv_var, pt.as_tensor(obs))
+        elif test == "logcdf":
+            pytensor_res = logcdf(rv_var, pt.as_tensor(obs))
+        elif test == "icdf":
+            pytensor_res = icdf(rv_var, pt.as_tensor(obs))
+        else:
+            raise ValueError(f"test must be one of (logprob, logcdf, icdf), got {test}")
 
-    pytensor_res_val = pytensor_res.eval(dist_params)
+        pytensor_res_val = pytensor_res.eval(dist_params)
 
     numpy_res = np.asarray(test_fn(obs, *dist_params.values()))
 

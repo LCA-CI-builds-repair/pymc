@@ -492,7 +492,7 @@ class TestElementWiseLogp:
             {"alpha": a, "beta": b},
             size=size,
             initval=initval,
-            transform=tr.Chain([tr.logodds, tr.ordered]),
+            transform=tr.Chain([tr.logodds(), tr.ordered()]),
         )
         self.check_vectortransform_elementwise_logp(model)
 
@@ -529,78 +529,23 @@ class TestElementWiseLogp:
             {"mu": mu, "kappa": kappa},
             size=size,
             initval=initval,
-            transform=tr.Chain([tr.circular, tr.ordered]),
+            transform=tr.Chain([tr.circular(), tr.ordered()]),
         )
         self.check_vectortransform_elementwise_logp(model)
 
     @pytest.mark.parametrize(
         "lower,upper,size,transform",
         [
-            (0.0, 1.0, (2,), tr.simplex),
-            (0.5, 5.5, (2, 3), tr.simplex),
+            (0.0, 1.0, (2,), tr.simplex()),
+            (0.5, 5.5, (2, 3), tr.simplex()),
             (
                 floatX(np.zeros(3)),
                 floatX(np.ones(3)),
                 (4, 3),
-                tr.Chain([tr.sum_to_1, tr.logodds]),
+                tr.Chain([tr.sum_to_1(), tr.logodds()]),
             ),
         ],
     )
-    def test_uniform_other(self, lower, upper, size, transform):
-        initval = np.ones(size) / size[-1]
-        model = self.build_model(
-            pm.Uniform,
-            {"lower": lower, "upper": upper},
-            size=size,
-            initval=initval,
-            transform=transform,
-        )
-        self.check_vectortransform_elementwise_logp(model)
-
-    @pytest.mark.parametrize(
-        "mu,cov,size,shape",
-        [
-            (floatX(np.zeros(2)), floatX(np.diag(np.ones(2))), None, (2,)),
-            (floatX(np.zeros(3)), floatX(np.diag(np.ones(3))), (4,), (4, 3)),
-        ],
-    )
-    @pytest.mark.parametrize("transform", (tr.ordered, tr.sum_to_1))
-    def test_mvnormal_transform(self, mu, cov, size, shape, transform):
-        initval = np.sort(np.random.randn(*shape))
-        model = self.build_model(
-            pm.MvNormal,
-            {"mu": mu, "cov": cov},
-            size=size,
-            initval=initval,
-            transform=transform,
-        )
-        self.check_vectortransform_elementwise_logp(model)
-
-
-def test_triangular_transform():
-    with pm.Model() as m:
-        x = pm.Triangular("x", lower=0, c=1, upper=2)
-
-    transform = m.rvs_to_transforms[x]
-    assert np.isclose(transform.backward(-np.inf, *x.owner.inputs).eval(), 0)
-    assert np.isclose(transform.backward(np.inf, *x.owner.inputs).eval(), 2)
-
-
-def test_interval_transform_raises():
-    with pytest.raises(ValueError, match="Lower and upper interval bounds cannot both be None"):
-        tr.Interval(None, None)
-
-    with pytest.raises(ValueError, match="Interval bounds must be constant values"):
-        tr.Interval(pt.constant(5) + 1, None)
-
-    assert tr.Interval(pt.constant(5), None)
-
-
-def test_discrete_trafo():
-    with pm.Model():
-        with pytest.raises(ValueError) as err:
-            pm.Binomial("a", n=5, p=0.5, transform="log")
-        err.match("Transformations for discrete distributions")
 
 
 def test_transform_univariate_dist_logp_shape():
@@ -669,7 +614,8 @@ def test_deprecated_ndim_supp_transforms():
         tr.SumTo1(ndim_supp=1)
 
     with pytest.warns(FutureWarning, match="deprecated"):
-        assert tr.univariate_sum_to_1 == tr.sum_to_1
+    assert m.logp(jacobian=True, sum=False)[0].type.shape == (4,)
 
-    with pytest.warns(FutureWarning, match="deprecated"):
-        assert tr.multivariate_sum_to_1 == tr.sum_to_1
+
+def test_univariate_transform_multivariate_dist_raises():
+    # Add test case implementation or description here

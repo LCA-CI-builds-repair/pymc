@@ -464,6 +464,8 @@ class TestSamplePPC:
             # test keep_size parameter
             ppc = pm.sample_posterior_predictive(trace, return_inferencedata=False)
             assert ppc["a"].shape == (nchains, ndraws)
+            assert len(ppc["a"]) == nchains
+            assert len(ppc["a"][0]) == ndraws
 
             # test default case
             random_state = np.random.RandomState(20160911)

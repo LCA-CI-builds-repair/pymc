@@ -169,7 +169,7 @@ class DifferentialEquation(Op):
         # use default implementation to prepare symbolic outputs (via make_node)
         states, sens = super().__call__(y0, theta, **kwargs)
 
-        if pytensor.config.compute_test_value != "off":
+        if pytensor.config.compute_test_value is not None:
             # compute test values from input test values
             test_states, test_sens = self._simulate(
                 y0=get_test_value(y0), theta=get_test_value(theta)

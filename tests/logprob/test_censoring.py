@@ -172,13 +172,13 @@ def test_broadcasted_clip_random():
 
     assert_no_rvs(logp_combined)
 
-
 def test_fail_base_and_clip_have_values():
     """Test failure when both base_rv and clipped_rv are given value vars"""
     x_rv = pt.random.normal(0, 1)
     cens_x_rv = pt.clip(x_rv, x_rv, 1)
     cens_x_rv.name = "cens_x"
 
+    x_vv = x_rv.clone()
     x_vv = x_rv.clone()
     cens_x_vv = cens_x_rv.clone()
     with pytest.raises(RuntimeError, match="could not be derived: {cens_x}"):
@@ -191,7 +191,6 @@ def test_fail_multiple_clip_single_base():
     cens_rv1 = pt.clip(base_rv, -1, 1)
     cens_rv1.name = "cens1"
     cens_rv2 = pt.clip(base_rv, -1, 1)
-    cens_rv2.name = "cens2"
 
     cens_vv1 = cens_rv1.clone()
     cens_vv2 = cens_rv2.clone()
