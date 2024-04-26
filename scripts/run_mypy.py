@@ -126,7 +126,7 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
         print(f"{len(unexpected_failing)} files unexpectedly failed.")
         print("\n".join(sorted(map(str, unexpected_failing))))
         print(
-            "These files did not fail before, so please check the above output"
+            "These files did not fail before, so please check the above output",
             f" for errors in {unexpected_failing} and fix them."
         )
         print("You can run `python scripts/run_mypy.py --verbose` to reproduce this test locally.")
