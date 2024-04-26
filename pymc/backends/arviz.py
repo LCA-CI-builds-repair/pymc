@@ -97,8 +97,6 @@ def find_constants(model: "Model") -> Dict[str, Var]:
             constant_data[name] = var
 
     return constant_data
-
-
 def coords_and_dims_for_inferencedata(model: Model) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     """Parse PyMC model coords and dims format to one accepted by InferenceData."""
     coords = {
@@ -109,8 +107,6 @@ def coords_and_dims_for_inferencedata(model: Model) -> Tuple[Dict[str, Any], Dic
     dims = {dname: list(dvals) for dname, dvals in model.named_vars_to_dims.items()}
 
     return coords, dims
-
-
 class _DefaultTrace:
     """
     Utility for collecting samples into a dictionary.

@@ -472,7 +472,6 @@ class BinaryGibbsMetropolis(ArrayStep):
         self.transit_p = transit_p
 
         vars = get_value_vars_from_user_vars(vars, model)
-
         initial_point = model.initial_point()
         self.dim = sum(initial_point[v.name].size for v in vars)
 
@@ -595,6 +594,7 @@ class CategoricalGibbsMetropolis(ArrayStep):
             dimcats += [(dim, k) for dim in range(start, start + v_init_val.size)]
 
         if order == "random":
+        if order == "random":
             self.shuffle_dims = True
             self.dimcats = dimcats
         else:
@@ -602,8 +602,6 @@ class CategoricalGibbsMetropolis(ArrayStep):
                 raise ValueError("Argument 'order' has to be a permutation")
             self.shuffle_dims = False
             self.dimcats = [dimcats[j] for j in order]
-
-        if proposal == "uniform":
             self.astep = self.astep_unif
         elif proposal == "proportional":
             # Use the optimized "Metropolized Gibbs Sampler" described in Liu96.

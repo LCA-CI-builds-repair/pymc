@@ -447,8 +447,6 @@ def _get_seeds_per_chain(
         )
 
     return random_state
-
-
 def get_value_vars_from_user_vars(
     vars: Union[Variable, Sequence[Variable]], model
 ) -> List[Variable]:

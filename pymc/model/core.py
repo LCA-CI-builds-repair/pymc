@@ -633,7 +633,7 @@ class Model(WithMemoization, metaclass=ContextMeta):
         sum:
             Whether to sum all logp terms or return elemwise logp for each variable.
             Defaults to True.
-        """
+            """
         return self.compile_fn(self.logp(vars=vars, jacobian=jacobian, sum=sum))
 
     def compile_dlogp(
