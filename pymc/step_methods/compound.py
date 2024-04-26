@@ -147,10 +147,8 @@ class BlockedStep(ABC):
                 step.stats_dtypes = stats_dtypes
                 step.stats_dtypes_shapes = stats_dtypes_shapes
                 # If we don't return the instance we have to manually
-                # call __init__
-                step.__init__([var], *args, **kwargs)
-                # Hack for creating the class correctly when unpickling.
-                step.__newargs = ([var],) + args, kwargs
+                super().__init__([var], *args, **kwargs)
+                step.__newargs = (([var],) + args, kwargs)
                 steps.append(step)
 
             return CompoundStep(steps)

@@ -65,8 +65,6 @@ rejection_geometric = RejectionGeometricRV()
 @_truncated.register(RejectionGeometricRV)
 def _truncated_not_implemented(*args, **kwargs):
     raise NotImplementedError()
-
-
 @_icdf.register(RejectionNormalRV)
 @_icdf.register(RejectionGeometricRV)
 def _icdf_not_implemented(*args, **kwargs):

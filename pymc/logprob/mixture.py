@@ -298,7 +298,7 @@ def find_measurable_index_mixture(fgraph, node):
     mixture_rvs, join_axis = get_stack_mixture_vars(node)
 
     # We don't support symbolic join axis
-    if mixture_rvs is None or not isinstance(join_axis, (NoneTypeT, Constant)):
+    if mixture_rvs is None or not isinstance(join_axis, (type(None), Constant)):
         return None
 
     if rv_map_feature.request_measurable(mixture_rvs) != mixture_rvs:

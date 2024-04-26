@@ -1089,7 +1089,7 @@ class Group(WithMemoization):
     @node_property
     def symbolic_normalizing_constant(self):
         """*Dev* - normalizing constant for `self.logq`, scales it to `minibatch_size` instead of `total_size`"""
-        t = self.to_flat_input(
+        self.to_flat_input(
             pt.max(
                 [
                     get_scaling(v.owner.inputs[1:], v.shape)

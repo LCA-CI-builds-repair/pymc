@@ -334,7 +334,8 @@ def tune(scale, acc_rate):
                             1.1,
                             # Do not change
                             1.0,
-                        ),
+                        )
+                    )
                     ),
                 ),
             ),
