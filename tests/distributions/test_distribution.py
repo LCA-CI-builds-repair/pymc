@@ -416,6 +416,7 @@ class TestCustomSymbolicDist:
             )
 
         assert isinstance(lognormal.owner.op, CustomSymbolicDistRV)
+        import numpy as np  # Added numpy import for testing
 
         # Fix mu and sigma, so that all source of randomness comes from the symbolic RV
         draws = pm.draw(lognormal, draws=3, givens={mu: 0.0, sigma: 1.0})

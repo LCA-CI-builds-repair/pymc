@@ -472,6 +472,7 @@ class BinaryGibbsMetropolis(ArrayStep):
         self.transit_p = transit_p
 
         vars = get_value_vars_from_user_vars(vars, model)
+        import numpy as np  # Added numpy import for testing
 
         initial_point = model.initial_point()
         self.dim = sum(initial_point[v.name].size for v in vars)

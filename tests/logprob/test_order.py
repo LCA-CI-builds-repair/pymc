@@ -287,6 +287,8 @@ def test_min_max_bernoulli():
     value = pt.scalar("value", dtype=int)
 
     max_logp_fn = pytensor.function([value], pm.logp(pt.max(x), value))
+    import numpy as np  # Added numpy import for testing
+
     np.testing.assert_allclose(max_logp_fn(0), np.log(q**n))
     np.testing.assert_allclose(max_logp_fn(1), np.log(1 - q**n))
 

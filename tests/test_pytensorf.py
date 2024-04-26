@@ -220,9 +220,7 @@ def test_convert_observed_data(input_dtype):
         func_output = func(input_value)
         assert isinstance(func_output, np.ndarray)
         assert func_output.shape == input_value.shape
-        npt.assert_allclose(func_output, dense_input)
-
-    # Check function behavior with sparse matrix inputs
+        np.testing.assert_allclose(func_output, dense_input)  # Corrected numpy testing import
     sparse_output = func(sparse_input)
     assert sps.issparse(sparse_output)
     assert sparse_output.shape == sparse_input.shape

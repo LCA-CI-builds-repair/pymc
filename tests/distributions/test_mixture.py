@@ -1678,6 +1678,8 @@ class TestHurdleMixtures:
         assert (1 - psi) - tol < p_zeros < (1 - psi) + tol
 
     def test_hurdle_poisson_logp(self):
+        import numpy as np  # Added numpy import for testing
+
         def logp_fn(value, psi, mu):
             if value == 0:
                 return np.log(1 - psi)

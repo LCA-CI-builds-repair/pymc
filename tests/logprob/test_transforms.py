@@ -692,6 +692,8 @@ def test_not_implemented_discrete_rv_transform():
 
 
 def test_negated_discrete_rv_transform():
+    import numpy as np  # Added numpy import for testing
+
     p = 0.7
     rv = -Bernoulli.dist(p=p)
     vv = rv.type()

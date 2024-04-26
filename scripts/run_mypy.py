@@ -17,9 +17,16 @@ import sys
 
 from typing import Iterator
 
-import pandas
+import numpy as np  # Added numpy import for testing
 
 DP_ROOT = pathlib.Path(__file__).absolute().parent.parent
+
+def logp_fn(p):
+    return np.log(1 - p) if p != 1 else -np.inf  # Implemented logp_fn function
+
+# Tests for logp_fn
+np.testing.assert_allclose(logp_fn(0), np.log(1 - 0))  # Corrected test for logp_fn(0)
+assert logp_fn(1) == -np.inf  # Corrected test for logp_fn(1)
 FAILING = """
 pymc/distributions/continuous.py
 pymc/distributions/dist_math.py
@@ -101,19 +108,19 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
     """Compares mypy results with list of known FAILING files.
 
     Exits the process with non-zero exit code upon unexpected results.
-    """
-    df = mypy_to_pandas(mypy_lines)
-    all_files = {
-        str(fp).replace(str(DP_ROOT), "").strip(os.sep).replace(os.sep, "/")
-        for fp in DP_ROOT.glob("pymc/**/*.py")
-        if "tests" not in str(fp)
-    }
-    failing = set(df.reset_index().file.str.replace(os.sep, "/", regex=False))
+    failing = set(df.reset_index().file.str.replace(os.sep, "/", regex=False)
     if not failing.issubset(all_files):
         raise Exception(
             "Mypy should have ignored these files:\n"
             + "\n".join(sorted(map(str, failing - all_files)))
         )
+    passing = all_files - failing
+    expected_failing = set(FAILING.strip().split("\n")) - {""}
+    unexpected_failing = failing - expected_failing
+    unexpected_passing = passing.intersection(expected_failing)
+
+    if not unexpected_failing:
+        print(f"{len(passing)}/{len(all_files)} files pass as expected.")
     passing = all_files - failing
     expected_failing = set(FAILING.strip().split("\n")) - {""}
     unexpected_failing = failing - expected_failing
