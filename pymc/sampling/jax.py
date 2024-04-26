@@ -667,7 +667,6 @@ def sample_numpyro_nuts(
     )
 
     logp_fn = get_jaxified_logp(model, negative_logp=False)
-
     nuts_kwargs = _update_numpyro_nuts_kwargs(nuts_kwargs)
     nuts_kernel = NUTS(
         potential_fn=logp_fn,

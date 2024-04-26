@@ -112,6 +112,7 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
     if not failing.issubset(all_files):
         raise Exception(
             "Mypy should have ignored these files:\n"
+        )
             + "\n".join(sorted(map(str, failing - all_files)))
         )
     passing = all_files - failing

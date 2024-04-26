@@ -510,7 +510,6 @@ class TestElementWiseLogp:
             return lower, upper
 
         interval = tr.Interval(bounds_fn=transform_params)
-
         initval = np.sort(np.abs(np.random.rand(*size)))
         model = self.build_model(
             pm.Uniform,
@@ -520,9 +519,9 @@ class TestElementWiseLogp:
             transform=tr.Chain([interval, tr.ordered]),
         )
         self.check_vectortransform_elementwise_logp(model)
-
+        
     @pytest.mark.parametrize(
-        "mu,kappa,size", [(0.0, 1.0, (2,)), (floatX(np.zeros(3)), floatX(np.ones(3)), (4, 3))]
+        "mu,kappa,size", [(0.0, 1.0, (2,)), (floatX(np.zeros(3)), floatX(np.ones(3)), (4, 3)]
     )
     def test_vonmises_ordered(self, mu, kappa, size):
         initval = np.sort(np.abs(np.random.rand(*size)))
@@ -534,7 +533,7 @@ class TestElementWiseLogp:
             transform=tr.Chain([tr.circular, tr.ordered]),
         )
         self.check_vectortransform_elementwise_logp(model)
-
+        
     @pytest.mark.parametrize(
         "lower,upper,size,transform",
         [
@@ -558,12 +557,12 @@ class TestElementWiseLogp:
             transform=transform,
         )
         self.check_vectortransform_elementwise_logp(model)
-
+        
     @pytest.mark.parametrize(
         "mu,cov,size,shape",
         [
             (floatX(np.zeros(2)), floatX(np.diag(np.ones(2))), None, (2,)),
-            (floatX(np.zeros(3)), floatX(np.diag(np.ones(3))), (4,), (4, 3)),
+            (floatX(np.zeros(3)), floatX(np.diag(np.ones(3))), (4,), (4, 3),
         ],
     )
     @pytest.mark.parametrize("transform", (tr.ordered, tr.sum_to_1))

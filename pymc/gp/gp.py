@@ -709,18 +709,17 @@ class MarginalApprox(Marginal):
 
         with model:
             fcond = gp.conditional("fcond", Xnew=Xnew)
-
+    
     References
     ----------
     -   Quinonero-Candela, J., and Rasmussen, C. (2005). A Unifying View of
         Sparse Approximate Gaussian Process Regression.
-
+    
     -   Titsias, M. (2009). Variational Learning of Inducing Variables in
         Sparse Gaussian Processes.
-
+    
     -   Bauer, M., van der Wilk, M., and Rasmussen, C. E. (2016). Understanding
         Probabilistic Sparse Gaussian Process Approximations.
-    """
 
     _available_approx = ("FITC", "VFE", "DTC")
 

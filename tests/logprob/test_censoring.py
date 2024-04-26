@@ -83,8 +83,9 @@ def test_discrete_rv_clip():
     ref_scipy = st.poisson(2)
 
     assert logp_fn(0) == -np.inf
+    import numpy as np
+    
     assert logp_fn(5) == -np.inf
-
     assert np.isclose(logp_fn(1), ref_scipy.logcdf(1))
     assert np.isclose(logp_fn(4), np.logaddexp(ref_scipy.logsf(4), ref_scipy.logpmf(4)))
     assert np.isclose(logp_fn(2), ref_scipy.logpmf(2))

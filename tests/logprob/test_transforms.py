@@ -692,11 +692,13 @@ def test_not_implemented_discrete_rv_transform():
 
 
 def test_negated_discrete_rv_transform():
+    import numpy as np
+    
     p = 0.7
     rv = -Bernoulli.dist(p=p)
     vv = rv.type()
     logp_fn = pytensor.function([vv], logp(rv, vv))
-
+    
     # A negated Bernoulli has pmf {p if x == -1; 1-p if x == 0; 0 otherwise}
     assert logp_fn(-2) == -np.inf
     np.testing.assert_allclose(logp_fn(-1),  np.log(p))
