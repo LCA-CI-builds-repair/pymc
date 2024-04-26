@@ -420,6 +420,7 @@ def expand_packed_triangular(n, packed, lower=True, diagonal_only=False):
     r"""Convert a packed triangular matrix into a two dimensional array.
 
     Triangular matrices can be stored with better space efficiency by
+    """
     storing the non-zero values in a one-dimensional array. We number
     the elements by row like this (for lower or upper triangular matrices):
 

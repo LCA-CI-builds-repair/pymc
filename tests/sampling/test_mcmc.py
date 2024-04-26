@@ -456,7 +456,6 @@ class TestSampleReturn:
             assert "warning" in idata.warmup_sample_stats
             assert "warning" in idata.sample_stats
             # And end up in the InferenceData
-            assert "warning" in idata.sample_stats
             # NOTE: The stats are squeezed by default but this does not always work.
             #       This tests flattens so we don't have to be exact in accessing (non-)squeezed items.
             #       Also see https://github.com/pymc-devs/pymc/issues/6207.

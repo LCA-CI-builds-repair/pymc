@@ -338,9 +338,9 @@ class SMC_KERNEL(ABC):
         varnames = [v.name for v in self.variables]
 
         with self.model:
+        for i in range(length_pos):
             strace = NDArray(name=self.model.name)
             strace.setup(length_pos, chain)
-        for i in range(length_pos):
             value = []
             size = 0
             for var in self.variables:

@@ -1,6 +1,6 @@
 """
-Invokes mypy and compare the reults with files in /pymc except tests
-and a list of files that are known to fail.
+Invokes mypy and compare the results with files in /pymc excluding tests
+and a lists of files that are know to fail.
 
 Exit code 0 indicates that there are no unexpected results.
 
@@ -133,6 +133,7 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
         sys.exit(1)
 
     if unexpected_passing:
+    }
         print("!!!!!!!!!")
         print(f"{len(unexpected_passing)} files unexpectedly passed the type checks:")
         print("\n".join(sorted(map(str, unexpected_passing))))

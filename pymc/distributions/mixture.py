@@ -130,8 +130,6 @@ class Mixture(Distribution):
             ]
 
             like = pm.Mixture('like', w=w, comp_dists=components, observed=data)
-
-
     .. code-block:: python
 
         # Mixture of (5 x 3) Normal variables
@@ -141,6 +139,7 @@ class Mixture(Distribution):
             w = pm.Dirichlet('w', a=np.ones(3), shape=(5, 3))
 
             # Each of the 3 mixture components has an independent mean
+            means = pm.Normal('means', mu=0, sigma=1, shape=(3,))
             mu = pm.Normal('mu', mu=np.arange(3), sigma=1, shape=3)
 
             # These two forms are equivalent, but the second benefits from vectorization

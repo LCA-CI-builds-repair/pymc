@@ -410,7 +410,7 @@ def multigammaln(a, p):
 
 def log_i0(x):
     """
-    Calculates the logarithm of the 0 order modified Bessel function of the first kind""
+    Calculates the logarithm of the 0 order modified Bessel function of the first kind"
     """
     return pt.switch(
         pt.lt(x, 5),
