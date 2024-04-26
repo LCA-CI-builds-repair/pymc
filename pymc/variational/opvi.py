@@ -709,8 +709,7 @@ class Group(WithMemoization):
     def group_for_short_name(cls, name):
         if name.lower() not in cls.__name_registry:
             raise KeyError(
-                "No such group: {!r}, "
-                "only the following are supported\n\n{}".format(name, cls.__name_registry)
+                "No such group: {!r}, only the following are supported\n\n{}".format(name, cls.__name_registry)
             )
         return cls.__name_registry[name.lower()]
 
@@ -837,6 +836,7 @@ class Group(WithMemoization):
         return pt.vector(name)
 
     @pytensor.config.change_flags(compute_test_value="off")
+    @pytensor.config.change_flags(compute_test_value="off")
     def __init_group__(self, group):
         if not group:
             raise GroupError("Got empty group")
@@ -848,7 +848,6 @@ class Group(WithMemoization):
         )
         self.input = self._input_type(self.__class__.__name__ + "_symbolic_input")
         # I do some staff that is not supported by standard __init__
-        # so I have to to it by myself
 
         # 1) we need initial point (transformed space)
         model_initial_point = self.model.initial_point(0)
