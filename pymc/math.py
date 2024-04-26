@@ -516,9 +516,9 @@ def batched_diag(C):
 class BlockDiagonalMatrix(Op):
     __props__ = ("sparse", "format")
 
-    def __init__(self, sparse=False, format="csr"):
+    def __init__(self, sparse: bool = False, format: str = "csr"):
         if format not in ("csr", "csc"):
-            raise ValueError(f"format must be one of: 'csr', 'csc', got {format}")
+            raise ValueError(f"Invalid format specified. The format must be either 'csr' or 'csc'. Got: {format}")
         self.sparse = sparse
         self.format = format
 
