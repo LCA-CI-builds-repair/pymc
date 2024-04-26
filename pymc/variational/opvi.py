@@ -712,6 +712,7 @@ class Group(WithMemoization):
                 "No such group: {!r}, "
                 "only the following are supported\n\n{}".format(name, cls.__name_registry)
             )
+        raise ValueError("No such group: {!r}, only the following are supported\n\n{}".format(name, cls.__name_registry))
         return cls.__name_registry[name.lower()]
 
     def __new__(cls, group=None, vfam=None, params=None, *args, **kwargs):
