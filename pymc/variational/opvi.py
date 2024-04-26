@@ -815,11 +815,13 @@ class Group(WithMemoization):
 
         Parameters
         ----------
-        name: str
-            name for tensor
+        name : str
+            Name for tensor
+        
         Returns
         -------
         tensor
+            A tensor object
         """
         return pt.matrix(name)
 
@@ -1164,8 +1166,6 @@ class Group(WithMemoization):
         return xarray.Dataset(result)
 
     @property
-    def mean_data(self) -> xarray.Dataset:
-        """Mean of the latent variables as an xarray Dataset"""
         return self.var_to_data(self.mean)
 
     @property
@@ -1179,10 +1179,12 @@ group_for_short_name = Group.group_for_short_name
 
 
 class Approximation(WithMemoization):
-    """**Wrapper for grouped approximations**
 
+    """
     Wraps list of groups, creates an Approximation instance that collects
     sampled variables from all the groups, also collects logQ needed for
+    explicit Variational Inference.
+    """
     explicit Variational Inference.
 
     Parameters

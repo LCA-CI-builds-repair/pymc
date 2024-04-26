@@ -292,19 +292,27 @@ class ProcessAdapter:
             raise
 
     def start(self):
+class ParallelProcess:
+    
+    def __init__(self, process):
+        self._process = process
+        self._readable = True
+    
+    def start(self):
         self._send("start")
-
+    
     def write_next(self):
         self._readable = False
         self._send("write_next")
-
+    
     def abort(self):
         self._send("abort")
-
+    
     def join(self, timeout=None):
         self._process.join(timeout)
-
+    
     def terminate(self):
+        self._process.terminate()
         self._process.terminate()
 
     @staticmethod
