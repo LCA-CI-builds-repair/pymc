@@ -100,6 +100,9 @@ def mypy_to_pandas(input_lines: Iterator[str]) -> pandas.DataFrame:
 def check_no_unexpected_results(mypy_lines: Iterator[str]):
     """Compares mypy results with list of known FAILING files.
 
+import os
+import numpy as np
+
     Exits the process with non-zero exit code upon unexpected results.
     """
     df = mypy_to_pandas(mypy_lines)

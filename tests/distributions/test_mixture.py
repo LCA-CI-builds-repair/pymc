@@ -1677,17 +1677,19 @@ class TestHurdleMixtures:
         p_zeros = sum(draws == 0) / n
         assert (1 - psi) - tol < p_zeros < (1 - psi) + tol
 
-    def test_hurdle_poisson_logp(self):
-        def logp_fn(value, psi, mu):
-            if value == 0:
-                return np.log(1 - psi)
-            else:
-                return (
-                    np.log(psi) + st.poisson.logpmf(value, mu) - np.log(1 - st.poisson.cdf(0, mu))
-                )
+import numpy as np
+import scipy.stats as st
 
-        check_logp(HurdlePoisson, Nat, {"psi": Unit, "mu": Rplus}, logp_fn)
+def test_hurdle_poisson_logp(self):
+    def logp_fn(value, psi, mu):
+        if value == 0:
+            return np.log(1 - psi)
+        else:
+            return (
+                np.log(psi) + st.poisson.logpmf(value, mu) - np.log1p(-st.poisson.cdf(0, mu))
+            )
 
+    check_logp(HurdlePoisson, Nat, {"psi": Unit, "mu": Rplus}, logp_fn)
     def test_hurdle_negativebinomial_logp(self):
         def logp_fn(value, psi, mu, alpha):
             n, p = NegativeBinomial.get_n_p(mu=mu, alpha=alpha)
