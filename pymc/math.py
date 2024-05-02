@@ -520,6 +520,9 @@ class BlockDiagonalMatrix(Op):
         if format not in ("csr", "csc"):
             raise ValueError(f"format must be one of: 'csr', 'csc', got {format}")
         self.sparse = sparse
+
+    def make_node(self, *args):
+        # Implementation of the make_node method can be added here
         self.format = format
 
     def make_node(self, *matrices):

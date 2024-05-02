@@ -505,7 +505,7 @@ class HSGPPeriodic(Base):
         of the expansion needed to create the GP.
 
         This function allows the user to bypass the GP interface and work directly with the basis
-        and coefficients directly.  This format allows the user to create predictions using
+        and coefficients.  This format allows the user to create predictions using
         `pm.set_data` similarly to a linear model.  It also enables computational speed ups in
         multi-GP models since they may share the same basis.
 

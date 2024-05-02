@@ -333,21 +333,31 @@ def tune(scale, acc_rate):
                             # increase by ten percent
                             1.1,
                             # Do not change
+                            1.0
+                        )
+                    )
+                )
+            )
+        )
+    )
                             1.0,
                         ),
                     ),
                 ),
             ),
-        ),
-    )
-
-
-class BinaryMetropolis(ArrayStep):
-    """Metropolis-Hastings optimized for binary variables
-
-    Parameters
-    ----------
-    vars: list
+    def __init__(self, vars, scaling=1, tune=True, tune_interval=100):
+        """
+        Parameters
+        ----------
+        vars: list
+            List of value variables for sampler
+        scaling: scalar or array
+            Initial scale factor for proposal. Defaults to 1.
+        tune: bool
+            Flag for tuning. Defaults to True.
+        tune_interval: int
+            The frequency of tuning. Defaults to 100 iterations.
+        """
         List of value variables for sampler
     scaling: scalar or array
         Initial scale factor for proposal. Defaults to 1.

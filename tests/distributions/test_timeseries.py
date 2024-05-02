@@ -239,6 +239,7 @@ class TestRandomWalk:
         elif steps_source == "observed":
             shape_source_kwargs["observed"] = np.zeros(shape)
         else:
+            # Add the necessary code snippet to handle the else case here
             raise ValueError
 
         coords = {f"dim{i}": range(s) for i, s in enumerate(shape)}

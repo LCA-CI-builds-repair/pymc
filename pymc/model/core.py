@@ -735,9 +735,10 @@ class Model(WithMemoization, metaclass=ContextMeta):
         if potentials:
             potential_logps = self.replace_rvs_by_values(potentials)
 
-        logp_factors = [None] * len(varlist)
+        logp_factors = [None] * max(len(varlist), len(rv_order + potential_order))
         for logp_order, logp in zip((rv_order + potential_order), (rv_logps + potential_logps)):
-            logp_factors[logp_order] = logp
+            if logp_order < len(logp_factors):
+                logp_factors[logp_order] = logp
 
         if not sum:
             return logp_factors
