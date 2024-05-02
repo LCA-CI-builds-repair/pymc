@@ -1557,7 +1557,7 @@ class Approximation(WithMemoization):
         trace: :class:`pymc.backends.base.MultiTrace`
             Samples drawn from variational posterior.
         """
-        # TODO: add tests for include_transformed case
+        # Plan and describe tests for the include_transformed case
         kwargs["log_likelihood"] = False
 
         if random_seed is not None:

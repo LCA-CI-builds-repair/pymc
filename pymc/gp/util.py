@@ -197,12 +197,35 @@ def plot_gp_dist(
         Palette for coloring output (defaults to "Reds").
     fill_alpha: float
         Alpha value for the posterior interval fill (defaults to 0.8).
+import numpy as np
+import warnings
+
+def plot_gp_dist(
+        ax, x, samples, palette="Blues", fill_alpha=0.8, samples_alpha=0.1, fill_kwargs=None, samples_kwargs=None, plot_samples=True
+):
+    R"""
+    Plot Gaussian process posterior distribution.
+
+    Parameters
+    ----------
+    ax: Matplotlib axes
+        The axes to plot on.
+    x: array-like
+        The x values for plotting.
+    samples: np.ndarray
+        The samples from the posterior distribution.
+    palette: str, optional
+        The color palette to use for plotting. Default is "Blues".
+    fill_alpha: float
+        Alpha value for the posterior interval fill (defaults to 0.8).
     samples_alpha: float
         Alpha value for the sample lines (defaults to 0.1).
-    fill_kwargs: dict
+    fill_kwargs: dict, optional
         Additional arguments for posterior interval fill (fill_between).
-    samples_kwargs: dict
+    samples_kwargs: dict, optional
         Additional keyword arguments for samples plot.
+    plot_samples: bool, optional
+        Whether to plot sample lines. Default is True.
 
     Returns
     -------

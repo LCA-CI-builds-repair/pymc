@@ -103,7 +103,7 @@ def from_yaml():
 
     # Print summary, warnings and raise errors on unwanted configurations
     _log.info("Number of test runs (❌=0, ✅=once)\n%s", df.replace(0, "❌").replace(1, "✅"))
-
+def from_yaml():
     if ignored_by_all:
         raise AssertionError(
             f"{len(ignored_by_all)} tests are completely ignored:\n{ignored_by_all}"
@@ -113,7 +113,6 @@ def from_yaml():
             f"{len(run_multiple_times)} tests are run multiple times with the same OS and floatX setting:\n{run_multiple_times}"
         )
     return
-
 
 if __name__ == "__main__":
     from_yaml()
