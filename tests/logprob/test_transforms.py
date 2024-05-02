@@ -702,6 +702,8 @@ def test_negated_discrete_rv_transform():
     np.testing.assert_allclose(logp_fn(-1),  np.log(p))
     np.testing.assert_allclose(logp_fn(0), np.log(1 - p))
     assert logp_fn(1) == -np.inf
+import pytest
+from some_module import Bernoulli
 
     # Logcdf and icdf not supported yet
     for func in (logcdf, icdf):
@@ -711,7 +713,7 @@ def test_negated_discrete_rv_transform():
 
 def test_shifted_discrete_rv_transform():
     p = 0.7
-    rv = Bernoulli.dist(p=p) + 5
+    rv = Bernoulli(p=p) + 5
     vv = rv.type()
     rv_logp_fn = pytensor.function([vv], logp(rv, vv))
 
