@@ -2845,7 +2845,6 @@ class VonMises(CircularContinuous):
 
     .. plot::
         :context: close-figs
-
         import matplotlib.pyplot as plt
         import numpy as np
         import scipy.stats as st

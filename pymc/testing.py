@@ -792,7 +792,6 @@ class BaseTestDistributionRandom:
     Additional tests should be added for each optional parametrization of the
     distribution. In this case it's enough to include the test
     `check_pymc_params_match_rv_op` since only this differs.
-
     Note on `check_rv_size` test:
         Custom input sizes (and expected output shapes) can be defined for the
         `check_rv_size` test, by adding the optional class attributes

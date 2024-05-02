@@ -18,7 +18,6 @@ import sys
 from typing import Iterator
 
 import pandas
-
 DP_ROOT = pathlib.Path(__file__).absolute().parent.parent
 FAILING = """
 pymc/distributions/continuous.py
@@ -131,7 +130,6 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
         )
         print("You can run `python scripts/run_mypy.py --verbose` to reproduce this test locally.")
         sys.exit(1)
-
     if unexpected_passing:
         print("!!!!!!!!!")
         print(f"{len(unexpected_passing)} files unexpectedly passed the type checks:")
