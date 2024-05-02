@@ -833,7 +833,6 @@ class CustomDist:
 
     random : Optional[Callable]
         A callable that can be used to generate random draws from the distribution
-
         It must have the following signature: ``random(*dist_params, rng=None, size=None)``.
         The numerical distribution parameters are passed as positional arguments in the
         same order as they are supplied when the ``CustomDist`` is constructed.
