@@ -342,7 +342,6 @@ class Distribution(metaclass=DistributionMeta):
                 "a 'with model:' block, or use the '.dist' syntax "
                 "for a standalone distribution."
             )
-
         if "testval" in kwargs:
             initval = kwargs.pop("testval")
             warnings.warn(
@@ -839,7 +838,6 @@ class CustomDist:
         same order as they are supplied when the ``CustomDist`` is constructed.
         The keyword arguments are ``rng``, which will provide the random variable's
         associated :py:class:`~numpy.random.Generator`, and ``size``, that will represent
-        the desired size of the random draw. If ``None``, a ``NotImplemented``
         error will be raised when trying to draw random samples from the distribution's
         prior or posterior predictive.
 
