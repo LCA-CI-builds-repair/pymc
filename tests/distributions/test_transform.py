@@ -517,7 +517,7 @@ class TestElementWiseLogp:
             {"lower": lower, "upper": upper},
             size=size,
             initval=initval,
-            transform=tr.Chain([interval, tr.ordered]),
+            transform=[interval, tr.ordered],
         )
         self.check_vectortransform_elementwise_logp(model)
 
