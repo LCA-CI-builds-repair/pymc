@@ -1139,9 +1139,8 @@ class MarginalKron(Base):
             raise ValueError("Must provide a covariance function for each X")
         if N != len(y):
             raise ValueError(
-                f"Length of y ({len(y)}) must match length of cartesian product of Xs ({N})"
+                "Length of y ({len_y}) must match length of cartesian product of Xs ({N})".format(len_y=len(y), N=N)
             )
-
     def marginal_likelihood(self, name, Xs, y, sigma, is_observed=True, **kwargs):
         """
         Returns the marginal likelihood distribution, given the input
