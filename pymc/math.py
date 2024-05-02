@@ -517,9 +517,14 @@ class BlockDiagonalMatrix(Op):
     __props__ = ("sparse", "format")
 
     def __init__(self, sparse=False, format="csr"):
+        self.format = format
         if format not in ("csr", "csc"):
             raise ValueError(f"format must be one of: 'csr', 'csc', got {format}")
         self.sparse = sparse
+
+    def make_node(self, x):
+        x = as_tensor_variable(x)
+        return Apply(self, [x], [x.type()])
         self.format = format
 
     def make_node(self, *matrices):
