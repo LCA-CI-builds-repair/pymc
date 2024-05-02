@@ -519,16 +519,18 @@ class TestElementWiseLogp:
             initval=initval,
             transform=tr.Chain([interval, tr.ordered]),
         )
-        self.check_vectortransform_elementwise_logp(model)
+import numpy as np
 
-    @pytest.mark.parametrize(
-        "mu,kappa,size", [(0.0, 1.0, (2,)), (floatX(np.zeros(3)), floatX(np.ones(3)), (4, 3))]
-    )
-    def test_vonmises_ordered(self, mu, kappa, size):
-        initval = np.sort(np.abs(np.random.rand(*size)))
-        model = self.build_model(
-            pm.VonMises,
-            {"mu": mu, "kappa": kappa},
+self.check_vectortransform_elementwise_logp(model)
+
+@pytest.mark.parametrize(
+    "mu,kappa,size", [(0.0, 1.0, (2,)), (floatX(np.zeros(3)), floatX(np.ones(3)), (4, 3))]
+)
+def test_vonmises_ordered(self, mu, kappa, size):
+    initval = np.sort(np.abs(np.random.rand(*size)))
+    model = self.build_model(
+        pm.VonMises,
+        {"mu": mu, "kappa": kappa},
             size=size,
             initval=initval,
             transform=tr.Chain([tr.circular, tr.ordered]),
@@ -547,26 +549,30 @@ class TestElementWiseLogp:
                 tr.Chain([tr.sum_to_1, tr.logodds]),
             ),
         ],
-    )
-    def test_uniform_other(self, lower, upper, size, transform):
-        initval = np.ones(size) / size[-1]
-        model = self.build_model(
-            pm.Uniform,
-            {"lower": lower, "upper": upper},
-            size=size,
-            initval=initval,
+import numpy as np
+
+initval = np.ones(size) / size[-1]
+model = self.build_model(
+    pm.Uniform,
+    {"lower": lower, "upper": upper},
+    size=size,
+    initval=initval,
+    transform=transform,
+)
             transform=transform,
         )
         self.check_vectortransform_elementwise_logp(model)
 
     @pytest.mark.parametrize(
-        "mu,cov,size,shape",
-        [
-            (floatX(np.zeros(2)), floatX(np.diag(np.ones(2))), None, (2,)),
-            (floatX(np.zeros(3)), floatX(np.diag(np.ones(3))), (4,), (4, 3)),
-        ],
-    )
-    @pytest.mark.parametrize("transform", (tr.ordered, tr.sum_to_1))
+import numpy as np
+
+],
+)
+@pytest.mark.parametrize("transform", (tr.ordered, tr.sum_to_1))
+def test_mvnormal_transform(self, mu, cov, size, shape, transform):
+    initval = np.sort(np.random.randn(*shape))
+    model = self.build_model(
+        pm.MvNormal,
     def test_mvnormal_transform(self, mu, cov, size, shape, transform):
         initval = np.sort(np.random.randn(*shape))
         model = self.build_model(

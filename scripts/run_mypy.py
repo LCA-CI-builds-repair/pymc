@@ -143,14 +143,16 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
             print("WOW! All files are passing the mypy type checks!")
             print("scripts\\run_mypy.py may no longer be needed.")
         print("!!!!!!!!!")
-        sys.exit(1)
-    return
+# Assuming necessary imports are present at the beginning of the file
 
+sys.exit(1)
+return
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run mypy type checks on PyMC codebase.")
     parser.add_argument(
         "--verbose", action="count", default=0, help="Pass this to print mypy output."
+    )
     )
     parser.add_argument(
         "--groupby",

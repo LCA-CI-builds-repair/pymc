@@ -691,6 +691,10 @@ def test_not_implemented_discrete_rv_transform():
         conditional_logp({y_rv: y_rv.clone()})
 
 
+import numpy as np
+import pytest
+import pytensor
+
 def test_negated_discrete_rv_transform():
     p = 0.7
     rv = -Bernoulli.dist(p=p)
