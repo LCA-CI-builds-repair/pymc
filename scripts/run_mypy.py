@@ -129,15 +129,18 @@ def check_no_unexpected_results(mypy_lines: Iterator[str]):
             "These files did not fail before, so please check the above output"
             f" for errors in {unexpected_failing} and fix them."
         )
-        print("You can run `python scripts/run_mypy.py --verbose` to reproduce this test locally.")
-        sys.exit(1)
+import sys
 
-    if unexpected_passing:
-        print("!!!!!!!!!")
-        print(f"{len(unexpected_passing)} files unexpectedly passed the type checks:")
-        print("\n".join(sorted(map(str, unexpected_passing))))
-        print(
-            "This is good news! Go to scripts/run_mypy.py and remove them from the `FAILING` list."
+print("You can run `python scripts/run_mypy.py --verbose` to reproduce this test locally.")
+sys.exit(1)
+
+if unexpected_passing:
+    print("!!!!!!!!!")
+    print(f"{len(unexpected_passing)} files unexpectedly passed the type checks:")
+    print("\n".join(sorted(map(str, unexpected_passing))))
+    print(
+        "This is good news! Go to scripts/run_mypy.py and remove them from the `FAILING` list."
+    )
         )
         if all_files.issubset(passing):
             print("WOW! All files are passing the mypy type checks!")
