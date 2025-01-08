@@ -97,8 +97,6 @@ from pytensor.tensor.special import log_softmax, softmax
 from scipy.linalg import block_diag as scipy_block_diag
 
 from pymc.pytensorf import floatX, ix_, largest_common_dtype
-
-
 __all__ = [
     "abs",
     "and_",
