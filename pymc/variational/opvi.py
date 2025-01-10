@@ -511,7 +511,7 @@ class Operator:
 
     def __str__(self):  # pragma: no cover
         return "%(op)s[%(ap)s]" % dict(
-            op=self.__class__.__name__, ap=self.approx.__class__.__name__
+            op=f"{self.__class__.__name__}", ap=f"{self.approx.__class__.__name__}"
         )
 
 
