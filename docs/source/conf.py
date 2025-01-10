@@ -16,6 +16,7 @@
 # serve to show the default.
 
 import os
+
 from pathlib import Path
 
 import pymc
@@ -71,6 +72,7 @@ numpydoc_xref_aliases = {
     "BaseTrace": ":class:`~pymc.backends.base.BaseTrace`",
     "Point": ":class:`~pymc.Point`",
     "Model": ":class:`~pymc.Model`",
+
     "SMC_kernel": ":ref:`SMC Kernel <smc_kernels>`",
     "PyTensor_Op": ":class:`PyTensor Op <pytensor.graph.op.Op>`",
     "tensor_like": ":term:`tensor_like`",
@@ -107,6 +109,7 @@ author = "PyMC contributors"
 
 version = pymc.__version__
 on_readthedocs = os.environ.get("READTHEDOCS", False)
+
 if on_readthedocs:
     rtd_version = os.environ.get("READTHEDOCS_VERSION", "")
     if rtd_version.lower() == "stable":
@@ -116,6 +119,7 @@ if on_readthedocs:
     else:
         version = rtd_version
 else:
+
     rtd_version = "local"
 # The full version, including alpha/beta/rc tags.
 release = version
