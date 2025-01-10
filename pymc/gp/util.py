@@ -75,7 +75,7 @@ def replace_with_values(vars_needed, replacements=None, model=None):
         missing_str = ", ".join(missing)
         raise ValueError(f"Values for {missing_str} must be included in `replacements`.")
 
-    return fn(**replacements)
+    return tuple(v.eval() for v in vars_needed)
 
 
 def stabilize(K, jitter=JITTER_DEFAULT):
