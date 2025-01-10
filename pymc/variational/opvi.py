@@ -259,7 +259,7 @@ class ObjectiveFunction:
                 more_tf_params=more_tf_params,
                 more_replacements=more_replacements,
                 total_grad_norm_constraint=total_grad_norm_constraint,
-            )
+            ).format(op=self.__class__.__name__, ap=self.approx.__class__.__name__)
         else:
             if tf_n_mc is not None:
                 _warn_not_used("tf_n_mc", self.op)
