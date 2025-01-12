@@ -92,6 +92,7 @@ from pymc.vartypes import discrete_types
 def generate_normal_mixture_data(w, mu, sigma, size=1000):
     component = np.random.choice(w.size, size=size, p=w)
     mu, sigma = np.broadcast_arrays(mu, sigma)
+
     out_size = to_tuple(size) + mu.shape[:-1]
     mu_ = np.array([mu[..., comp] for comp in component.ravel()])
     sigma_ = np.array([sigma[..., comp] for comp in component.ravel()])

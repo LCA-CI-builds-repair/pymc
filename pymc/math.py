@@ -27,7 +27,6 @@ import scipy.sparse
 
 from pytensor.graph.basic import Apply
 from pytensor.graph.op import Op
-
 from pytensor.tensor import (
     abs,
     and_,
