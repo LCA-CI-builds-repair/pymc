@@ -510,9 +510,7 @@ class Operator:
         return self.objective_class(self, f)
 
     def __str__(self):  # pragma: no cover
-        return "%(op)s[%(ap)s]" % dict(
-            op=self.__class__.__name__, ap=self.approx.__class__.__name__
-        )
+        return f"{self.__class__.__name__}[{self.approx.__class__.__name__}]"
 
 
 def collect_shared_to_list(params):
