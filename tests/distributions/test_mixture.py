@@ -149,7 +149,7 @@ class TestMixture:
         if size is not None and len(size) < max(component.ndim - 1, weights.ndim - 1):
             return
 
-        mix = Mixture.dist(weights, component, size=size)
+        mix = Mixture.dist(weights=weights, comp_dists=component, size=size)
         mix_eval = mix.eval()
 
         # Test shape
