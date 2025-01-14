@@ -111,8 +111,7 @@ class Binomial(Discrete):
         Probability of success in each trial (0 < p < 1).
     logit_p : tensor_like of float
         Alternative log odds for the probability of success.
-    """
-    rv_op = binomial
+    """    rv_op = binomial
 
     @classmethod
     def dist(cls, n, p=None, logit_p=None, *args, **kwargs):
@@ -333,8 +332,7 @@ class Bernoulli(Discrete):
         Probability of success (0 < p < 1).
     logit_p : tensor_like of float
         Alternative log odds for the probability of success.
-    """
-    rv_op = bernoulli
+    """    rv_op = bernoulli
 
     @classmethod
     def dist(cls, p=None, logit_p=None, *args, **kwargs):
@@ -449,8 +447,7 @@ class DiscreteWeibull(Discrete):
     beta : tensor_like of float
         Shape parameter (beta > 0).
 
-    """
-    rv_op = discrete_weibull
+    """    rv_op = discrete_weibull
 
     @classmethod
     def dist(cls, q, beta, *args, **kwargs):
