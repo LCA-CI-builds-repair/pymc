@@ -44,8 +44,9 @@ class CpuLeapfrogIntegrator:
         self._dtype = self._logp_dlogp_func.dtype
         if self._potential.dtype != self._dtype:
             raise ValueError(
-                "dtypes of potential (%s) and logp function (%s)"
-                "don't match." % (self._potential.dtype, self._dtype)
+                "dtypes of potential ({0}) and logp function ({1}) don't match.".format(
+                    self._potential.dtype, self._dtype
+                )
             )
 
     def compute_state(self, q: RaveledVars, p: RaveledVars):
