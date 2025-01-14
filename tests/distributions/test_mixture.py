@@ -129,14 +129,14 @@ class TestMixture:
 
     @pytest.mark.parametrize(
         "weights",
-        [
+        (
             np.array([1, 0]),
             np.array([[1, 0], [0, 1], [1, 0]]),
         ],
     )
     @pytest.mark.parametrize(
         "component",
-        [
+        (
             Normal.dist([-10, 10]),
             Normal.dist([-10, 10], size=(3, 2)),
             Normal.dist([[-15, 15], [-10, 10], [-5, 5]], 1e-3),
