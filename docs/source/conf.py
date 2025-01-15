@@ -38,6 +38,7 @@ extensions = [
     "numpydoc",
     "IPython.sphinxext.ipython_console_highlighting",
     "IPython.sphinxext.ipython_directive",
+    "ruff",
     "myst_nb",
     "sphinx_design",
     "notfound.extension",
