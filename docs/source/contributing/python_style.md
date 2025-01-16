@@ -1,7 +1,7 @@
 (python_style)=
 # Python style guide
 
-## Pre commit checks
+## Pre-commit checks
 
 Some code-quality checks are performed during continuous integration. The easiest way to check that they pass locally,
 before submitting your pull request, is by using [pre-commit](https://pre-commit.com/).
