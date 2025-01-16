@@ -19,6 +19,7 @@ import numpy as np
 import pytensor.tensor as pt
 
 # ignore mypy error because it somehow considers that
+
 # "numpy.core.numeric has no attribute normalize_axis_tuple"
 from numpy.core.numeric import normalize_axis_tuple  # type: ignore
 from pytensor.graph import Op

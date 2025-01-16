@@ -30,9 +30,8 @@ from pytensor.graph.op import Op
 from pytensor.raise_op import Assert
 from pytensor.sparse.basic import sp_sum
 from pytensor.tensor import TensorConstant, gammaln, sigmoid
-from pytensor.tensor.linalg import cholesky, det, eigh
+from pytensor.tensor.linalg import cholesky, det, eigh, solve_triangular, trace
 from pytensor.tensor.linalg import inv as matrix_inverse
-from pytensor.tensor.linalg import solve_triangular, trace
 from pytensor.tensor.random.basic import dirichlet, multinomial, multivariate_normal
 from pytensor.tensor.random.op import RandomVariable
 from pytensor.tensor.random.utils import (
@@ -147,8 +146,7 @@ def quaddist_chol(value, mu, cov):
     if value.ndim == 0:
         raise ValueError("Value can't be a scalar")
     if value.ndim == 1:
-        onedim = True
-        value = value[None, :]
+        onedim = True        value = value[None, :]
     else:
         onedim = False
 
