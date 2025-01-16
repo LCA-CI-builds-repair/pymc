@@ -41,6 +41,7 @@ from pytensor.tensor.random.utils import (
 )
 from pytensor.tensor.type import TensorType
 from scipy import stats
+import numpy as np
 
 import pymc as pm
 
