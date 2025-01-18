@@ -539,6 +539,7 @@ class Poisson(Discrete):
     The Poisson distribution can be derived as a limiting case of the
     binomial distribution.
     """
+
     rv_op = poisson
 
     @classmethod
