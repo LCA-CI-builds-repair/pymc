@@ -112,7 +112,7 @@ class Binomial(Discrete):
     logit_p : tensor_like of float
         Alternative log odds for the probability of success.
     """
-    rv_op = binomial
+    rv_op = binomial_rv
 
     @classmethod
     def dist(cls, n, p=None, logit_p=None, *args, **kwargs):
@@ -334,7 +334,7 @@ class Bernoulli(Discrete):
     logit_p : tensor_like of float
         Alternative log odds for the probability of success.
     """
-    rv_op = bernoulli
+    rv_op = bernoulli_rv
 
     @classmethod
     def dist(cls, p=None, logit_p=None, *args, **kwargs):
@@ -450,7 +450,7 @@ class DiscreteWeibull(Discrete):
         Shape parameter (beta > 0).
 
     """
-    rv_op = discrete_weibull
+    rv_op = discrete_weibull_rv
 
     @classmethod
     def dist(cls, q, beta, *args, **kwargs):
@@ -539,7 +539,7 @@ class Poisson(Discrete):
     The Poisson distribution can be derived as a limiting case of the
     binomial distribution.
     """
-    rv_op = poisson
+    rv_op = poisson_rv
 
     @classmethod
     def dist(cls, mu, *args, **kwargs):
