@@ -20,6 +20,7 @@ from pathlib import Path
 
 import pymc
 
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
