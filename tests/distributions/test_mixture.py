@@ -1,4 +1,99 @@
 #   Copyright 2024 The PyMC Developers
+
+import warnings
+
+from functools import singledispatch
+
+import numpy as np
+import pytensor
+import pytest
+import scipy.stats as st
+
+from numpy.testing import assert_allclose
+from pytensor import tensor as pt
+from pytensor.tensor import TensorVariable
+from pytensor.tensor.random.op import RandomVariable
+from scipy.special import logsumexp
+
+from pymc.distributions import (
+    Categorical,
+    DiracDelta,
+    Dirichlet,
+    DirichletMultinomial,
+    Exponential,
+    Gamma,
+    HalfNormal,
+    HalfStudentT,
+    HurdleGamma,
+    HurdleLogNormal,
+    HurdleNegativeBinomial,
+    HurdlePoisson,
+    LKJCholeskyCov,
+    LogNormal,
+    Mixture,
+    Multinomial,
+    MvNormal,
+    NegativeBinomial,
+    Normal,
+    NormalMixture,
+    Poisson,
+    StickBreakingWeights,
+    Triangular,
+    Truncated,
+    Uniform,
+    ZeroInflatedBinomial,
+    ZeroInflatedNegativeBinomial,
+    ZeroInflatedPoisson,
+)
+from pymc.distributions.mixture import MixtureTransformWarning
+from pymc.distributions.shape_utils import change_dist_size, to_tuple
+from pymc.distributions.transforms import _default_transform
+from pymc.logprob.basic import logp
+from pymc.logprob.transforms import IntervalTransform, LogTransform, SimplexTransform
+from pymc.math import expand_packed_triangular
+from pymc.model import Model
+from pymc.pytensorf import floatX
+from pymc.sampling.forward import (
+    draw,
+    sample_posterior_predictive,
+    sample_prior_predictive,
+)
+from pymc.sampling.mcmc import sample
+from pymc.step_methods import Metropolis
+from pymc.testing import (
+    Domain,
+    Nat,
+    NatSmall,
+    R,
+    Rplus,
+    Rplusbig,
+    Simplex,
+    Unit,
+    assert_moment_is_expected,
+    check_logcdf,
+    check_logp,
+    check_selfconsistency_discrete_logcdf,
+    continuous_random_tester,
+)
+from pymc.vartypes import discrete_types
+def generate_normal_mixture_data(w, mu, sigma, size=1000):
+    component = np.random.choice(w.size, size=size, p=w)
+    mu, sigma = np.broadcast_arrays(mu, sigma)
+    out_size = to_tuple(size) + mu.shape[:-1]
+    mu_ = np.array([mu[..., comp] for comp in component.ravel()])
+    sigma_ = np.array([sigma[..., comp] for comp in component.ravel()])
+    mu_ = np.reshape(mu_, out_size)
+    sigma_ = np.reshape(sigma_, out_size)
+    x = np.random.normal(mu_, sigma_, size=out_size)
+    return x
+def generate_poisson_mixture_data(w, mu, size=1000):
+    component = np.random.choice(w.size, size=size, p=w)
+    mu = np.atleast_1d(mu)
+    out_size = to_tuple(size) + mu.shape[:-1]
+    mu_ = np.array([mu[..., comp] for comp in component.ravel()])
+    mu_ = np.reshape(mu_, out_size)
+    x = np.random.poisson(mu_, size=out_size)
+    return x
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
