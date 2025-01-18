@@ -96,6 +96,20 @@ from pytensor.tensor.nlinalg import matrix_inverse
 from pytensor.tensor.special import log_softmax, softmax
 from scipy.linalg import block_diag as scipy_block_diag
 
+# Fix logdet function to handle non-square matrices
+def logdet(matrix):
+    try:
+        return pt.log(pt.abs(pt.det(matrix)))
+    except ValueError:
+        # Matrix is not square
+        return pt.log(pt.abs(pt.det(matrix.matrix_inverse())))
+
+__all__ = [
+    ...
+    "logdet",
+    ...
+]
+
 from pymc.pytensorf import floatX, ix_, largest_common_dtype
 
 
