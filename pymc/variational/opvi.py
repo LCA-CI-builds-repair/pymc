@@ -458,8 +458,7 @@ class Operator:
         self.approx = approx
         if self.require_logq and not approx.has_logq:
             raise ExplicitInferenceError(
-                "%s requires logq, but %s does not implement it"
-                "please change inference method" % (self, approx)
+                f"{self} requires logq, but {approx} does not implement it please change inference method"
             )
 
     inputs = property(lambda self: self.approx.inputs)
