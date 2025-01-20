@@ -68,6 +68,7 @@ __all__ = [
 
 
 class Binomial(Discrete):
+    rv_op = binomial
     R"""
     Binomial log-likelihood.
 
@@ -290,6 +291,7 @@ class BetaBinomial(Discrete):
 
 
 class Bernoulli(Discrete):
+    rv_op = bernoulli
     R"""Bernoulli log-likelihood
 
     The Bernoulli distribution describes the probability of successes
@@ -403,6 +405,7 @@ discrete_weibull = DiscreteWeibullRV()
 
 
 class DiscreteWeibull(Discrete):
+    rv_op = discrete_weibull
     R"""Discrete Weibull log-likelihood.
 
     The discrete Weibull distribution is a flexible model of count data that
@@ -495,6 +498,7 @@ class DiscreteWeibull(Discrete):
 
 
 class Poisson(Discrete):
+    rv_op = poisson
     R"""
     Poisson log-likelihood.
 
