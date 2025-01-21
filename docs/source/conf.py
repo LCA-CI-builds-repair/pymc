@@ -16,7 +16,7 @@
 # serve to show the default.
 
 import os
-from pathlib import Path
+from pathlib import path
 
 import pymc
 
