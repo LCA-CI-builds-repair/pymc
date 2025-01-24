@@ -324,10 +324,7 @@ def get_root():
         me_dir = os.path.normcase(os.path.splitext(my_path)[0])
         vsr_dir = os.path.normcase(os.path.splitext(versioneer_py)[0])
         if me_dir != vsr_dir:
-            print(
-                "Warning: build in %s is using versioneer.py from %s"
-                % (os.path.dirname(my_path), versioneer_py)
-            )
+            print(f"Warning: build in {os.path.dirname(my_path)} is using versioneer.py from {versioneer_py}")
     except NameError:
         pass
     return root
